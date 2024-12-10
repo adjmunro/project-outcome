@@ -1,8 +1,6 @@
-rootProject.name = "nomadic"
+rootProject.name = "build-logic"
 
 pluginManagement {
-    includeBuild("build-logic")
-
     /**
      * The pluginManagement.repositories block configures the repositories that Gradle uses
      * to search for and download the Gradle plugins and their transitive dependencies.
@@ -11,13 +9,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
         google()
     }
 
@@ -27,8 +18,8 @@ pluginManagement {
     }
 }
 
-@Suppress("UnstableApiUsage") dependencyResolutionManagement {
-
+@Suppress("UnstableApiUsage")
+dependencyResolutionManagement {
     /**
      * The dependencyResolutionManagement.repositories block is where you configure the source
      * repositories of the dependencies used by all modules in your project. However, you should
@@ -40,9 +31,10 @@ pluginManagement {
     }
 
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-}
 
-include(
-    ":error",
-    ":numbery",
-)
+    versionCatalogs {
+        create("libs") {
+            from(files("${rootDir.parent}/gradle/libs.versions.toml"))
+        }
+    }
+}
