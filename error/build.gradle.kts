@@ -8,18 +8,10 @@ android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
 }
 
 dependencies {
-
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.kotlinx.atomicfu)
+    implementation(libs.kotlinx.coroutines.core)
 }
