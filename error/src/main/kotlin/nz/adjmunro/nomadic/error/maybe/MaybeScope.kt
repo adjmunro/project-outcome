@@ -14,7 +14,9 @@ import kotlin.experimental.ExperimentalTypeInference
 object MaybeScope {
 
     @NomadicDsl
-    inline fun <Ok : Any> maybeOf(@BuilderInference block: () -> Ok): Maybe<Ok> {
+    inline infix fun <Ok : Any> maybeOf(
+        @BuilderInference block: () -> Ok,
+    ): Maybe<Ok> {
         contract {
             callsInPlace(block, AT_MOST_ONCE)
         }
@@ -28,7 +30,7 @@ object MaybeScope {
     }
 
     @NomadicDsl
-    fun <Ok : Any> maybeRaise(
+    infix fun <Ok : Any> maybeRaise(
         @BuilderInference block: RaiseScope<Any>.() -> Ok,
     ): Maybe<Ok> {
         return block.foldEager(
@@ -39,7 +41,7 @@ object MaybeScope {
     }
 
     @NomadicDsl
-    suspend fun <Ok : Any> maybeSuspend(
+    suspend infix fun <Ok : Any> maybeSuspend(
         @BuilderInference block: suspend RaiseScope<Any>.() -> Ok,
     ): Maybe<Ok> {
         return block.foldSuspend(

@@ -3,7 +3,9 @@ package nz.adjmunro.nomadic.error.outcome
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.outcome.OutcomeFold.flatFold
 import nz.adjmunro.nomadic.error.outcome.OutcomeFold.fold
-import nz.adjmunro.nomadic.error.util.identity
+import nz.adjmunro.nomadic.error.util.failure
+import nz.adjmunro.nomadic.error.util.it
+import nz.adjmunro.nomadic.error.util.success
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -13,7 +15,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object OutcomeMap {
 
     @NomadicDsl
-    inline fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.mapSuccess(
+    inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.mapSuccess(
         @BuilderInference transform: (In) -> Out,
     ): Outcome<Out, Error> {
         contract {
@@ -22,12 +24,12 @@ object OutcomeMap {
 
         return fold(
             success = transform,
-            failure = ::identity,
+            failure = ::it,
         )
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.mapFailure(
+    inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.mapFailure(
         @BuilderInference transform: (ErrorIn) -> ErrorOut,
     ): Outcome<Ok, ErrorOut> {
         contract {
@@ -35,13 +37,13 @@ object OutcomeMap {
         }
 
         return fold(
-            success = ::identity,
+            success = ::it,
             failure = transform,
         )
     }
 
     @NomadicDsl
-    inline fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMapSuccess(
+    inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMapSuccess(
         @BuilderInference transform: (In) -> Outcome<Out, Error>,
     ): Outcome<Out, Error> {
         contract {
@@ -50,12 +52,12 @@ object OutcomeMap {
 
         return flatFold(
             success = transform,
-            failure = { Outcome.Failure(it) },
+            failure = ::failure,
         )
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMapFailure(
+    inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMapFailure(
         @BuilderInference transform: (ErrorIn) -> Outcome<Ok, ErrorOut>,
     ): Outcome<Ok, ErrorOut> {
         contract {
@@ -63,7 +65,7 @@ object OutcomeMap {
         }
 
         return flatFold(
-            success = { Outcome.Success(it) },
+            success = ::success,
             failure = transform,
         )
     }

@@ -10,39 +10,39 @@ import kotlin.experimental.ExperimentalTypeInference
 object FallibleIs {
 
     @NomadicDsl
-    fun <Error : Any> Fallible<Error>.isNone(): Boolean {
+    fun <Error : Any> Fallible<Error>.isPass(): Boolean {
         contract {
-            returns(true) implies (this@isNone is Fallible.None)
-            returns(false) implies (this@isNone is Fallible.Oops<Error>)
+            returns(true) implies (this@isPass is Fallible.Pass)
+            returns(false) implies (this@isPass is Fallible.Oops<Error>)
         }
 
-        return this@isNone is Fallible.None
+        return this@isPass is Fallible.Pass
     }
 
     @NomadicDsl
     fun <Error : Any> Fallible<Error>.isOops(): Boolean {
         contract {
             returns(true) implies (this@isOops is Fallible.Oops<Error>)
-            returns(false) implies (this@isOops is Fallible.None)
+            returns(false) implies (this@isOops is Fallible.Pass)
         }
 
         return this@isOops is Fallible.Oops<Error>
     }
 
     @NomadicDsl
-    inline fun <Error : Any> Fallible<Error>.isNone(
+    inline infix fun <Error : Any> Fallible<Error>.isPass(
         @BuilderInference predicate: () -> Boolean,
     ): Boolean {
         contract {
-            returns(true) implies (this@isNone is Fallible.None)
+            returns(true) implies (this@isPass is Fallible.Pass)
             callsInPlace(predicate, AT_MOST_ONCE)
         }
 
-        return this@isNone is Fallible.None && predicate()
+        return this@isPass is Fallible.Pass && predicate()
     }
 
     @NomadicDsl
-    inline fun <Error : Any> Fallible<Error>.isOops(
+    inline infix fun <Error : Any> Fallible<Error>.isOops(
         @BuilderInference predicate: (Error) -> Boolean,
     ): Boolean {
         contract {

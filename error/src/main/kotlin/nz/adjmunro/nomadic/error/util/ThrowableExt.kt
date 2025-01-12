@@ -5,11 +5,13 @@ import java.util.concurrent.CancellationException
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
+@Suppress("MemberVisibilityCanBePrivate")
 @OptIn(ExperimentalContracts::class)
 object ThrowableExt {
 
     fun Throwable.isFatal(): Boolean {
         contract {
+            returns(false) implies (this@isFatal !is AssertionError)
             returns(false) implies (this@isFatal !is CancellationException)
             returns(false) implies (this@isFatal !is InterruptedException)
             returns(false) implies (this@isFatal !is LinkageError)
@@ -21,6 +23,7 @@ object ThrowableExt {
         }
 
         return when (this) {
+            is AssertionError -> true
             is CancellationException -> true
             is InterruptedException -> true
             is LinkageError -> true

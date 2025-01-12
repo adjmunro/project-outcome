@@ -2,7 +2,7 @@ package nz.adjmunro.nomadic.error.outcome
 
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.outcome.OutcomeFold.flatFold
-import nz.adjmunro.nomadic.error.util.identity
+import nz.adjmunro.nomadic.error.util.it
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -14,8 +14,8 @@ object OutcomeUtils {
     @NomadicDsl
     fun <Ok : Any, Error : Any> Outcome<Outcome<Ok, Error>, Outcome<Ok, Error>>.flatten(): Outcome<Ok, Error> {
         return flatFold(
-            success = ::identity,
-            failure = ::identity,
+            success = ::it,
+            failure = ::it,
         )
     }
 
@@ -28,7 +28,7 @@ object OutcomeUtils {
     }
 
     @NomadicDsl
-    inline fun <Ok : Output, Error : Output, Output : Any> Outcome<Ok, Error>.collapse(
+    inline fun <Ok : Any, Error : Any, Output : Any?> Outcome<Ok, Error>.collapse(
         @BuilderInference success: (Ok) -> Output,
         @BuilderInference failure: (Error) -> Output,
     ): Output {

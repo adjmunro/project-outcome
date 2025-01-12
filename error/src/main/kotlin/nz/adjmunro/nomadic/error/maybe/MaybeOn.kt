@@ -12,7 +12,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object MaybeOn {
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.onSome(
+    inline infix fun <Ok : Any> Maybe<Ok>.onSome(
         @BuilderInference block: (Ok) -> Unit,
     ): Maybe<Ok> {
         contract {
@@ -24,7 +24,7 @@ object MaybeOn {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.onNone(
+    inline infix fun <Ok : Any> Maybe<Ok>.onNone(
         @BuilderInference block: () -> Unit,
     ): Maybe<Ok> {
         contract {

@@ -10,23 +10,21 @@ import kotlin.experimental.ExperimentalTypeInference
 object FallibleGetError {
 
     @NomadicDsl
-    fun <Error : Any> Fallible<Error>.errorOrDefault(default: Error): Error {
+    infix fun <Error : Any> Fallible<Error>.errorOrDefault(default: Error): Error {
         return when (this@errorOrDefault) {
-            is Fallible.None -> default
+            is Fallible.Pass -> default
             is Fallible.Oops<Error> -> error
         }
     }
 
     @NomadicDsl
-    inline fun <Error : Any> Fallible<Error>.errorOrElse(
+    inline infix fun <Error : Any> Fallible<Error>.errorOrElse(
         @BuilderInference transform: () -> Error,
     ): Error {
-        contract {
-            callsInPlace(transform, AT_MOST_ONCE)
-        }
+        contract { callsInPlace(transform, AT_MOST_ONCE) }
 
         return when (this@errorOrElse) {
-            is Fallible.None -> transform()
+            is Fallible.Pass -> transform()
             is Fallible.Oops<Error> -> error
         }
     }
@@ -35,29 +33,27 @@ object FallibleGetError {
     fun <Error : Any> Fallible<Error>.errorOrNull(): Error? {
         contract {
             returnsNotNull() implies (this@errorOrNull is Fallible.Oops<Error>)
-            returns(null) implies (this@errorOrNull is Fallible.None)
+            returns(null) implies (this@errorOrNull is Fallible.Pass)
         }
 
         return when (this@errorOrNull) {
-            is Fallible.None -> null
+            is Fallible.Pass -> null
             is Fallible.Oops<Error> -> error
         }
     }
 
     @NomadicDsl
     fun <Error : Any> Fallible<Error>.errorOrThrow(): Error {
-        contract {
-            returns() implies (this@errorOrThrow is Fallible.Oops<Error>)
-        }
+        contract { returns() implies (this@errorOrThrow is Fallible.Oops<Error>) }
 
         return when (this@errorOrThrow) {
-            is Fallible.None -> error("Fallible::errorOrThrow threw! Got: $this")
+            is Fallible.Pass -> error("Fallible::errorOrThrow threw! Got: $this")
             is Fallible.Oops<Error> -> error
         }
     }
 
     @NomadicDsl
-    fun <Error : Any> Fallible<Error>.errorOrThrow(
+    inline infix fun <Error : Any> Fallible<Error>.errorOrThrow(
         @BuilderInference throws: () -> Throwable,
     ): Error {
         contract {
@@ -66,7 +62,7 @@ object FallibleGetError {
         }
 
         return when (this@errorOrThrow) {
-            is Fallible.None -> throw throws()
+            is Fallible.Pass -> throw throws()
             is Fallible.Oops<Error> -> error
         }
     }

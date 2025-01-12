@@ -10,7 +10,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object MaybeMap {
 
     @NomadicDsl
-    inline fun <In : Any, Out : Any> Maybe<In>.map(
+    inline infix fun <In : Any, Out : Any> Maybe<In>.map(
         @BuilderInference some: (In) -> Out,
     ): Maybe<Out> {
         contract {
@@ -24,7 +24,7 @@ object MaybeMap {
     }
 
     @NomadicDsl
-    inline fun <In : Any, Out : Any> Maybe<In>.flatMap(
+    inline infix fun <In : Any, Out : Any> Maybe<In>.flatMap(
         @BuilderInference some: (In) -> Maybe<Out>,
     ): Maybe<Out> {
         contract {

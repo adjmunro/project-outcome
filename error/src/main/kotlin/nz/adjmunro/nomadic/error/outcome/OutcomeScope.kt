@@ -2,8 +2,8 @@ package nz.adjmunro.nomadic.error.outcome
 
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.raise.RaiseFold.foldEager
-import nz.adjmunro.nomadic.error.raise.RaiseScope
 import nz.adjmunro.nomadic.error.raise.RaiseFold.foldSuspend
+import nz.adjmunro.nomadic.error.raise.RaiseScope
 import nz.adjmunro.nomadic.error.util.ThrowableExt.nonFatalOrThrow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
@@ -14,7 +14,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object OutcomeScope {
 
     @Suppress("UNCHECKED_CAST")
-    inline fun <Ok : Any, Error : Any> outcomeOf(
+    inline infix fun <Ok : Any, Error : Any> outcomeOf(
         @BuilderInference block: () -> Ok,
     ): Outcome<Ok, Error> {
         contract {
@@ -51,4 +51,5 @@ object OutcomeScope {
             transform = { Outcome.Success(it) },
         )
     }
+
 }

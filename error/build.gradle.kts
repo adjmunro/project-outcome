@@ -4,10 +4,6 @@ plugins {
 
 android {
     namespace = "nz.adjmunro.nomadic.error"
-
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 }
 
 dependencies {

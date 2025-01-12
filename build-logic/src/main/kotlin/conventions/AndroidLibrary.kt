@@ -1,15 +1,11 @@
 package conventions
 
-import conventions.util.DependencyHandlerScopeExt.androidTestImplementation
-import conventions.util.DependencyHandlerScopeExt.testImplementation
 import conventions.config.KotlinAndroidConfig.configureKotlinAndroid
 import conventions.util.PluginManagerExt.id
 import conventions.util.ProjectExt.library
 import conventions.util.ProjectExt.libs
 import conventions.util.ProjectExt.plugins
 import conventions.util.VersionCatalogExt.plugin
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.kotlin
 
 internal class AndroidLibrary : ConventionPlugin({
     plugins {
@@ -19,10 +15,15 @@ internal class AndroidLibrary : ConventionPlugin({
 
     library {
         configureKotlinAndroid(commonExtension = this@library)
-    }
 
-    dependencies {
-        testImplementation(kotlin("test"))
-        androidTestImplementation(kotlin("test"))
+        defaultConfig {
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        testOptions {
+            unitTests.all {
+                it.useJUnitPlatform()
+            }
+        }
     }
 })

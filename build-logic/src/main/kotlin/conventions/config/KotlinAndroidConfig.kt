@@ -1,7 +1,9 @@
 package conventions.config
 
 import com.android.build.api.dsl.CommonExtension
+import conventions.util.DependencyHandlerScopeExt.androidTestImplementation
 import conventions.util.DependencyHandlerScopeExt.implementation
+import conventions.util.DependencyHandlerScopeExt.testImplementation
 import conventions.util.ProjectExt.libs
 import conventions.util.VersionCatalogExt.javaOrDefault
 import conventions.util.VersionCatalogExt.library
@@ -10,6 +12,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -37,6 +40,14 @@ internal object KotlinAndroidConfig {
         dependencies {
             implementation(platform(libs.library("kotlin-bom")))
             implementation(libs.library("kotlin-stdlib"))
+
+            testImplementation(kotlin("test"))
+            testImplementation(libs.findBundle("kotest").get())
+            testImplementation(libs.findBundle("mockk").get())
+
+            androidTestImplementation(kotlin("test"))
+            testImplementation(libs.findBundle("kotest").get())
+            testImplementation(libs.findBundle("mockk").get())
         }
 
         configureKotlin()

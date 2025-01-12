@@ -30,7 +30,7 @@ object OutcomeIs {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(
         @BuilderInference predicate: (Ok) -> Boolean,
     ): Boolean {
         contract {
@@ -42,7 +42,7 @@ object OutcomeIs {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(
         @BuilderInference predicate: (Error) -> Boolean,
     ): Boolean {
         contract {

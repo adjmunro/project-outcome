@@ -10,7 +10,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object OutcomeGet {
 
     @NomadicDsl
-    fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrDefault(default: Ok): Ok {
+    infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrDefault(default: Ok): Ok {
         return when (this@getOrDefault) {
             is Outcome.Success<Ok> -> value
             is Outcome.Failure<Error> -> default
@@ -18,7 +18,7 @@ object OutcomeGet {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrElse(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrElse(
         @BuilderInference recover: (Error) -> Ok,
     ): Ok {
         contract {
@@ -58,7 +58,7 @@ object OutcomeGet {
     }
 
     @NomadicDsl
-    fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrThrow(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrThrow(
         @BuilderInference throws: (Error) -> Throwable,
     ): Ok {
         contract {

@@ -9,4 +9,8 @@ sealed interface Fetch<out T : Any> {
     @JvmInline
     value class Completed<out T : Any>(val result: T) : Fetch<T>
 
+    data class ErrorWithCache<out Ok : Any, out Error : Any>(
+        val error: Error,
+        val cache: Ok? = null,
+    )
 }

@@ -2,7 +2,7 @@ package nz.adjmunro.nomadic.error.maybe
 
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.maybe.MaybeMap.flatMap
-import nz.adjmunro.nomadic.error.util.identity
+import nz.adjmunro.nomadic.error.util.it
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -13,12 +13,12 @@ object MaybeUtils {
 
     @NomadicDsl
     fun <Ok : Any> Maybe<Maybe<Ok>>.flatten(): Maybe<Ok> {
-        return flatMap(some = ::identity)
+        return flatMap(some = ::it)
     }
 
     @NomadicDsl
-    inline fun <In : Any, Out : Any> Maybe<In>.collapse(
-        @BuilderInference some: (In) -> Out,
+    inline fun <Ok : Any, Out : Any?> Maybe<Ok>.collapse(
+        @BuilderInference some: (Ok) -> Out,
         @BuilderInference none: () -> Out,
     ): Out {
         contract {
@@ -27,7 +27,7 @@ object MaybeUtils {
         }
 
         return when (this@collapse) {
-            is Maybe.Some<In> -> some(value)
+            is Maybe.Some<Ok> -> some(value)
             is Maybe.None -> none()
         }
     }

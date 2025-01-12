@@ -10,7 +10,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object OutcomeRecover {
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
         @BuilderInference transform: (Error) -> Ok,
     ): Outcome<Ok, Error> {
         contract {
@@ -24,7 +24,7 @@ object OutcomeRecover {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.flatRecover(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.flatRecover(
         @BuilderInference transform: (Error) -> Outcome<Ok, Error>,
     ): Outcome<Ok, Error> {
         contract {

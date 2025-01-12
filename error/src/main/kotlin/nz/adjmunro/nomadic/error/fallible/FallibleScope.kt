@@ -15,14 +15,14 @@ object FallibleScope {
 
     @Suppress("UNCHECKED_CAST")
     @NomadicDsl
-    inline fun <Error : Throwable> fallibleOf(block: () -> Unit): Fallible<Error> {
+    inline infix fun <Error : Throwable> fallibleOf(block: () -> Unit): Fallible<Error> {
         contract {
             callsInPlace(block, AT_MOST_ONCE)
         }
 
         return try {
             block()
-            Fallible.None
+            Fallible.Pass
         } catch (e: Throwable) {
             Fallible.Oops(e.nonFatalOrThrow() as Error)
         }
@@ -36,7 +36,7 @@ object FallibleScope {
         return block.foldEager(
             catch = catch,
             recover = { error -> Fallible.Oops(error) },
-            transform = { Fallible.None },
+            transform = { Fallible.Pass },
         )
     }
 
@@ -48,7 +48,7 @@ object FallibleScope {
         return block.foldSuspend(
             catch = catch,
             recover = { error -> Fallible.Oops(error) },
-            transform = { Fallible.None },
+            transform = { Fallible.Pass },
         )
     }
 }

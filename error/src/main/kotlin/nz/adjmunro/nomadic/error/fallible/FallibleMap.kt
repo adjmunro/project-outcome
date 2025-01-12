@@ -10,30 +10,26 @@ import kotlin.experimental.ExperimentalTypeInference
 object FallibleMap {
 
     @NomadicDsl
-    inline fun <ErrorIn : Any, ErrorOut : Any> Fallible<ErrorIn>.map(
+    inline infix fun <ErrorIn : Any, ErrorOut : Any> Fallible<ErrorIn>.map(
         @BuilderInference oops: (ErrorIn) -> ErrorOut,
     ): Fallible<ErrorOut> {
-        contract {
-            callsInPlace(oops, AT_MOST_ONCE)
-        }
+        contract { callsInPlace(oops, AT_MOST_ONCE) }
 
         return when (this@map) {
+            is Fallible.Pass -> this@map
             is Fallible.Oops<ErrorIn> -> Fallible.Oops(oops(error))
-            is Fallible.None -> this@map
         }
     }
 
     @NomadicDsl
-    inline fun <ErrorIn : Any, ErrorOut : Any> Fallible<ErrorIn>.flatMap(
+    inline infix fun <ErrorIn : Any, ErrorOut : Any> Fallible<ErrorIn>.flatMap(
         @BuilderInference oops: (ErrorIn) -> Fallible<ErrorOut>,
     ): Fallible<ErrorOut> {
-        contract {
-            callsInPlace(oops, AT_MOST_ONCE)
-        }
+        contract { callsInPlace(oops, AT_MOST_ONCE) }
 
         return when (this@flatMap) {
+            is Fallible.Pass -> this@flatMap
             is Fallible.Oops<ErrorIn> -> oops(error)
-            is Fallible.None -> this@flatMap
         }
     }
 

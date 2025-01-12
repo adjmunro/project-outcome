@@ -5,6 +5,8 @@ import conventions.util.PluginManagerExt.id
 import conventions.util.ProjectExt.libs
 import conventions.util.ProjectExt.plugins
 import conventions.util.VersionCatalogExt.plugin
+import org.gradle.api.tasks.testing.Test
+import org.gradle.kotlin.dsl.withType
 
 internal class JvmLibrary : ConventionPlugin({
     plugins {
@@ -12,4 +14,8 @@ internal class JvmLibrary : ConventionPlugin({
     }
 
     configureKotlinJvm()
+
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
 })

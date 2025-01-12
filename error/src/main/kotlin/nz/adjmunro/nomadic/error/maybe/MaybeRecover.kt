@@ -10,7 +10,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object MaybeRecover {
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.recover(
+    inline infix fun <Ok : Any> Maybe<Ok>.recover(
         @BuilderInference transform: () -> Ok,
     ): Maybe<Ok> {
         contract {
@@ -24,7 +24,7 @@ object MaybeRecover {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.flatRecover(
+    inline infix fun <Ok : Any> Maybe<Ok>.flatRecover(
         @BuilderInference transform: () -> Maybe<Ok>,
     ): Maybe<Ok> {
         contract {

@@ -10,7 +10,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object MaybeGet {
 
     @NomadicDsl
-    fun <Ok : Any> Maybe<Ok>.getOrDefault(default: Ok): Ok {
+    infix fun <Ok : Any> Maybe<Ok>.getOrDefault(default: Ok): Ok {
         return when (this@getOrDefault) {
             is Maybe.Some<Ok> -> value
             is Maybe.None -> default
@@ -18,7 +18,7 @@ object MaybeGet {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.getOrElse(
+    inline infix fun <Ok : Any> Maybe<Ok>.getOrElse(
         @BuilderInference recover: () -> Ok,
     ): Ok {
         contract {
@@ -57,7 +57,7 @@ object MaybeGet {
     }
 
     @NomadicDsl
-    fun <Ok : Any> Maybe<Ok>.getOrThrow(
+    inline infix fun <Ok : Any> Maybe<Ok>.getOrThrow(
         @BuilderInference throws: () -> Throwable,
     ): Ok {
         contract {

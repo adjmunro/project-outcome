@@ -12,7 +12,7 @@ import kotlin.experimental.ExperimentalTypeInference
 object OutcomeOn {
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onSuccess(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onSuccess(
         @BuilderInference block: (Ok) -> Unit,
     ): Outcome<Ok, Error> {
         contract {
@@ -24,7 +24,7 @@ object OutcomeOn {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onFailure(
+    inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onFailure(
         @BuilderInference block: (Error) -> Unit,
     ): Outcome<Ok, Error> {
         contract {

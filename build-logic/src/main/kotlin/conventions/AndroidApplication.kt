@@ -16,6 +16,16 @@ internal class AndroidApplication : ConventionPlugin({
 
     application {
         configureKotlinAndroid(commonExtension = this@application)
-        defaultConfig.targetSdk = libs.versionOrNull(alias = "targetSdk")?.toIntOrNull() ?: 34
+
+        defaultConfig {
+            targetSdk = libs.versionOrNull(alias = "targetSdk")?.toIntOrNull() ?: 34
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        testOptions {
+            unitTests.all {
+                it.useJUnitPlatform()
+            }
+        }
     }
 })

@@ -30,7 +30,7 @@ object MaybeIs {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.isSome(
+    inline infix fun <Ok : Any> Maybe<Ok>.isSome(
         @BuilderInference predicate: (Ok) -> Boolean,
     ): Boolean {
         contract {
@@ -42,7 +42,7 @@ object MaybeIs {
     }
 
     @NomadicDsl
-    inline fun <Ok : Any> Maybe<Ok>.isNone(
+    inline infix fun <Ok : Any> Maybe<Ok>.isNone(
         @BuilderInference predicate: () -> Boolean,
     ): Boolean {
         contract {

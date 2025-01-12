@@ -5,10 +5,6 @@ plugins {
 android {
     namespace = "nz.adjmunro.nomadic.numbery"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
