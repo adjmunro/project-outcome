@@ -31,9 +31,9 @@ object FlowUtils {
     }
 
     // TODO
-    fun <In, Out> Flow<In>.mapInstance(klass: KClass<Out>, action: suspend Out.() -> Unit): Flow<In> {
-        filterIsInstance(klass).onEach(action)
-        return this
-    }
+//    fun <In, Out> Flow<In>.mapInstance(klass: KClass<Out>, action: suspend Out.() -> Unit): Flow<In> {
+//        filterIsInstance(klass).onEach(action)
+//        return this
+//    }
 
 }
