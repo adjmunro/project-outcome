@@ -13,6 +13,9 @@ import kotlin.experimental.ExperimentalTypeInference
 @OptIn(ExperimentalTypeInference::class, ExperimentalContracts::class)
 object OutcomeScope {
 
+    // TODO consider an outcomeOf that assumes Error is Throwable to reduce boilerplate
+    // TODO investigate same name overload issues
+
     @Suppress("UNCHECKED_CAST")
     inline infix fun <Ok : Any, Error : Any> outcomeOf(
         @BuilderInference block: () -> Ok,
