@@ -11,10 +11,13 @@ import kotlinx.coroutines.flow.internal.NopCollector.emit
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.timeout
+import kotlinx.coroutines.time.withTimeoutOrNull
+import kotlinx.coroutines.withTimeoutOrNull
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.fetch.Fetch.Completed
 import nz.adjmunro.nomadic.error.fetch.Fetch.InProgress
 import nz.adjmunro.nomadic.error.fetch.Fetch.NotStarted
+import nz.adjmunro.nomadic.error.fetch.Fetch.TimedOut
 import nz.adjmunro.nomadic.error.util.FlowTransformExt.onEachInstance
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.time.Duration
@@ -66,6 +69,7 @@ typealias FetchCollector<T> = FlowCollector<Fetch<T>>
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
+    private val timeout: Duration = Duration.INFINITE,
     private val block: suspend FetchCollector<T>.() -> T,
 ) : AbstractFlow<Fetch<T>>() {
     override suspend fun collectSafely(collector: FetchCollector<T>) {
@@ -74,7 +78,10 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
             emit(InProgress)
 
             // Execute the block & await the result
-            emit(Completed(block()))
+            emit {
+                withTimeoutOrNull(timeout = timeout) { Completed(block()) }
+                    ?: TimedOut
+            }
         }
     }
 
@@ -95,7 +102,7 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
         fun <T : Any> fetch(
             timeout: Duration = Duration.INFINITE,
             @BuilderInference block: suspend FetchCollector<T>.() -> T,
-        ): FetchFlow<T> = SafeFetchFlow(block).recoverTimeout(duration = timeout) { Fetch.TimedOut }
+        ): FetchFlow<T> = SafeFetchFlow(timeout = timeout, block = block)
 
         /**
          * [Send][FlowCollector.emit] a [fetch not started][Fetch.NotStarted]
@@ -122,6 +129,11 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
         @NomadicDsl
         suspend inline fun <T : Any> FetchCollector<T>.completed(result: T) {
             emit(Completed(result = result))
+        }
+
+        @NomadicDsl
+        suspend inline fun <T> FlowCollector<T>.emit(block: FlowCollector<T>.() -> T) {
+            emit(block())
         }
 
         @OptIn(FlowPreview::class)
