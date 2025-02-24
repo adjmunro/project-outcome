@@ -39,7 +39,7 @@ object FlowTransformExt {
     }
 
     inline fun <reified T> Flow<*>.mapInstance(noinline action: suspend T.() -> T): Flow<*> {
-        filterIsInstance<T>().map(action)
+        filterIsInstance<T>().map(action) // todo should this return the result?
         return this
     }
 

@@ -20,6 +20,7 @@ import nz.adjmunro.nomadic.error.util.FlowTransformExt.mapInstance
 import nz.adjmunro.nomadic.error.util.FlowTransformExt.onEachIf
 import nz.adjmunro.nomadic.error.util.FlowTransformExt.onEachInstance
 import nz.adjmunro.nomadic.error.util.FlowTransformExt.plus
+import kotlin.time.Duration.Companion.seconds
 
 object OnFetch {
 
@@ -30,7 +31,7 @@ object OnFetch {
 
         3
     }
-    val test = fetch {
+    val test = fetch(timeout = 100.seconds) {
         outcomeOf<Int, Throwable> { 4 }
     }.onNotStarted {
 

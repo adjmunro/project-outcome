@@ -13,6 +13,8 @@ sealed interface Fetch<out T : Any> {
 
     @JvmInline
     value class Completed<T : Any>(val result: T) : Fetch<T>
+
+    data object TimedOut : Fetch<Nothing>
 }
 
 object FetchIs {

@@ -1,14 +1,23 @@
 package nz.adjmunro.nomadic.error.fetch
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.AbstractFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.internal.NopCollector.emit
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.timeout
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.fetch.Fetch.Completed
 import nz.adjmunro.nomadic.error.fetch.Fetch.InProgress
 import nz.adjmunro.nomadic.error.fetch.Fetch.NotStarted
+import nz.adjmunro.nomadic.error.util.FlowTransformExt.onEachInstance
 import kotlin.experimental.ExperimentalTypeInference
+import kotlin.time.Duration
 
 /**
  * Alias for a [Flow] of [Fetch] statuses.
@@ -84,8 +93,9 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
         @NomadicDsl
         @OptIn(ExperimentalTypeInference::class)
         fun <T : Any> fetch(
+            timeout: Duration = Duration.INFINITE,
             @BuilderInference block: suspend FetchCollector<T>.() -> T,
-        ): FetchFlow<T> = SafeFetchFlow(block)
+        ): FetchFlow<T> = SafeFetchFlow(block).recoverTimeout(duration = timeout) { Fetch.TimedOut }
 
         /**
          * [Send][FlowCollector.emit] a [fetch not started][Fetch.NotStarted]
@@ -112,6 +122,23 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
         @NomadicDsl
         suspend inline fun <T : Any> FetchCollector<T>.completed(result: T) {
             emit(Completed(result = result))
+        }
+
+        @OptIn(FlowPreview::class)
+        inline fun <T> Flow<T>.recoverTimeout(
+            duration: Duration,
+            crossinline recover: suspend (TimeoutCancellationException) -> T,
+        ): Flow<T> {
+            return timeout(timeout = duration).catch { e: Throwable ->
+                if (e is TimeoutCancellationException) emit(recover(e))
+                else throw e
+            }
+        }
+
+        inline fun <T: Any> FetchFlow<T>.recover(
+            crossinline recover: suspend Fetch.TimedOut.() -> Fetch<T>,
+        ): FetchFlow<T> {
+            return map { if(it is Fetch.TimedOut) recover(it) else it }
         }
     }
 }
