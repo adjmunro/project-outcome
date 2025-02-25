@@ -34,7 +34,7 @@ object OutcomeDeteriorate {
 
     @NomadicDsl
     inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.flatDeteriorate(
-        @BuilderInference transform: (Ok) -> Outcome<Ok, Error>,
+        @BuilderInference transform: (Ok) -> Outcome.Failure<Error>,
     ): Outcome<Ok, Error> {
         contract {
             callsInPlace(transform, AT_MOST_ONCE)

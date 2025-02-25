@@ -50,7 +50,7 @@ sealed interface Fetch<out T : Any> {
      * @param result The result of the fetch operation.
      */
     @JvmInline
-    value class Completed<T : Any>(val result: T) : Fetch<T> {
+    value class Completed<out T : Any>(val result: T) : Fetch<T> {
         operator fun component1(): T = result
         override fun toString(): String {
             return "Fetch.Completed<${result::class.simpleName}>(result = $result)"

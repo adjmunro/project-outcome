@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import kotlin.experimental.ExperimentalTypeInference
 import kotlin.reflect.KClass
 import kotlin.time.Duration
 
@@ -43,14 +44,22 @@ object FlowTransformExt {
         return this
     }
 
-    inline fun <reified T> Flow<*>.mapInstance(noinline action: suspend T.() -> T): Flow<*> {
-        filterIsInstance<T>().map(action) // todo should this return the result?
-        return this
-    }
+//    inline fun <reified T> Flow<*>.mapInstance(noinline action: suspend T.() -> T): Flow<*> {
+//        filterIsInstance<T>().map(action) // todo should this return the result?
+//        return this
+//    }
+//
+//    fun <T : Any> Flow<*>.mapInstance(klass: KClass<T>, action: suspend T.() -> T): Flow<*> {
+//        filterIsInstance(klass).map(action)
+//        return this
+//    }
 
-    fun <T : Any> Flow<*>.mapInstance(klass: KClass<T>, action: suspend T.() -> T): Flow<*> {
-        filterIsInstance(klass).map(action)
-        return this
+    @OptIn(ExperimentalTypeInference::class)
+    inline fun <A, reified B : A> Flow<A>.foldInstance(
+        @BuilderInference crossinline no: suspend A.() -> A = { this },
+        @BuilderInference crossinline yes: suspend B.() -> A,
+    ): Flow<A> {
+        return map { if (it is B) it.yes() else it.no() }
     }
 
     operator fun <A, B> Flow<A>.plus(other: Flow<B>): Flow<Pair<A, B>> =
