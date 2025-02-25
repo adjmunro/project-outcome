@@ -4,7 +4,7 @@ import nz.adjmunro.nomadic.error.BinaryResult
 import nz.adjmunro.nomadic.error.outcome.OutcomeGet.getOrNull
 import nz.adjmunro.nomadic.error.outcome.OutcomeGetError.errorOrNull
 
-sealed interface Outcome<out Ok : Any, out Error : Any> : BinaryResult {
+sealed interface Outcome<out Ok : Any, out Error : Any> : BinaryResult<Ok, Error> {
 
     @JvmInline
     value class Success<out Ok : Any>(val value: Ok) : Outcome<Ok, Nothing> {

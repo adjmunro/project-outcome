@@ -3,7 +3,7 @@ package nz.adjmunro.nomadic.error.maybe
 import nz.adjmunro.nomadic.error.BinaryResult
 import nz.adjmunro.nomadic.error.maybe.MaybeGet.getOrNull
 
-sealed interface Maybe<out Ok : Any> : BinaryResult {
+sealed interface Maybe<out Ok : Any> : BinaryResult<Ok, Nothing> {
 
     @JvmInline
     value class Some<out Ok : Any>(val value: Ok) : Maybe<Ok> {

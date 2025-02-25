@@ -3,7 +3,7 @@ package nz.adjmunro.nomadic.error.fallible
 import nz.adjmunro.nomadic.error.BinaryResult
 import nz.adjmunro.nomadic.error.fallible.FallibleGetError.errorOrNull
 
-sealed interface Fallible<out Error : Any> : BinaryResult {
+sealed interface Fallible<out Error : Any> : BinaryResult<Nothing, Error> {
 
     data object Pass : Fallible<Nothing> {
         override fun toString(): String {

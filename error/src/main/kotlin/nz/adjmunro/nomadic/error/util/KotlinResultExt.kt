@@ -7,7 +7,7 @@ import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 import kotlin.experimental.ExperimentalTypeInference
 
-typealias KotlinResult<T> = kotlin.Result<T>
+
 
 @OptIn(ExperimentalContracts::class, ExperimentalTypeInference::class)
 object KotlinResultExt  {
