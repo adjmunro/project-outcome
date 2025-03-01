@@ -1,18 +1,17 @@
 package nz.adjmunro.nomadic.error.util
 
-import nz.adjmunro.nomadic.error.util.KotlinResultExt.resultOf
+import nz.adjmunro.nomadic.error.KotlinResult
 import nz.adjmunro.nomadic.error.util.ThrowableExt.nonFatalOrThrow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 import kotlin.experimental.ExperimentalTypeInference
 
-
-
 @OptIn(ExperimentalContracts::class, ExperimentalTypeInference::class)
-object KotlinResultExt  {
+object KotlinResultExt {
 
-    inline infix fun <In : Any?, Out : Any?> In.resultOf( //this is andThen?
+    inline infix fun <In : Any?, Out : Any?> In.resultOf(
+        //this is andThen? daisy chaining?
         @BuilderInference block: In.() -> Out,
     ): KotlinResult<Out> {
         contract {
@@ -38,18 +37,5 @@ object KotlinResultExt  {
         } catch (e: Throwable) {
             KotlinResult.failure(e.nonFatalOrThrow())
         }
-    }
-
-    fun t() = resultOf {
-        1
-    }
-}
-
-fun x() = resultOf {
-    1
-    val x = 1 resultOf {
-        this
-    } resultOf {  // daisy chaining?
-        getOrThrow()
     }
 }

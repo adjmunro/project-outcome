@@ -1,12 +1,9 @@
-@file:Suppress("NOTHING_TO_INLINE") @file:OptIn(
-    ExperimentalContracts::class,
-    ExperimentalTypeInference::class
-)
+@file:Suppress("NOTHING_TO_INLINE")
+@file:OptIn(ExperimentalContracts::class, ExperimentalTypeInference::class)
 
 package nz.adjmunro.nomadic.error.util
 
 import nz.adjmunro.nomadic.error.NomadicDsl
-import nz.adjmunro.nomadic.error.R
 import nz.adjmunro.nomadic.error.fallible.Fallible
 import nz.adjmunro.nomadic.error.maybe.Maybe
 import nz.adjmunro.nomadic.error.outcome.Outcome
@@ -17,23 +14,22 @@ import kotlin.contracts.contract
 import kotlin.experimental.ExperimentalTypeInference
 
 @NomadicDsl
-inline fun <T> it(value: T): T {
+internal inline fun <T> it(value: T): T {
     return value
 }
 
-//@Suppress("UNCHECKED_CAST")
 @NomadicDsl
-inline fun <T> T.receiver(): T {
-    return this@receiver// as R
-}
-
-@NomadicDsl
-inline fun <T> T.receiver(ignore: Any?): T {
+internal inline fun <T> T.receiver(): T {
     return this@receiver
 }
 
 @NomadicDsl
-inline fun throws(throwable: Throwable): Nothing {
+internal inline fun <T> T.receiver(ignore: Any?): T {
+    return this@receiver
+}
+
+@NomadicDsl
+inline fun rethrow(throwable: Throwable): Nothing {
     throw throwable
 }
 
@@ -44,7 +40,10 @@ inline fun nulls(ignore: Any?): Unit? {
 
 // this is possibly my dumbest idea yet... but i'm lazy and i want to see if it works
 @NomadicDsl
-inline fun <In, Out> In.nullfold(some: (In) -> Out, none: () -> Out): Out {
+inline fun <In, Out> In.nullfold(
+    @BuilderInference some: (In) -> Out,
+    @BuilderInference none: () -> Out,
+): Out {
     contract {
         callsInPlace(some, AT_MOST_ONCE)
         callsInPlace(none, AT_MOST_ONCE)
@@ -68,7 +67,7 @@ inline fun <Error : Any> failure(error: Error): Outcome.Failure<Error> {
 
 
 @NomadicDsl
-inline fun <Error : Any> failure(@BuilderInference error: () -> Error): Outcome.Failure<Error> {
+inline fun <Error : Any> failureOf(@BuilderInference error: () -> Error): Outcome.Failure<Error> {
     contract { callsInPlace(error, EXACTLY_ONCE) }
     return Outcome.Failure(error())
 }
@@ -105,7 +104,7 @@ inline fun <Error : Any> oops(error: Error): Fallible.Oops<Error> {
 }
 
 @NomadicDsl
-inline fun <Error : Any> oops(@BuilderInference error: () -> Error): Fallible.Oops<Error> {
+inline fun <Error : Any> oopsOf(@BuilderInference error: () -> Error): Fallible.Oops<Error> {
     contract { callsInPlace(error, EXACTLY_ONCE) }
     return Fallible.Oops(error())
 }
