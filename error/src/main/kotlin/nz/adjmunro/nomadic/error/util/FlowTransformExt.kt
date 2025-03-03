@@ -16,8 +16,11 @@ import kotlinx.coroutines.flow.timeout
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import nz.adjmunro.nomadic.error.R
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.reflect.KClass
+import kotlin.reflect.cast
+import kotlin.reflect.safeCast
 import kotlin.time.Duration
 
 object FlowTransformExt {
@@ -28,21 +31,22 @@ object FlowTransformExt {
 
     inline fun <T> Flow<T>.onEachIf(
         crossinline predicate: suspend (T) -> Boolean,
-        noinline action: suspend (T) -> Unit,
+        crossinline action: suspend (T) -> Unit,
     ): Flow<T> {
-        filter(predicate).onEach(action)
-        return this
+        return onEach { value: T -> if(predicate(value)) action(value) }
     }
 
-    inline fun <reified T> Flow<*>.onEachInstance(noinline action: suspend T.() -> Unit): Flow<*> {
-        filterIsInstance<T>().onEach(action)
-        return this
+    // TODO flawed => return type is *not* Flow<T> but Flow<*>
+    fun <T> Flow<T>.onEachInstance(klass: KClass<*>, action: suspend T.() -> Unit): Flow<T> {
+//        filterIsInstance<T>().onEach(action)
+//        return this
+        return onEach { value -> if(klass.isInstance(value)) action(value) }
     }
 
-    fun <T : Any> Flow<*>.onEachInstance(klass: KClass<T>, action: suspend T.() -> Unit): Flow<*> {
-        filterIsInstance(klass).onEach(action)
-        return this
-    }
+    // TODO flawed => return type is *not* Flow<T> but Flow<*>
+//    fun <T : Any, R> Flow<R>.onEachInstance(klass: KClass<T>, action: suspend T.() -> Unit): Flow<R> {
+//        return onEach { if(klass.isInstance(it)) action(it as T) }
+//    }
 
 //    inline fun <reified T> Flow<*>.mapInstance(noinline action: suspend T.() -> T): Flow<*> {
 //        filterIsInstance<T>().map(action) // todo should this return the result?

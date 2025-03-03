@@ -14,6 +14,7 @@ import kotlin.contracts.contract
 import kotlin.experimental.ExperimentalTypeInference
 
 @NomadicDsl
+@PublishedApi
 internal inline fun <T> it(value: T): T {
     return value
 }
@@ -56,55 +57,59 @@ inline fun <In, Out> In.nullfold(
 }
 
 @NomadicDsl
-inline fun <Ok : Any> success(value: Ok): Outcome.Success<Ok> {
+inline fun <Ok : Any> outcomeSuccess(value: Ok): Outcome.Success<Ok> {
     return Outcome.Success(value)
 }
 
 @NomadicDsl
-inline fun <Error : Any> failure(error: Error): Outcome.Failure<Error> {
+inline fun <Error : Any> outcomeFailure(error: Error): Outcome.Failure<Error> {
     return Outcome.Failure(error)
 }
 
 
 @NomadicDsl
-inline fun <Error : Any> failureOf(@BuilderInference error: () -> Error): Outcome.Failure<Error> {
+inline fun <Error : Any> outcomeFailureOf(
+    @BuilderInference error: () -> Error,
+): Outcome.Failure<Error> {
     contract { callsInPlace(error, EXACTLY_ONCE) }
-    return Outcome.Failure(error())
+    return Outcome.Failure(error = error())
 }
 
 
 @NomadicDsl
-inline fun <Ok : Any> some(value: Ok): Maybe.Some<Ok> {
+inline fun <Ok : Any> maybeSome(value: Ok): Maybe.Some<Ok> {
     return Maybe.Some(value)
 }
 
 @NomadicDsl
-inline fun none(): Maybe.None {
+inline fun maybeNone(): Maybe.None {
     return Maybe.None
 }
 
 @NomadicDsl
-inline fun none(ignore: Any?): Maybe.None {
+inline fun maybeNone(ignore: Any?): Maybe.None {
     return Maybe.None
 }
 
 @NomadicDsl
-inline fun pass(): Fallible.Pass {
+inline fun falliblePass(): Fallible.Pass {
     return Fallible.Pass
 }
 
 @NomadicDsl
-inline fun pass(ignore: Any?): Fallible.Pass {
+inline fun falliblePass(ignore: Any?): Fallible.Pass {
     return Fallible.Pass
 }
 
 @NomadicDsl
-inline fun <Error : Any> oops(error: Error): Fallible.Oops<Error> {
+inline fun <Error : Any> fallibleOops(error: Error): Fallible.Oops<Error> {
     return Fallible.Oops(error)
 }
 
 @NomadicDsl
-inline fun <Error : Any> oopsOf(@BuilderInference error: () -> Error): Fallible.Oops<Error> {
+inline fun <Error : Any> fallibleOopsOf(
+    @BuilderInference error: () -> Error,
+): Fallible.Oops<Error> {
     contract { callsInPlace(error, EXACTLY_ONCE) }
     return Fallible.Oops(error())
 }

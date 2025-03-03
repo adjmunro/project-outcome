@@ -1,6 +1,7 @@
 package nz.adjmunro.nomadic.error.raise
 
 import nz.adjmunro.nomadic.error.NomadicDsl
+import nz.adjmunro.nomadic.error.raise.RaiseScope.Companion.raise
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -19,7 +20,7 @@ object RaiseEnsure {
             returns() implies condition
         }
 
-        return if (condition) Unit else this.raise(raise())
+        return if (condition) Unit else raise(raise)
     }
 
     @NomadicDsl
@@ -32,6 +33,6 @@ object RaiseEnsure {
             returns() implies (value != null)
         }
 
-        return value ?: this.raise(raise())
+        return value ?: raise(raise)
     }
 }

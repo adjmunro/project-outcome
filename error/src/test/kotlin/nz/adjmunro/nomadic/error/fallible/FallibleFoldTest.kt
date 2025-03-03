@@ -1,9 +1,8 @@
 package nz.adjmunro.nomadic.error.fallible
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.should
-import io.kotest.matchers.shouldBe
-import nz.adjmunro.nomadic.error.util.pass
+import nz.adjmunro.nomadic.error.outcome.Outcome.Companion.outcomeOf
+import nz.adjmunro.nomadic.error.outcome.Outcome.Failure
 
 object FallibleFoldTest : BehaviorSpec({
     Given("A fallible") {

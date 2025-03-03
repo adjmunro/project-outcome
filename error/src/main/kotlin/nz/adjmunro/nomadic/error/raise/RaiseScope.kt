@@ -3,6 +3,7 @@ package nz.adjmunro.nomadic.error.raise
 import kotlinx.atomicfu.atomic
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.raise.RaiseScope.Companion.fold
+import nz.adjmunro.nomadic.error.raise.RaiseScope.Companion.raise
 import nz.adjmunro.nomadic.error.raise.RaiseScope.Companion.withRaiseScope
 import nz.adjmunro.nomadic.error.raise.exception.RaiseCancellationException
 import nz.adjmunro.nomadic.error.raise.exception.RaiseScopeLeakedException
@@ -44,31 +45,6 @@ sealed interface RaiseScope<in Error : Any> {
      */
     fun raised(error: Error): Nothing
 
-    /**
-     * Injects the [RaiseScope] (from the current context of the interface implementation)
-     * into a lambda (the receiver for this function), and invokes this function's receiver
-     * with the [RaiseScope] implementation as a receiver.
-     *
-     * @receiver A lambda that needs a [RaiseScope] as a receiver.
-     * @return The result of the lambda.
-     */
-//    fun <Ok : Any> (RaiseScope<Error>.() -> Ok).injectRaiseScope(): Ok {
-//        return this(this@RaiseScope)
-//    }
-//
-//    fun <Ok : Any> withRaisedScope(action: RaiseScope<Error>.() -> Ok): Ok {
-//        return with(receiver = this@RaiseScope, block = action)
-//    }
-//
-//    suspend fun <Ok : Any> withRaisedScope(action: suspend RaiseScope<Error>.() -> Ok): Ok {
-//        return action(this@RaiseScope)
-//    }
-//
-//    suspend fun <Ok : Any> (suspend RaiseScope<Error>.() -> Ok).injectRaiseScope(): Ok {
-//        return this(this@RaiseScope)
-//    }
-
-
     class DefaultRaise<in Error : Any> @PublishedApi internal constructor() : RaiseScope<Error> {
         private val active = atomic(initial = true)
 
@@ -86,9 +62,10 @@ sealed interface RaiseScope<in Error : Any> {
 
     @OptIn(ExperimentalTypeInference::class, ExperimentalContracts::class)
     companion object {
-        inline fun <Ok : Any, Error : Any> withRaiseScope(action: RaiseScope<Error>.() -> Ok): Ok {
-            return with(receiver = DefaultRaise(), block = action)
-        }
+        @NomadicDsl
+        inline fun <Ok : Any, Error : Any> withRaiseScope(
+            @BuilderInference action: RaiseScope<Error>.() -> Ok,
+        ): Ok = with(receiver = DefaultRaise(), block = action)
 
         /**
          * Invokes [error], wraps it as a [Throwable] and then throws it,
@@ -105,29 +82,41 @@ sealed interface RaiseScope<in Error : Any> {
         }
 
         @Suppress("UnusedReceiverParameter")
-        inline fun <reified Error: Throwable> RaiseScope<Error>.expect() { /* No-Op */ }
+        inline fun <reified Error : Throwable> RaiseScope<Error>.expect() { /* No-Op */
+        }
 
         // todo this just called block, but then expect only informs typesafety, it doesn't map!
-        inline fun <Ok, reified Error: Throwable> RaiseScope<Error>.expect(
+        inline fun <Ok, reified Error : Throwable> RaiseScope<Error>.expect(
             error: KClass<Error>,
-            @BuilderInference block: RaiseScope<Error>.() -> Ok
+            @BuilderInference block: RaiseScope<Error>.() -> Ok,
         ): Ok {
             return try {
                 block()
-            } catch(e: Throwable) {
+            } catch (e: Throwable) {
                 if (e is Error) raised(error = e)
                 else throw e
             }
         }
 
         // TODO encapsulate block's errors?
-        inline fun <Ok, reified Error: Throwable> RaiseScope<Error>.expect(
-            @BuilderInference block: RaiseScope<Error>.() -> Ok
+        inline fun <Ok, reified Error : Throwable> RaiseScope<Error>.expect(
+            @BuilderInference block: RaiseScope<Error>.() -> Ok,
         ): Ok {
             return try {
                 block()
-            } catch(e: Throwable) {
+            } catch (e: Throwable) {
                 raised(error = e.nonFatalOrThrow() as Error)
+            }
+        }
+
+        inline fun <Ok : Any, Error : Any, T : Throwable> RaiseScope<Error>.catch(
+            @BuilderInference catch: (throwable: T) -> Error = { it as Error },
+            @BuilderInference block: RaiseScope<Error>.() -> Ok,
+        ): Ok {
+            return try {
+                block()
+            } catch (e: Throwable) {
+                raised(error = catch(e.nonFatalOrThrow() as T))
             }
         }
 
@@ -159,28 +148,6 @@ sealed interface RaiseScope<in Error : Any> {
                     catch(e.nonFatalOrThrow())
                 }
             }
-        }
-
-        @NomadicDsl
-         suspend inline fun <In : Any, Out : Any, Error : Any> foldSuspend(
-            @BuilderInference crossinline block: suspend (scope: RaiseScope<Error>) -> In,
-            @BuilderInference crossinline catch: suspend (throwable: Throwable) -> Out,
-            @BuilderInference crossinline recover: suspend (error: Error) -> Out,
-            @BuilderInference crossinline transform: suspend (value: In) -> Out,
-        ): Out {
-            contract {
-                callsInPlace(block, AT_MOST_ONCE)
-                callsInPlace(catch, AT_MOST_ONCE)
-                callsInPlace(recover, AT_MOST_ONCE)
-                callsInPlace(transform, AT_MOST_ONCE)
-            }
-
-            return fold(
-                block = { scope -> block(scope) },
-                catch = { throwable -> catch(throwable) },
-                recover = { error -> recover(error) },
-                transform = { value -> transform(value) },
-            )
         }
     }
 }

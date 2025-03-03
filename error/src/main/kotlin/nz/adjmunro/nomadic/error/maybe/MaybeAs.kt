@@ -2,9 +2,7 @@ package nz.adjmunro.nomadic.error.maybe
 
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.outcome.Outcome
-import nz.adjmunro.nomadic.error.outcome.OutcomeUtils.collapse
 import nz.adjmunro.nomadic.error.util.ThrowableExt.nonFatalOrThrow
-import nz.adjmunro.nomadic.error.util.some
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
