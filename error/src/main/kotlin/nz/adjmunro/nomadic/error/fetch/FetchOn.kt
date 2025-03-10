@@ -11,24 +11,24 @@ object FetchOn {
         return this
     }
 
-    inline fun <T : Any> Fetch<T>.onCompleted(action: Fetch.Completed<T>.() -> Unit): Fetch<T> {
-        if (this is Fetch.Completed) action(this)
+    inline fun <T : Any> Fetch<T>.onFinished(action: Fetch.Finished<T>.() -> Unit): Fetch<T> {
+        if (this is Fetch.Finished) action(this)
         return this
     }
 
-    inline fun <T : Any> Fetch<T>.onCompleted(
+    inline fun <T : Any> Fetch<T>.onFinished(
         crossinline predicate: (result: T) -> Boolean,
-        action: Fetch.Completed<T>.() -> Unit,
+        action: Fetch.Finished<T>.() -> Unit,
     ): Fetch<T> {
-        if (this is Fetch.Completed && predicate(result)) action(this)
+        if (this is Fetch.Finished && predicate(result)) action(this)
         return this
     }
 
-    inline fun <T : Any> Fetch<T>.onCompleted(
+    inline fun <T : Any> Fetch<T>.onFinished(
         predicate: Boolean,
-        action: Fetch.Completed<T>.() -> Unit,
+        action: Fetch.Finished<T>.() -> Unit,
     ): Fetch<T> {
-        if (this is Fetch.Completed && predicate) action(this)
+        if (this is Fetch.Finished && predicate) action(this)
         return this
     }
 }

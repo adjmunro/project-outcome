@@ -8,7 +8,7 @@ import kotlinx.coroutines.withTimeout
 import nz.adjmunro.nomadic.error.FetchCollector
 import nz.adjmunro.nomadic.error.FetchFlow
 import nz.adjmunro.nomadic.error.NomadicDsl
-import nz.adjmunro.nomadic.error.fetch.Fetch.Completed
+import nz.adjmunro.nomadic.error.fetch.Fetch.Finished
 import nz.adjmunro.nomadic.error.fetch.Fetch.InProgress
 import nz.adjmunro.nomadic.error.fetch.Fetch.NotStarted
 import nz.adjmunro.nomadic.error.fetch.FlowCollectorExt.emit
@@ -32,7 +32,7 @@ import kotlin.time.Duration
  * ```
  * - [Fetch.NotStarted] is used for initial states, and is not emitted by the [FetchFlow].
  * - [Fetch.InProgress] is emitted automatically *before* [block] is executed.
- * - [Fetch.Completed] automatically encapsulates the result of [block].
+ * - [Fetch.Finished] automatically encapsulates the result of [block].
  *
  * @property T The type of the result of the fetch.
  * @param timeout The duration to wait [withTimeout] for the fetch [block] to complete once.
@@ -54,7 +54,7 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
 
             // Execute the block & await the result
             emit(recover = recover) {
-                withTimeout(timeout = timeout) { Completed(block()) }
+                withTimeout(timeout = timeout) { Finished(block()) }
             }
         }
     }
@@ -79,12 +79,12 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
         }
 
         /**
-         * [Send][FlowCollector.emit] a [fetch completed][Fetch.Completed]
+         * [Send][FlowCollector.emit] a [fetch finished][Fetch.Finished]
          * status to the current [flow-scope][Flow], with the encapsulated [result].
          */
         @NomadicDsl
-        suspend inline fun <T : Any> FetchCollector<T>.completed(result: T) {
-            emit(Completed(result = result))
+        suspend inline fun <T : Any> FetchCollector<T>.finished(result: T) {
+            emit(Finished(result = result))
         }
     }
 }

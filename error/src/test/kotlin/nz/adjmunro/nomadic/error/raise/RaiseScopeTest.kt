@@ -19,6 +19,13 @@ class RaiseScopeTest {
 
         }
 
+        outcomeOf(::Failure) {
+            raise { 1 }
+            ""
+        }.also {
+
+        }
+
         outcomeOf {
             raise { "error" }
             1

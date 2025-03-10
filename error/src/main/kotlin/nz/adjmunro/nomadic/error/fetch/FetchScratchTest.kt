@@ -8,7 +8,7 @@ import nz.adjmunro.nomadic.error.fetch.Fetch.InProgress
 import nz.adjmunro.nomadic.error.fetch.FlowFetchOn.onCompleted
 import nz.adjmunro.nomadic.error.fetch.FlowFetchOn.onFetching
 import nz.adjmunro.nomadic.error.fetch.FlowFetchOn.onNotStarted
-import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.completed
+import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.finished
 import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.fetching
 import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.reset
 import nz.adjmunro.nomadic.error.outcome.OutcomeGet.getOrNull
@@ -24,7 +24,7 @@ object FetchScratchTest {
     val t2 = flow {
         reset()
         fetching()
-        completed(3)
+        finished(3)
 
         3
     }
