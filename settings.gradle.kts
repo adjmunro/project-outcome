@@ -1,8 +1,6 @@
-rootProject.name = "nomadic"
+rootProject.name = "knomadic"
 
 pluginManagement {
-    includeBuild("build-logic")
-
     /**
      * The pluginManagement.repositories block configures the repositories that Gradle uses
      * to search for and download the Gradle plugins and their transitive dependencies.
@@ -11,13 +9,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
         google()
     }
 
@@ -27,7 +18,8 @@ pluginManagement {
     }
 }
 
-@Suppress("UnstableApiUsage") dependencyResolutionManagement {
+@Suppress("UnstableApiUsage")
+dependencyResolutionManagement {
 
     /**
      * The dependencyResolutionManagement.repositories block is where you configure the source
@@ -41,8 +33,3 @@ pluginManagement {
 
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 }
-
-include(
-    ":error",
-    ":numbery",
-)

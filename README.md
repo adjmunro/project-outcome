@@ -1,4 +1,4 @@
-# Nomadic Kotlin
+# Knomadic Kotlin
 ---
 The goal of this library (besides satisfying my own curiosity & requirements) is to find a middle ground. Something simpler and more Kotlin idiomatic than ArrowKt, for regular, non-functional programmers to get their head around, while still supplying some great features not present in other implementations. I'm only posing as a functional programmer, so take my implementation with a large grain of salt.
 
