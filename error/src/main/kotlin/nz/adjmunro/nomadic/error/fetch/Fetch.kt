@@ -3,13 +3,12 @@ package nz.adjmunro.nomadic.error.fetch
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.withTimeout
-import nz.adjmunro.nomadic.error.BinaryResult
 import nz.adjmunro.nomadic.error.FetchCollector
 import nz.adjmunro.nomadic.error.FetchFlow
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.fetch.Fetch.Companion.fetch
-import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.finished
 import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.fetching
+import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.finished
 import nz.adjmunro.nomadic.error.fetch.SafeFetchFlow.Companion.reset
 import nz.adjmunro.nomadic.error.util.ThrowableExt.nonFatalOrThrow
 import kotlin.experimental.ExperimentalTypeInference

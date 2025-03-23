@@ -4,9 +4,7 @@ package nz.adjmunro.nomadic.error.outcome
 
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.raise.RaiseScope
-import nz.adjmunro.nomadic.error.util.it
-import nz.adjmunro.nomadic.error.util.outcomeFailure
-import nz.adjmunro.nomadic.error.util.outcomeSuccess
+import nz.adjmunro.nomadic.error.util.itself
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -116,7 +114,7 @@ suspend inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<
 @NomadicDsl
 suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.mapSuccess(
     @BuilderInference crossinline transform: suspend (In) -> Out,
-): Outcome<Out, Error> = fold(success = transform, failure = ::it)
+): Outcome<Out, Error> = fold(success = transform, failure = ::itself)
 
 /**
  * Returns a new [Outcome], after applying [transform] to the [Outcome.Success] value.
@@ -142,7 +140,7 @@ suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.m
 @NomadicDsl
 suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMapSuccess(
     @BuilderInference crossinline transform: suspend (In) -> Outcome<Out, Error>,
-): Outcome<Out, Error> = flatFold(success = transform, failure = ::outcomeFailure)
+): Outcome<Out, Error> = flatFold(success = transform, failure = ::failureOf)
 
 /**
  * Returns a new [Outcome], after applying [transform] to the [Outcome.Failure] error.
@@ -168,7 +166,7 @@ suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.f
 @NomadicDsl
 suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.mapFailure(
     @BuilderInference crossinline transform: suspend (ErrorIn) -> ErrorOut,
-): Outcome<Ok, ErrorOut> = fold(success = ::it, failure = transform)
+): Outcome<Ok, ErrorOut> = fold(success = ::itself, failure = transform)
 
 /**
  * Returns a new [Outcome], after applying [transform] to the [Outcome.Failure] error.
@@ -194,7 +192,7 @@ suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, E
 @NomadicDsl
 suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMapFailure(
     @BuilderInference crossinline transform: suspend (ErrorIn) -> Outcome<Ok, ErrorOut>,
-): Outcome<Ok, ErrorOut> = flatFold(success = ::outcomeSuccess, failure = transform)
+): Outcome<Ok, ErrorOut> = flatFold(success = ::successOf, failure = transform)
 
 /**
  * Inverts the [Outcome] so that the [Outcome.Success] value becomes the [Outcome.Failure] error and vice versa.

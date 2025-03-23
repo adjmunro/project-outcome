@@ -3,50 +3,43 @@
 package nz.adjmunro.nomadic.error.fetch
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import nz.adjmunro.nomadic.error.FetchFlow
 import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.fetch.Fetch.Finished
 import nz.adjmunro.nomadic.error.fetch.Fetch.InProgress
 import nz.adjmunro.nomadic.error.fetch.Fetch.NotStarted
-import nz.adjmunro.nomadic.error.util.FlowTransformExt.onEachInstance
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind.AT_MOST_ONCE
-import kotlin.contracts.contract
 import kotlin.experimental.ExperimentalTypeInference
 
 object FlowFetchOn {
 
-    fun <T : Any> FetchFlow<T>.onNotStarted(action: suspend NotStarted.() -> Unit): FetchFlow<T> {
-        onEachInstance<NotStarted>(action)
-        return this
+    fun <T : Any> FetchFlow<T>.filterOnlyFinished(): FetchFlow<T> {
+        return filter { it.isFinished() }
     }
 
-    fun <T : Any> FetchFlow<T>.onFetching(action: suspend InProgress.() -> Unit): FetchFlow<T> {
-        onEachInstance<InProgress>(action)
-        return this
-    }
+    fun <T : Any> FetchFlow<T>.onFetchNotStarted(
+        action: suspend NotStarted.() -> Unit,
+    ): FetchFlow<T> = onEach { if (it.hasNotStarted) action(NotStarted) }
 
-    fun <T : Any> FetchFlow<T>.onFinished(action: suspend (result: T) -> Unit): FetchFlow<T> {
-        onEachInstance<Finished<T>> { action(result) }
-        return this
-    }
+    fun <T : Any> FetchFlow<T>.onFetchInProgress(
+        action: suspend InProgress.() -> Unit,
+    ): FetchFlow<T> = onEach { if (it.isInProgress) action(InProgress) }
 
-    fun <T : Any> FetchFlow<T>.onFinished(
+    fun <T : Any> FetchFlow<T>.onFetchFinished(
+        action: suspend (T) -> Unit,
+    ): FetchFlow<T> = onEach { if (it.isFinished()) action(it.result) }
+
+    fun <T : Any> FetchFlow<T>.onFetchFinished(
         predicate: Boolean,
-        action: suspend (result: T) -> Unit,
-    ): FetchFlow<T> {
-        if (predicate) onEachInstance<Finished<T>> { action(result) }
-        return this
-    }
+        action: suspend (T) -> Unit,
+    ): FetchFlow<T> = onEach { if (predicate && it.isFinished()) action(it.result) }
 
-    fun <T : Any> FetchFlow<T>.onFinished(
-        predicate: suspend (result: T) -> Boolean,
-        action: suspend (result: T) -> Unit,
-    ): FetchFlow<T> {
-        onEachInstance<Finished<T>> { if (predicate(result)) action(result) }
-        return this
-    }
+    fun <T : Any> FetchFlow<T>.onFetchFinished(
+        predicate: (T) -> Boolean,
+        action: suspend (T) -> Unit,
+    ): FetchFlow<T> = onEach { if (it.isFinished(predicate)) action(it.result) }
 
     /**
      * Transform each [Fetch] status into a new [Fetch] status.
@@ -66,47 +59,33 @@ object FlowFetchOn {
      * flowOf(Finished(1)).fold(fetching = { Finished("a") }, /* finished = { Finished(1) } */)
      * ```
      */
-    @OptIn(ExperimentalTypeInference::class, ExperimentalContracts::class)
+    @OptIn(ExperimentalTypeInference::class)
     @NomadicDsl
     inline fun <In : Any, Out : Any> FetchFlow<In>.fold(
         @BuilderInference crossinline notStarted: suspend NotStarted.() -> Fetch<Out> = { NotStarted },
         @BuilderInference crossinline fetching: suspend InProgress.() -> Fetch<Out> = { InProgress },
         @BuilderInference crossinline finished: suspend (result: In) -> Fetch<Out>,
-    ): FetchFlow<Out> {
-        contract {
-            callsInPlace(notStarted, AT_MOST_ONCE)
-            callsInPlace(fetching, AT_MOST_ONCE)
-            callsInPlace(finished, AT_MOST_ONCE)
-        }
-
-        return map {
-            when (it) {
-                is NotStarted -> notStarted(it)
-                is InProgress -> fetching(it)
-                is Finished -> finished(it.result)
-            }
+    ): FetchFlow<Out> = map {
+        when (it) {
+            is NotStarted -> notStarted(it)
+            is InProgress -> fetching(it)
+            is Finished -> finished(it.result)
         }
     }
 
-    @OptIn(ExperimentalTypeInference::class, ExperimentalContracts::class)
+    @OptIn(ExperimentalTypeInference::class)
     @NomadicDsl
-    inline fun <Ancestor: Any, In : Ancestor, Out : Ancestor> FetchFlow<In>.foldAncestor(
+    inline fun <Ancestor : Any, In : Ancestor, Out : Ancestor> FetchFlow<In>.foldAncestor(
         @BuilderInference crossinline notStarted: suspend NotStarted.() -> Fetch<Out> = { NotStarted },
         @BuilderInference crossinline fetching: suspend InProgress.() -> Fetch<Out> = { InProgress },
-        @BuilderInference crossinline finished: suspend (result: In) -> Fetch<Ancestor> = { Finished(it) },
-    ): FetchFlow<Ancestor> {
-        contract {
-            callsInPlace(notStarted, AT_MOST_ONCE)
-            callsInPlace(fetching, AT_MOST_ONCE)
-            callsInPlace(finished, AT_MOST_ONCE)
-        }
-
-        return map {
-            when (it) {
-                is NotStarted -> notStarted(it)
-                is InProgress -> fetching(it)
-                is Finished<In> -> finished(it.result)
-            }
+        @BuilderInference crossinline finished: suspend (result: In) -> Fetch<Ancestor> = {
+            Finished(it)
+        },
+    ): FetchFlow<Ancestor> = map {
+        when (it) {
+            is NotStarted -> notStarted(it)
+            is InProgress -> fetching(it)
+            is Finished<In> -> finished(it.result)
         }
     }
 
@@ -115,28 +94,20 @@ object FlowFetchOn {
         @BuilderInference crossinline transform: suspend (result: In) -> Fetch<Out>,
     ): FetchFlow<Out> = fold(finished = transform)
 
-    @OptIn(ExperimentalContracts::class, ExperimentalTypeInference::class)
-    fun <In : Any, Out: Any> FetchFlow<In>.collapse(
+    @OptIn(ExperimentalTypeInference::class)
+    fun <In : Any, Out : Any> FetchFlow<In>.collapse(
         @BuilderInference notStarted: suspend NotStarted.() -> Out,
         @BuilderInference fetching: suspend InProgress.() -> Out,
         @BuilderInference finished: suspend (result: In) -> Out,
-    ): Flow<Out> {
-        contract {
-            callsInPlace(notStarted, AT_MOST_ONCE)
-            callsInPlace(fetching, AT_MOST_ONCE)
-            callsInPlace(finished, AT_MOST_ONCE)
-        }
-
-        return map {
-            when (it) {
-                is NotStarted -> notStarted(it)
-                is InProgress -> fetching(it)
-                is Finished<In> -> finished(it.result)
-            }
+    ): Flow<Out> = map {
+        when (it) {
+            is NotStarted -> notStarted(it)
+            is InProgress -> fetching(it)
+            is Finished<In> -> finished(it.result)
         }
     }
 
-    fun <T: Any> FetchFlow<Fetch<T>>.flatten(): FetchFlow<T> = mapFinished { inner ->
+    fun <T : Any> FetchFlow<Fetch<T>>.flatten(): FetchFlow<T> = mapFinished { inner ->
         when (inner) {
             NotStarted, InProgress -> InProgress
             is Finished -> Finished(inner.result)

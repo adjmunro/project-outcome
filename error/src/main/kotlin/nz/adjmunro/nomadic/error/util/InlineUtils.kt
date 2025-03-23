@@ -1,49 +1,31 @@
-@file:Suppress("NOTHING_TO_INLINE")
-@file:OptIn(ExperimentalContracts::class, ExperimentalTypeInference::class)
+@file:Suppress("NOTHING_TO_INLINE") @file:OptIn(
+    ExperimentalContracts::class, ExperimentalTypeInference::class
+)
 
 package nz.adjmunro.nomadic.error.util
 
 import nz.adjmunro.nomadic.error.NomadicDsl
-import nz.adjmunro.nomadic.error.fallible.Fallible
-import nz.adjmunro.nomadic.error.maybe.Maybe
-import nz.adjmunro.nomadic.error.outcome.Outcome
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
-import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.experimental.ExperimentalTypeInference
 
 @NomadicDsl
-@PublishedApi
-internal inline fun <T> it(value: T): T {
-    return value
-}
+inline fun <T> itself(value: T): T = value
 
 @NomadicDsl
-internal inline fun <T> T.receiver(): T {
-    return this@receiver
-}
+inline fun <T> T.caller(ignore: Any? = null): T = this@caller
 
 @NomadicDsl
-internal inline fun <T> T.receiver(ignore: Any?): T {
-    return this@receiver
-}
+inline fun rethrow(throwable: Throwable): Nothing = throw throwable
 
 @NomadicDsl
-inline fun rethrow(throwable: Throwable): Nothing {
-    throw throwable
-}
+inline fun nulls(ignore: Any? = null): Unit? = null
 
-@NomadicDsl
-inline fun nulls(ignore: Any?): Unit? {
-    return null
-}
-
-// this is possibly my dumbest idea yet... but i'm lazy and i want to see if it works
 @NomadicDsl
 inline fun <In, Out> In.nullfold(
-    @BuilderInference some: (In) -> Out,
-    @BuilderInference none: () -> Out,
+    @BuilderInference none: (NullPointerException) -> Out,
+    @BuilderInference some: (In & Any) -> Out,
 ): Out {
     contract {
         callsInPlace(some, AT_MOST_ONCE)
@@ -51,65 +33,23 @@ inline fun <In, Out> In.nullfold(
     }
 
     return when (this@nullfold) {
-        null -> none()
+        null -> none(NullPointerException("Nullfold source was null."))
         else -> some(this@nullfold)
     }
 }
 
 @NomadicDsl
-inline fun <Ok : Any> outcomeSuccess(value: Ok): Outcome.Success<Ok> {
-    return Outcome.Success(value)
-}
+inline fun <In, Out> In.throwfold(
+    @BuilderInference throws: (Throwable) -> Out,
+    @BuilderInference pass: (In) -> Out,
+): Out {
+    contract {
+        callsInPlace(pass, AT_MOST_ONCE)
+        callsInPlace(throws, AT_MOST_ONCE)
+    }
 
-@NomadicDsl
-inline fun <Error : Any> outcomeFailure(error: Error): Outcome.Failure<Error> {
-    return Outcome.Failure(error)
-}
-
-
-@NomadicDsl
-inline fun <Error : Any> outcomeFailureOf(
-    @BuilderInference error: () -> Error,
-): Outcome.Failure<Error> {
-    contract { callsInPlace(error, EXACTLY_ONCE) }
-    return Outcome.Failure(error = error())
-}
-
-
-@NomadicDsl
-inline fun <Ok : Any> maybeSome(value: Ok): Maybe.Some<Ok> {
-    return Maybe.Some(value)
-}
-
-@NomadicDsl
-inline fun maybeNone(): Maybe.None {
-    return Maybe.None
-}
-
-@NomadicDsl
-inline fun maybeNone(ignore: Any?): Maybe.None {
-    return Maybe.None
-}
-
-@NomadicDsl
-inline fun falliblePass(): Fallible.Pass {
-    return Fallible.Pass
-}
-
-@NomadicDsl
-inline fun falliblePass(ignore: Any?): Fallible.Pass {
-    return Fallible.Pass
-}
-
-@NomadicDsl
-inline fun <Error : Any> fallibleOops(error: Error): Fallible.Oops<Error> {
-    return Fallible.Oops(error)
-}
-
-@NomadicDsl
-inline fun <Error : Any> fallibleOopsOf(
-    @BuilderInference error: () -> Error,
-): Fallible.Oops<Error> {
-    contract { callsInPlace(error, EXACTLY_ONCE) }
-    return Fallible.Oops(error())
+    return when (this@throwfold) {
+        is Throwable -> throws(this@throwfold)
+        else -> pass(this@throwfold)
+    }
 }

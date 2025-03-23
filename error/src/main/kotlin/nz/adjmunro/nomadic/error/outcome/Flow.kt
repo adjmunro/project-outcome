@@ -2,16 +2,8 @@ package nz.adjmunro.nomadic.error.outcome
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.supervisorScope
-import nz.adjmunro.nomadic.error.outcome.OutcomeOn.onFailure
-import nz.adjmunro.nomadic.error.outcome.OutcomeOn.onSuccess
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 fun <Ok : Any, Error : Any> Flow<Outcome<Ok, Error>>.filterOnlySuccess(): Flow<Outcome.Success<Ok>> {
     return filterIsInstance<Outcome.Success<Ok>>()
@@ -44,28 +36,3 @@ inline fun <Ok: Any, Error: Any, Output> Flow<Outcome<Ok, Error>>.collapse(
     crossinline success: suspend (Ok) -> Output,
     crossinline failure: suspend (Error) -> Output,
 ): Flow<Output> = map { it.collapseFold(success, failure) }
-
-fun test() {
-    flowOf(Outcome.Success(1), Outcome.Failure("error"))
-        .onEachSuccess {
-        }
-        .onEachFailure {
-            supervisorScope {
-                this.launch {
-                    suspendCoroutine {
-                        it.resume(Unit)
-                    }
-                }
-            }
-        }.mapEachSuccess {
-            supervisorScope {
-
-            }
-        }.mapEachFailure {
-            3
-        }.also {
-
-        }.collapse().also {
-
-        }
-}

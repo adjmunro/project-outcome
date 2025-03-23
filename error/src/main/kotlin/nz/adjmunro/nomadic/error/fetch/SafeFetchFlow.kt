@@ -11,7 +11,6 @@ import nz.adjmunro.nomadic.error.NomadicDsl
 import nz.adjmunro.nomadic.error.fetch.Fetch.Finished
 import nz.adjmunro.nomadic.error.fetch.Fetch.InProgress
 import nz.adjmunro.nomadic.error.fetch.Fetch.NotStarted
-import nz.adjmunro.nomadic.error.fetch.FlowCollectorExt.emit
 import nz.adjmunro.nomadic.error.util.ThrowableExt.nonFatalOrThrow
 import kotlin.experimental.ExperimentalTypeInference
 import kotlin.time.Duration
@@ -53,8 +52,10 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
             emit(InProgress)
 
             // Execute the block & await the result
-            emit(recover = recover) {
-                withTimeout(timeout = timeout) { Finished(block()) }
+            emit(recover = this@SafeFetchFlow.recover) {
+                withTimeout(timeout = this@SafeFetchFlow.timeout) {
+                    Finished(this@SafeFetchFlow.block(this@with))
+                }
             }
         }
     }
@@ -85,6 +86,25 @@ class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
         @NomadicDsl
         suspend inline fun <T : Any> FetchCollector<T>.finished(result: T) {
             emit(Finished(result = result))
+        }
+
+        /**
+         * [Emit][FlowCollector.emit] the result of [block], with a built-in [try-catch][recover].
+         *
+         * @param recover The transformation to apply to any [non-fatal][nonFatalOrThrow] [Throwable] that is caught.
+         * @param block The block of code to execute.
+         */
+        @OptIn(ExperimentalTypeInference::class)
+        @NomadicDsl
+        suspend inline fun <T> FlowCollector<T>.emit(
+            @BuilderInference recover: FlowCollector<T>.(Throwable) -> T = { throw it },
+            @BuilderInference block: FlowCollector<T>.() -> T,
+        ) {
+            try {
+                emit(block())
+            } catch (e: Throwable) {
+                emit(recover(e.nonFatalOrThrow()))
+            }
         }
     }
 }

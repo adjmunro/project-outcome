@@ -1,23 +1,17 @@
 package nz.adjmunro.nomadic.error.outcome
 
-import nz.adjmunro.nomadic.error.BinaryResult
 import nz.adjmunro.nomadic.error.KotlinResult
 import nz.adjmunro.nomadic.error.NomadicDsl
-import nz.adjmunro.nomadic.error.outcome.Outcome.Failure
-import nz.adjmunro.nomadic.error.outcome.OutcomeGet.getOrNull
-import nz.adjmunro.nomadic.error.outcome.OutcomeGetError.errorOrNull
 import nz.adjmunro.nomadic.error.raise.RaiseScope
 import nz.adjmunro.nomadic.error.raise.RaiseScope.Companion.expect
-import nz.adjmunro.nomadic.error.util.outcomeFailure
 import nz.adjmunro.nomadic.error.util.rethrow
-import nz.adjmunro.nomadic.error.util.outcomeSuccess
 import kotlin.experimental.ExperimentalTypeInference
 
 /**
- * A [BinaryResult] that represents either a [Success] or [Failure] state.
+ * Represents either a [Success] or [Failure] state.
  *
  * - Unlike [KotlinResult], [Outcome] stores the [Error] type explicitly to prevent information loss.
- * - Both [Ok] and [Error] are children of [Any], to allow any non-null type to be used.
+ * - Both [Ok] and [Error] are restricted to non-null types.
  *
  * @property Ok The type of a successful result.
  * @property Error The type of an error result.
@@ -25,7 +19,7 @@ import kotlin.experimental.ExperimentalTypeInference
  * @see Outcome.Failure
  * @see Outcome.outcomeOf
  */
-sealed interface Outcome<out Ok : Any, out Error : Any> : BinaryResult<Ok, Error> {
+sealed interface Outcome<out Ok : Any, out Error : Any> {
 
     operator fun component1(): Ok? = getOrNull()
     operator fun component2(): Error? = errorOrNull()
@@ -53,6 +47,7 @@ sealed interface Outcome<out Ok : Any, out Error : Any> : BinaryResult<Ok, Error
     }
 
     companion object {
+
         /**
          * Context runner that encapsulates the [Ok] result of [block] as an [Outcome.Success], and any
          * [raised][RaiseScope.raised] or [expected][RaiseScope.expect] [errors][Error] as an [Outcome.Failure].
@@ -93,5 +88,6 @@ sealed interface Outcome<out Ok : Any, out Error : Any> : BinaryResult<Ok, Error
                 transform = ::Success,
             )
         }
+
     }
 }

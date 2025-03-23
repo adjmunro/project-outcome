@@ -2,9 +2,9 @@ package nz.adjmunro.nomadic.error
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
-import nz.adjmunro.nomadic.error.fallible.Fallible
+import nz.adjmunro.nomadic.error.outcome.Faulty
 import nz.adjmunro.nomadic.error.fetch.Fetch
-import nz.adjmunro.nomadic.error.maybe.Maybe
+import nz.adjmunro.nomadic.error.outcome.Maybe
 import nz.adjmunro.nomadic.error.outcome.Outcome
 
 /**
@@ -33,20 +33,20 @@ typealias FetchFlow<T> = Flow<Fetch<T>>
 internal typealias FetchCollector<T> = FlowCollector<Fetch<T>>
 
 /**
- * Alias for a [flow][Flow] that [fetches][Fetch] a [fallible][Fallible] result.
+ * Alias for a [flow][Flow] that [fetches][Fetch] a [faulty][Faulty] result.
  *
  * ```kotlin
- * val fallible: FallibleFetch<String> = fetch {
- *    // Return a Fallible from inside the Fetch runner
- *    fallibleOf { "An error occurred." }
+ * val faulty: FaultyFetch<String> = fetch {
+ *    // Return a Faulty from inside the Fetch runner
+ *    faultyOf { "An error occurred." }
  * }
  * ```
  *
  * @see Fetch.fetch
- * @see Fallible
+ * @see Faulty
  */
 @NomadicDsl
-typealias FallibleFetch<Error> = Flow<Fetch<Fallible<Error>>>
+typealias FaultyFetch<Error> = Flow<Fetch<Faulty<Error>>>
 
 /**
  * Alias for a [flow][Flow] that [fetches][Fetch] a [maybe][Maybe] result.
@@ -97,19 +97,19 @@ typealias OutcomeFetch<Ok, Error> = Flow<Fetch<Outcome<Ok, Error>>>
 typealias ResultFetch<Ok> = Flow<Fetch<KotlinResult<Ok>>>
 
 /**
- * Alias for a [flow][Flow] of a [fallible][Fallible] result.
+ * Alias for a [flow][Flow] of a [faulty][Faulty] result.
  *
  * ```kotlin
- * val fallible: FallibleFlow<String> = flow {
- *     // Emit a Fallible from inside the Flow
- *     emit(fallibleOf { "An error occurred." })
+ * val faulty: FaultyFlow<String> = flow {
+ *     // Emit a Faulty from inside the Flow
+ *     emit(faultyOf { "An error occurred." })
  * }
  * ```
  *
- * @see Fallible
+ * @see Faulty
  */
 @NomadicDsl
-typealias FallibleFlow<Error> = Flow<Fallible<Error>>
+typealias FaultyFlow<Error> = Flow<Faulty<Error>>
 
 /**
  * Alias for a [flow][Flow] of a [maybe][Maybe] result.

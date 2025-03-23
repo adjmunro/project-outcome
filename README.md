@@ -9,7 +9,7 @@ TL;DR: idiomatic kotlin; `sealed` & `inline`; `<Error: Any>`; short-circuit via 
 - All my `BinaryResult` types are backed by a `RasieScope`, which means you can *short-circuit* the scope, by *throwing `Any` error type!*.
     - Disclaimer: `RaiseScope` was heavily influenced by ArrowKt, as well as blogposts which I can only imagine were also written by their team. I tried to work out how to short-circuit myself, but it just turned out pretty much the same. (Please don't sue me. LMK if I need to sort out the licenses better, but raise and the inline hacks should be the only extremely similar parts -- I even think my implementation makes it a bit easier to understand the logic flow, that bind() stuff and the parameter order swapping when injecting the scope was confusing AF!)
     - To reiterate, `RaiseScope` allows you to `throw` generic type `<Error: Any>`, not just `Throwable`.
-- `Outcome`, `Maybe`, `Fallible` are all `sealed interfaces` with `value class` children, providing a lightweight wrapper *and* exhaustive states.
+- `Outcome`, `Maybe`, `Faulty` are all `sealed interfaces` with `value class` children, providing a lightweight wrapper *and* exhaustive states.
 - `Outcome` - My solution to Kotlin's `Result` problem. 
   - Holds *both* the data and error types, unlike Kotlin's `Result`.
   - Uses `RaiseScope`.
@@ -21,7 +21,7 @@ TL;DR: idiomatic kotlin; `sealed` & `inline`; `<Error: Any>`; short-circuit via 
 - `Maybe` - Effectively Java's `Option` class, or a nullable type. 
   - Holds some data or nothing.
   - Uses `RaiseScope`.
-- `Fallible` - The opposite of `Maybe`.
+- `Faulty` - The opposite of `Maybe`.
   - Holds nothing or some error.
   - Uses `RaiseScope`.
   - AFAIK, an inverse-option type is unique to this library. But I seriously think returning `Result<Unit>` for success in an anti-pattern of no value.
