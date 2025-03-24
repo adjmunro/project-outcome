@@ -10,7 +10,7 @@ import nz.adjmunro.knomadic.outcome.Outcome
 /**
  * Alias for Kotlin's [Result] type.
  *
- * *Consider using a [BinaryResult] instead.*
+ * *Consider using a [Outcome] instead.*
  */
 @KnomadicDsl
 public typealias KotlinResult<T> = Result<T>

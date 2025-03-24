@@ -11,7 +11,7 @@ import kotlin.contracts.contract
  * - Transforms `Outcome<Ok, Error>` into `Outcome.Failure<Ok, Error>`.
  * - If the receiver [Outcome] is an [Outcome.Failure], nothing happens.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambda for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  *
  * @receiver The [Outcome]<[Ok], [Error]> to transform.
  * @return A new [Outcome.Failure]<[Nothing], [Error]> with the transformed error.
@@ -42,7 +42,7 @@ public suspend inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerc
  * - Transforms `Outcome<Ok, Error>` into `Outcome.Success<Ok>`.
  * - If the receiver [Outcome] is an [Outcome.Success], nothing happens.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambda for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  *
  * @receiver The [Outcome]<[Ok], [Error]> to transform.
  * @return A new [Outcome.Success]<[Ok]> with the transformed value.

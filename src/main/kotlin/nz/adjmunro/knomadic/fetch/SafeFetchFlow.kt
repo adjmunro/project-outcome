@@ -3,19 +3,16 @@ package nz.adjmunro.knomadic.fetch
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.AbstractFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.withTimeout
 import nz.adjmunro.knomadic.FetchCollector
 import nz.adjmunro.knomadic.FetchFlow
-import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.fetch.SafeFetchFlow.Companion.emit
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
 import kotlin.time.Duration
 
 /**
  * [AbstractFlow] implementation for [FetchFlow].
  *
- * *Use [Fetch.fetch] to provide an instance of this class.*
+ * *Use [fetch] to provide an instance of this class.*
  * ```kotlin
  * // Typealias for Flow<Fetch<Int>>
  * val a: FetchFlow<Int> = fetch { 4 }
@@ -35,7 +32,7 @@ import kotlin.time.Duration
  * @param recover The transformation to apply to any [non-fatal][nonFatalOrThrow] [Throwable] that is caught.
  * @param block The block of code to execute.
  * @return [FetchFlow] -- a [Flow] that encapsulates the [Fetch] behaviour.
- * @see Fetch.fetch
+ * @see fetch
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 public class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
@@ -53,53 +50,6 @@ public class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
                 withTimeout(timeout = this@SafeFetchFlow.timeout) {
                     Fetch.Finished(this@SafeFetchFlow.block(this@with))
                 }
-            }
-        }
-    }
-
-    public companion object {
-        /**
-         * [Send][FlowCollector.emit] a [fetch not started][Fetch.NotStarted]
-         * status to the current [flow-scope][Flow].
-         */
-        @KnomadicDsl
-        public suspend inline fun FetchCollector<Nothing>.reset() {
-            emit(Fetch.NotStarted)
-        }
-
-        /**
-         * [Send][FlowCollector.emit] a [fetch in progress][Fetch.InProgress]
-         * status to the current [flow-scope][Flow].
-         */
-        @KnomadicDsl
-        public suspend inline fun FetchCollector<Nothing>.fetching() {
-            emit(Fetch.InProgress)
-        }
-
-        /**
-         * [Send][FlowCollector.emit] a [fetch finished][Fetch.Finished]
-         * status to the current [flow-scope][Flow], with the encapsulated [result].
-         */
-        @KnomadicDsl
-        public suspend inline fun <T : Any> FetchCollector<T>.finished(result: T) {
-            emit(Fetch.Finished(result = result))
-        }
-
-        /**
-         * [Emit][FlowCollector.emit] the result of [block], with a built-in [try-catch][recover].
-         *
-         * @param recover The transformation to apply to any [non-fatal][nonFatalOrThrow] [Throwable] that is caught.
-         * @param block The block of code to execute.
-         */
-        @KnomadicDsl
-        public suspend inline fun <T> FlowCollector<T>.emit(
-            @BuilderInference recover: FlowCollector<T>.(Throwable) -> T = { throw it },
-            @BuilderInference block: FlowCollector<T>.() -> T,
-        ) {
-            try {
-                emit(block())
-            } catch (e: Throwable) {
-                emit(recover(e.nonFatalOrThrow()))
             }
         }
     }

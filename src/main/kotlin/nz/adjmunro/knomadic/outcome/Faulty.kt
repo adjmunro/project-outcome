@@ -9,6 +9,7 @@ import nz.adjmunro.knomadic.util.nullfold
 import nz.adjmunro.knomadic.util.rethrow
 import nz.adjmunro.knomadic.util.throwfold
 
+@KnomadicDsl
 public typealias Faulty<Error> = Outcome<Unit, Error>
 
 @KnomadicDsl
@@ -22,7 +23,7 @@ public inline fun <T> T.wrapFaulty(): Faulty<Throwable> =
     throwfold(::failureOf) { it.nullfold(::failureOf, ::outcomePassed) }
 
 @KnomadicDsl
-public inline fun <Error : Any> faultOf(
+public inline fun <Error : Any> faultyOf(
     @BuilderInference crossinline catch: (throwable: Throwable) -> Faulty<Error> = ::rethrow,
     @BuilderInference crossinline block: RaiseScope<Error>.() -> Unit,
 ): Faulty<Error> {

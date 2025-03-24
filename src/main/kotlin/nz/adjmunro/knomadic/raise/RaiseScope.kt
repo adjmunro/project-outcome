@@ -32,6 +32,7 @@ public sealed interface RaiseScope<in Error : Any> {
      *
      * *This is to prevent the scope from being leaked.*
      */
+    @KnomadicDsl
     public fun complete()
 
     /**
@@ -42,6 +43,7 @@ public sealed interface RaiseScope<in Error : Any> {
      * @throws RaiseCancellationException When [RaiseScope] is active.
      * @throws RaiseScopeLeakedException If [RaiseScope.complete] has already been called.
      */
+    @KnomadicDsl
     public fun raised(error: Error): Nothing
 
     public class DefaultRaise<in Error : Any> @PublishedApi internal constructor() : RaiseScope<Error> {
@@ -76,6 +78,7 @@ public sealed interface RaiseScope<in Error : Any> {
          * @throws RaiseScopeLeakedException If [RaiseScope.complete] has already been called.
          * @see RaiseScope.raise
          */
+        @KnomadicDsl
         public inline fun <Error : Any> RaiseScope<Error>.raise(error: () -> Error): Nothing {
             raised(error = error())
         }

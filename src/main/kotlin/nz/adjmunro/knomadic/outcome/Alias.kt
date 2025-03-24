@@ -10,7 +10,7 @@ import nz.adjmunro.knomadic.KnomadicDsl
  */
 @KnomadicDsl
 @JvmName("mapSuccessAlias")
-public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.map(
+public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.maps(
     @BuilderInference crossinline success: suspend (In) -> Out,
 ): Outcome<Out, Error> = mapSuccess(success)
 
@@ -22,7 +22,7 @@ public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, E
  */
 @KnomadicDsl
 @JvmName("mapFailureAlias")
-public suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.map(
+public suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.mapf(
     @BuilderInference crossinline failure: suspend (ErrorIn) -> ErrorOut,
 ): Outcome<Ok, ErrorOut> = mapFailure(failure)
 
@@ -34,7 +34,7 @@ public suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcom
  */
 @KnomadicDsl
 @JvmName("flatMapSuccessAlias")
-public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMap(
+public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMaps(
     @BuilderInference crossinline success: suspend (In) -> Outcome<Out, Error>,
 ): Outcome<Out, Error> = flatMapSuccess(success)
 
@@ -46,7 +46,7 @@ public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, E
  */
 @KnomadicDsl
 @JvmName("flatMapFailureAlias")
-public suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMap(
+public suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMapf(
     @BuilderInference crossinline failure: suspend (ErrorIn) -> Outcome<Ok, ErrorOut>,
 ): Outcome<Ok, ErrorOut> = flatMapFailure(failure)
 

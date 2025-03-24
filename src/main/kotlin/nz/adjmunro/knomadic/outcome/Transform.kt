@@ -13,7 +13,7 @@ import kotlin.experimental.ExperimentalTypeInference
  *
  * - Transforms `Outcome<In, ErrorIn>` into `Outcome<Out, ErrorOut>`.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambdas for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambdas for that.
  * - Unlike [Outcome.flatFold], fold's transform lambdas return the monad's internal value directly instead of the [Outcome] wrapper.
  *
  * @receiver The [Outcome]<[In], [ErrorIn]> to transform.
@@ -52,7 +52,7 @@ public suspend inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> O
  *
  * - Transforms `Outcome<In, ErrorIn>` into `Outcome<Out, ErrorOut>`.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambdas for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambdas for that.
  * - Unlike [Outcome.fold], flatFold's transform lambdas return the [Outcome] wrapper directly instead of the monad's internal value.
  *
  * @receiver The [Outcome]<[In], [ErrorIn]> to transform.
@@ -92,7 +92,7 @@ public suspend inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> O
  * - Transforms `Outcome<In, Error>` into `Outcome<Out, Error>`.
  * - If the receiver [Outcome] is an [Outcome.Failure], the `Error` is simply re-wrapped to update the `Ok` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambda for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  * - Unlike [Outcome.flatMapSuccess], mapSuccess's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
  *
  * @receiver The [Outcome]<[In], [Error]> to transform.
@@ -118,7 +118,7 @@ public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, E
  * - Transforms `Outcome<In, Error>` into `Outcome<Out, Error>`.
  * - If the receiver [Outcome] is an [Outcome.Failure], the `Error` is simply re-wrapped to update the `Ok` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambda for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  * - Unlike [Outcome.mapSuccess], flatMapSuccess's transform lambda returns the [Outcome] wrapper directly instead of the monad's internal value.
  *
  * @receiver The [Outcome]<[In], [Error]> to transform.
@@ -144,7 +144,7 @@ public suspend inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, E
  * - Transforms `Outcome<Ok, ErrorIn>` into `Outcome<Ok, ErrorOut>`.
  * - If the receiver [Outcome] is an [Outcome.Success], the `Ok` is simply re-wrapped to update the `Error` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambda for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  * - Unlike [Outcome.flatMapFailure], mapFailure's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
  *
  * @receiver The [Outcome]<[Ok], [ErrorIn]> to transform.
@@ -170,7 +170,7 @@ public suspend inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcom
  * - Transforms `Outcome<Ok, ErrorIn>` into `Outcome<Ok, ErrorOut>`.
  * - If the receiver [Outcome] is an [Outcome.Success], the `Ok` is simply re-wrapped to update the `Error` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
- *   handling, or rethrowing errors! Use [Outcome.outcomeOf] within the transformation lambda for that.
+ *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  * - Unlike [Outcome.mapFailure], flatMapFailure's transform lambda returns the [Outcome] wrapper directly instead of the monad's internal value.
  *
  * @receiver The [Outcome]<[Ok], [ErrorIn]> to transform.

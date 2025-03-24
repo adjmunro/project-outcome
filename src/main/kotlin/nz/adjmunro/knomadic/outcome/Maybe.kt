@@ -9,6 +9,7 @@ import nz.adjmunro.knomadic.util.rethrow
 import nz.adjmunro.knomadic.util.throwfold
 import kotlin.experimental.ExperimentalTypeInference
 
+@KnomadicDsl
 public typealias Maybe<Ok> = Outcome<Ok, Unit>
 
 @KnomadicDsl

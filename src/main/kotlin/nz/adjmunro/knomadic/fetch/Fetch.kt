@@ -6,11 +6,35 @@ import kotlinx.coroutines.withTimeout
 import nz.adjmunro.knomadic.FetchCollector
 import nz.adjmunro.knomadic.FetchFlow
 import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.fetch.Fetch.Companion.fetch
-import nz.adjmunro.knomadic.fetch.SafeFetchFlow.Companion.fetching
-import nz.adjmunro.knomadic.fetch.SafeFetchFlow.Companion.finished
-import nz.adjmunro.knomadic.fetch.SafeFetchFlow.Companion.reset
 import kotlin.time.Duration
+
+/**
+ * Create a new [FetchFlow] with the given [block] of code to execute.
+ *
+ * - [Fetch.NotStarted] is for default states, and is not emitted by the resulting [FetchFlow].
+ * - [Fetch.InProgress] is emitted automatically *before* [block] is executed.
+ * - [Fetch.Finished] automatically encapsulates the result of [block].
+ *
+ * However, you can manually [emit][FlowCollector.emit] these statuses via
+ * [emit][FlowCollector.emit], [reset], [fetching], and [finished].
+ *
+ * @param T The type of the result of the fetch.
+ * @param timeout The duration to wait [withTimeout] for the fetch [block] to complete once.
+ * @param recover The transformation to apply to any [non-fatal][nz.adjmunro.knomadic.util.nonFatalOrThrow] [Throwable] that is caught.
+ * @param block The block of code to execute.
+ * @return [FetchFlow] -- a [Flow] that encapsulates the [Fetch] behaviour.
+ * @see SafeFetchFlow
+ */
+@KnomadicDsl
+public fun <T : Any> fetch(
+    timeout: Duration = Duration.INFINITE,
+    @BuilderInference recover: FetchCollector<T>.(Throwable) -> Fetch<T> = { throw it },
+    @BuilderInference block: suspend FetchCollector<T>.() -> T,
+): FetchFlow<T> = SafeFetchFlow(
+    timeout = timeout,
+    recover = recover,
+    block = block,
+)
 
 /**
  * A wrapper for asynchronous fetch operations.
@@ -19,7 +43,7 @@ import kotlin.time.Duration
  * - [Fetch.InProgress] is emitted automatically *before* the fetch operation is executed when using [fetch];
  * - [Fetch.Finished] automatically encapsulates the result of the fetch operation.
  *
- * @see Fetch.fetch
+ * @see fetch
  * @see FetchFlow
  */
 public sealed interface Fetch<out T : Any> {
@@ -42,7 +66,7 @@ public sealed interface Fetch<out T : Any> {
      * A fetch operation that has finished.
      *
      * *Following the single-responsibility principle, the success or failure of the [fetch] is left
-     * up to the encapsulated type, [T]. It is recommended to use a [BinaryResult] type for this purpose.*
+     * up to the encapsulated type, [T]. It is recommended to use a [Outcome] type for this purpose.*
      *
      * @param result The result of the fetch operation.
      */
@@ -52,35 +76,5 @@ public sealed interface Fetch<out T : Any> {
         override fun toString(): String {
             return "Fetch.Finished<${result::class.simpleName}>(result = $result)"
         }
-    }
-
-    public companion object {
-        /**
-         * Create a new [FetchFlow] with the given [block] of code to execute.
-         *
-         * - [Fetch.NotStarted] is for default states, and is not emitted by the resulting [FetchFlow].
-         * - [Fetch.InProgress] is emitted automatically *before* [block] is executed.
-         * - [Fetch.Finished] automatically encapsulates the result of [block].
-         *
-         * However, you can manually [emit][FlowCollector.emit] these statuses via
-         * [emit][FlowCollector.emit], [SafeFetchFlow.Companion.reset], [SafeFetchFlow.Companion.fetching], and [SafeFetchFlow.Companion.finished].
-         *
-         * @param T The type of the result of the fetch.
-         * @param timeout The duration to wait [withTimeout] for the fetch [block] to complete once.
-         * @param recover The transformation to apply to any [non-fatal][nz.adjmunro.knomadic.util.ThrowableExt.nonFatalOrThrow] [Throwable] that is caught.
-         * @param block The block of code to execute.
-         * @return [FetchFlow] -- a [Flow] that encapsulates the [Fetch] behaviour.
-         * @see SafeFetchFlow
-         */
-        @KnomadicDsl
-        public fun <T : Any> fetch(
-            timeout: Duration = Duration.INFINITE,
-            @BuilderInference recover: FetchCollector<T>.(Throwable) -> Fetch<T> = { throw it },
-            @BuilderInference block: suspend FetchCollector<T>.() -> T,
-        ): FetchFlow<T> = SafeFetchFlow(
-            timeout = timeout,
-            recover = recover,
-            block = block,
-        )
     }
 }

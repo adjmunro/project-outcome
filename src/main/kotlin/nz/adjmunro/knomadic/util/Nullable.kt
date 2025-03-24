@@ -1,17 +1,18 @@
 package nz.adjmunro.knomadic.util
 
 import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.KotlinResult
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
+/** Runner that converts any [non-fatal][nonFatalOrThrow] exception into `null`. */
 @KnomadicDsl
-public inline fun <T> resultOf(@BuilderInference block: () -> T): KotlinResult<T> {
+public inline fun <T> nullable(@BuilderInference block: () -> T): T? {
     contract { callsInPlace(block, AT_MOST_ONCE) }
 
     return try {
-        KotlinResult.success(block())
+        block()
     } catch (e: Throwable) {
-        KotlinResult.failure(e.nonFatalOrThrow())
+        e.nonFatalOrThrow()
+        null
     }
 }
