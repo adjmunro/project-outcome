@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SafeFetchFlow</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    knomadic
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+0.0.1        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":/main"
+                                       data-filter=":/main"/>
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    knomadic
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="knomadic::nz.adjmunro.knomadic.fetch/SafeFetchFlow///PointingToDeclaration//-251573632">
+  <div class="breadcrumbs"><a href="../../../index.html">knomadic</a><span class="delimiter">/</span><a href="../index.html">nz.adjmunro.knomadic.fetch</a><span class="delimiter">/</span><span class="current">SafeFetchFlow</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Safe</span><wbr></wbr><span>Fetch</span><wbr></wbr><span><span>Flow</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">SafeFetchFlow</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span> : <span data-unresolved-link="kotlinx.coroutines.flow/AbstractFlow///PointingToDeclaration/">AbstractFlow</span><span class="token operator">&lt;</span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span>, <span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span></div><p class="paragraph"><span data-unresolved-link="kotlinx.coroutines.flow/AbstractFlow///PointingToDeclaration/">AbstractFlow</span> implementation for <a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a>.</p><p class="paragraph"><i>Use </i><a href="../fetch.html"><i>fetch</i></a><i> to provide an instance of this class.</i></p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">// Typealias for Flow&lt;Fetch&lt;Int&gt;&gt;<br>val a: FetchFlow&lt;Int&gt; = fetch { 4 }<br><br>// Will throw TimeoutCancellationException if [block] is not emitted within 4 seconds<br>val b: FetchFlow&lt;Int&gt; = fetch(timeout = 4.seconds) { 4 }<br><br>// The recover param can map unexpected errors to a Fetch state.<br>val c: FetchFlow&lt;Int&gt; = fetch(timeout = 4.seconds, recover = { NotStarted }) { 4 }</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><ul><li><p class="paragraph"><a href="../-fetch/-not-started/index.html">Fetch.NotStarted</a> is used for initial states, and is not emitted by the <a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a>.</p></li><li><p class="paragraph"><a href="../-fetch/-in-progress/index.html">Fetch.InProgress</a> is emitted automatically <i>before</i> <span data-unresolved-link="nz.adjmunro.knomadic.fetch/SafeFetchFlow/block/#/PointingToDeclaration/">block</span> is executed.</p></li><li><p class="paragraph"><a href="../-fetch/-finished/index.html">Fetch.Finished</a> automatically encapsulates the result of <span data-unresolved-link="nz.adjmunro.knomadic.fetch/SafeFetchFlow/block/#/PointingToDeclaration/">block</span>.</p></li></ul><span class="kdoc-tag"><h4 class="">Return</h4><p class="paragraph"><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a> -- a <span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span> that encapsulates the <a href="../-fetch/index.html">Fetch</a> behaviour.</p></span><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>timeout</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The duration to wait <span data-unresolved-link="kotlinx.coroutines//withTimeout/#kotlin.Long#kotlin.coroutines.SuspendFunction1[kotlinx.coroutines.CoroutineScope,TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/">withTimeout</span> for the fetch <span data-unresolved-link="nz.adjmunro.knomadic.fetch/SafeFetchFlow/block/#/PointingToDeclaration/">block</span> to complete once.</p></div></div></div></div><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>recover</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The transformation to apply to any <a href="../../nz.adjmunro.knomadic.util/non-fatal-or-throw.html">non-fatal</a> <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-throwable/index.html">Throwable</a> that is caught.</p></div></div></div></div><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>block</span></span></u></div></span></div><div><div class="title"><p class="paragraph">The block of code to execute.</p></div></div></div></div></div><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../fetch.html"><span><span>fetch</span></span></a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="545631963%2FFunctions%2F-251573632" anchor-label="collapse" id="545631963%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../collapse.html"><span><span>collapse</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="545631963%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../collapse.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../collapse.html">In</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../collapse.html"><span class="token function">collapse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">notStarted<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-not-started/index.html">Fetch.NotStarted</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse.html">Out</a><span class="token punctuation">, </span></span><span class="parameter ">fetching<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-in-progress/index.html">Fetch.InProgress</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse.html">Out</a><span class="token punctuation">, </span></span><span class="parameter ">finished<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span>result<span class="token operator">: </span><a href="../collapse.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse.html">Out</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../collapse.html">Out</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ancestor</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ok</a><span class="token operator"> : </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ancestor</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Error</a><span class="token operator"> : </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ancestor</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html"><span class="token function">collapse</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ancestor</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Output</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html"><span class="token function">collapse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Output</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Output</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/collapse.html">Output</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1388873997%2FFunctions%2F-251573632" anchor-label="collect" id="1388873997%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1388873997%2FFunctions%2F-251573632"><span><span>collect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1388873997%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="index.html#1388873997%2FFunctions%2F-251573632"><span class="token function">collect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">collector<span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/FlowCollector///PointingToDeclaration/">FlowCollector</span><span class="token operator">&lt;</span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="730632888%2FFunctions%2F-251573632" anchor-label="collectSafely" id="730632888%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="collect-safely.html"><span>collect</span><wbr></wbr><span><span>Safely</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="730632888%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="collect-safely.html"><span class="token function">collectSafely</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">collector<span class="token operator">: </span><span data-unresolved-link="nz.adjmunro.knomadic/FetchCollector///PointingToDeclaration/">FetchCollector</span><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-570529949%2FFunctions%2F-251573632" anchor-label="filterOnlyFailure" id="-570529949%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html"><span>filter</span><wbr></wbr><span>Only</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-570529949%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html"><span class="token function">filterOnlyFailure</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/-failure/index.html">Outcome.Failure</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-failure.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1818774708%2FFunctions%2F-251573632" anchor-label="filterOnlyFinished" id="-1818774708%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../filter-only-finished.html"><span>filter</span><wbr></wbr><span>Only</span><wbr></wbr><span><span>Finished</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1818774708%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../filter-only-finished.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../filter-only-finished.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../filter-only-finished.html"><span class="token function">filterOnlyFinished</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../filter-only-finished.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1788456804%2FFunctions%2F-251573632" anchor-label="filterOnlySuccess" id="-1788456804%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html"><span>filter</span><wbr></wbr><span>Only</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1788456804%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html"><span class="token function">filterOnlySuccess</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/-success/index.html">Outcome.Success</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/filter-only-success.html">Ok</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="661661620%2FFunctions%2F-251573632" anchor-label="flatten" id="661661620%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten.html"><span><span>flatten</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="661661620%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flatten.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../flatten.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten.html"><span class="token function">flatten</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../flatten.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1971935978%2FFunctions%2F-251573632" anchor-label="fold" id="-1971935978%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../fold.html"><span><span>fold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1971935978%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../fold.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../fold.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../fold.html">In</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../fold.html"><span class="token function">fold</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">notStarted<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-not-started/index.html">Fetch.NotStarted</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../fold.html">Out</a><span class="token operator">&gt;</span><span class="token operator"> = </span>{ Fetch.NotStarted }<span class="token punctuation">, </span></span><span class="parameter ">fetching<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-in-progress/index.html">Fetch.InProgress</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../fold.html">Out</a><span class="token operator">&gt;</span><span class="token operator"> = </span>{ Fetch.InProgress }<span class="token punctuation">, </span></span><span class="parameter ">finished<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span>result<span class="token operator">: </span><a href="../fold.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../fold.html">Out</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../fold.html">Out</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Transform each <a href="../-fetch/index.html">Fetch</a> status into a new <a href="../-fetch/index.html">Fetch</a> status.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-627332255%2FFunctions%2F-251573632" anchor-label="foldAncestor" id="-627332255%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../fold-ancestor.html"><span>fold</span><wbr></wbr><span><span>Ancestor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-627332255%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../fold-ancestor.html">Ancestor</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../fold-ancestor.html">In</a><span class="token operator"> : </span><a href="../fold-ancestor.html">Ancestor</a><span class="token punctuation">, </span><a href="../fold-ancestor.html">Out</a><span class="token operator"> : </span><a href="../fold-ancestor.html">Ancestor</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../fold-ancestor.html">In</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../fold-ancestor.html"><span class="token function">foldAncestor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>notStarted<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-not-started/index.html">Fetch.NotStarted</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../fold-ancestor.html">Out</a><span class="token operator">&gt;</span><span class="token operator"> = </span>{ Fetch.NotStarted }<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>fetching<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-in-progress/index.html">Fetch.InProgress</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../fold-ancestor.html">Out</a><span class="token operator">&gt;</span><span class="token operator"> = </span>{ Fetch.InProgress }<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>finished<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span>result<span class="token operator">: </span><a href="../fold-ancestor.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../fold-ancestor.html">Ancestor</a><span class="token operator">&gt;</span><span class="token operator"> = </span>{
+        Fetch.Finished(it)
+    }</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../fold-ancestor.html">Ancestor</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1863475787%2FFunctions%2F-251573632" anchor-label="mapEachFailure" id="1863475787%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html"><span>map</span><wbr></wbr><span>Each</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1863475787%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html"><span class="token function">mapEachFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">ErrorOut</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-failure.html">ErrorOut</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1638167502%2FFunctions%2F-251573632" anchor-label="mapEachSuccess" id="-1638167502%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html"><span>map</span><wbr></wbr><span>Each</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1638167502%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">In</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html"><span class="token function">mapEachSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">Out</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">Out</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/map-each-success.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-170698701%2FFunctions%2F-251573632" anchor-label="mapFinished" id="-170698701%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../map-finished.html"><span>map</span><wbr></wbr><span><span>Finished</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-170698701%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../map-finished.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../map-finished.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../map-finished.html">In</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../map-finished.html"><span class="token function">mapFinished</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span>result<span class="token operator">: </span><a href="../map-finished.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../-fetch/index.html">Fetch</a><span class="token operator">&lt;</span><a href="../map-finished.html">Out</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../map-finished.html">Out</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="977998458%2FFunctions%2F-251573632" anchor-label="onEachFailure" id="977998458%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html"><span>on</span><wbr></wbr><span>Each</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="977998458%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html"><span class="token function">onEachFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>block<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/on-each-failure.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2022073357%2FFunctions%2F-251573632" anchor-label="onEachSuccess" id="-2022073357%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html"><span>on</span><wbr></wbr><span>Each</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2022073357%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html"><span class="token function">onEachSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>block<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="kotlinx.coroutines.flow/Flow///PointingToDeclaration/">Flow</span><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/-outcome/index.html">Outcome</a><span class="token operator">&lt;</span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Ok</a><span class="token punctuation">, </span><a href="../../nz.adjmunro.knomadic.outcome/on-each-success.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-617608103%2FFunctions%2F-251573632" anchor-label="onFetchFinished" id="-617608103%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../on-fetch-finished.html"><span>on</span><wbr></wbr><span>Fetch</span><wbr></wbr><span><span>Finished</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-617608103%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-fetch-finished.html"><span class="token function">onFetchFinished</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">action<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../on-fetch-finished.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-fetch-finished.html"><span class="token function">onFetchFinished</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">predicate<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">action<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../on-fetch-finished.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator">&gt;</span></div><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-fetch-finished.html"><span class="token function">onFetchFinished</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">predicate<span class="token operator">: </span><span class="token punctuation">(</span><a href="../on-fetch-finished.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">action<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../on-fetch-finished.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-finished.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="359823875%2FFunctions%2F-251573632" anchor-label="onFetchInProgress" id="359823875%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../on-fetch-in-progress.html"><span>on</span><wbr></wbr><span>Fetch</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Progress</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="359823875%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-fetch-in-progress.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-in-progress.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-fetch-in-progress.html"><span class="token function">onFetchInProgress</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">action<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-in-progress/index.html">Fetch.InProgress</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-in-progress.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-826733445%2FFunctions%2F-251573632" anchor-label="onFetchNotStarted" id="-826733445%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../on-fetch-not-started.html"><span>on</span><wbr></wbr><span>Fetch</span><wbr></wbr><span>Not</span><wbr></wbr><span><span>Started</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-826733445%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-fetch-not-started.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-not-started.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-fetch-not-started.html"><span class="token function">onFetchNotStarted</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">action<span class="token operator">: </span><span class="token keyword">suspend </span><a href="../-fetch/-not-started/index.html">Fetch.NotStarted</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../nz.adjmunro.knomadic/-fetch-flow/index.html">FetchFlow</a><span class="token operator">&lt;</span><a href="../on-fetch-not-started.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

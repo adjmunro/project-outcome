@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Outcome</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    knomadic
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+0.0.1        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active=""
+                        data-filter=":/main">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":/main"
+                                       data-filter=":/main"/>
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    knomadic
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="knomadic::nz.adjmunro.knomadic.outcome/Outcome///PointingToDeclaration//-251573632">
+  <div class="breadcrumbs"><a href="../../../index.html">knomadic</a><span class="delimiter">/</span><a href="../index.html">nz.adjmunro.knomadic.outcome</a><span class="delimiter">/</span><span class="current">Outcome</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Outcome</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">interface </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="index.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></div><p class="paragraph">Represents either a <a href="-success/index.html">Success</a> or <a href="-failure/index.html">Failure</a> state.</p><ul><li><p class="paragraph">Unlike <a href="../../nz.adjmunro.knomadic/-kotlin-result/index.html">KotlinResult</a>, <a href="index.html">Outcome</a> stores the <a href="index.html">Error</a> type explicitly to prevent information loss.</p></li><li><p class="paragraph">Both <a href="index.html">Ok</a> and <a href="index.html">Error</a> are restricted to non-null types.</p></li></ul><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-success/index.html"><span>Outcome.</span><wbr></wbr><span>Success</span></a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-failure/index.html"><span>Outcome.</span><wbr></wbr><span>Failure</span></a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../outcome-of.html"><span>outcome</span><wbr></wbr><span><span>Of</span></span></a></div></span></div><div></div></div></div></div><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-success/index.html">Success</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-failure/index.html">Failure</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1898980096%2FClasslikes%2F-251573632" anchor-label="Failure" id="1898980096%2FClasslikes%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-failure/index.html"><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1898980096%2FClasslikes%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-inline/index.html"><span class="token annotation builtin">JvmInline</span></a></div></div><span class="token keyword">value </span><span class="token keyword">class </span><a href="-failure/index.html">Failure</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="-failure/index.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>error<span class="token operator">: </span><a href="-failure/index.html">Error</a></span></span><span class="token punctuation">)</span> : <a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-nothing/index.html">Nothing</a><span class="token punctuation">, </span><a href="-failure/index.html">Error</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">A failed <a href="index.html">Outcome</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-870637913%2FClasslikes%2F-251573632" anchor-label="Success" id="-870637913%2FClasslikes%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-success/index.html"><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-870637913%2FClasslikes%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-inline/index.html"><span class="token annotation builtin">JvmInline</span></a></div></div><span class="token keyword">value </span><span class="token keyword">class </span><a href="-success/index.html">Success</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="-success/index.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>value<span class="token operator">: </span><a href="-success/index.html">Ok</a></span></span><span class="token punctuation">)</span> : <a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="-success/index.html">Ok</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-nothing/index.html">Nothing</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">A successful <a href="index.html">Outcome</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="EXTENSION_PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-337255097%2FProperties%2F-251573632" anchor-label="flatten" id="-337255097%2FProperties%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten.html"><span><span>flatten</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-337255097%2FProperties%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;flattenNestedFailureAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">val </span><span class="token operator">&lt;</span><a href="../flatten.html">OuterOk</a><span class="token operator"> : </span><a href="../flatten.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten.html">EmbeddedOk</a><span class="token operator"> : </span><a href="../flatten.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flatten.html">AncestorOk</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">OuterOk</a><span class="token punctuation">, </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">EmbeddedOk</a><span class="token punctuation">, </span><a href="../flatten.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten.html">flatten</a><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../flatten-nested-failure.html">Outcome.flattenNestedFailure</a>.</p></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;flattenNestedBothAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">val </span><span class="token operator">&lt;</span><a href="../flatten.html">SuccessOk</a><span class="token operator"> : </span><a href="../flatten.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten.html">SuccessError</a><span class="token operator"> : </span><a href="../flatten.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten.html">FailureOk</a><span class="token operator"> : </span><a href="../flatten.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten.html">FailureError</a><span class="token operator"> : </span><a href="../flatten.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten.html">AncestorOk</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flatten.html">AncestorError</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">SuccessOk</a><span class="token punctuation">, </span><a href="../flatten.html">SuccessError</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">FailureOk</a><span class="token punctuation">, </span><a href="../flatten.html">FailureError</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten.html">flatten</a><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten.html">AncestorError</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../flatten-nested-both.html">Outcome.flattenNestedBoth</a>.</p></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@get:</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;flattenNestedSuccessAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">val </span><span class="token operator">&lt;</span><a href="../flatten.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flatten.html">EmbeddedError</a><span class="token operator"> : </span><a href="../flatten.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten.html">OuterError</a><span class="token operator"> : </span><a href="../flatten.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten.html">AncestorError</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">Ok</a><span class="token punctuation">, </span><a href="../flatten.html">EmbeddedError</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="../flatten.html">OuterError</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten.html">flatten</a><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten.html">Ok</a><span class="token punctuation">, </span><a href="../flatten.html">AncestorError</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../flatten-nested-success.html">Outcome.flattenNestedSuccess</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1465792354%2FFunctions%2F-251573632" anchor-label="coerceToFailure" id="1465792354%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../coerce-to-failure.html"><span>coerce</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1465792354%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../coerce-to-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../coerce-to-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../coerce-to-failure.html">Ok</a><span class="token punctuation">, </span><a href="../coerce-to-failure.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../coerce-to-failure.html"><span class="token function">coerceToFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>falter<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../coerce-to-failure.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../coerce-to-failure.html">Error</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-failure/index.html">Outcome.Failure</a><span class="token operator">&lt;</span><a href="../coerce-to-failure.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="-failure/index.html">Outcome.Failure</a>, after applying <a href="../coerce-to-failure.html">falter</a> to the <a href="-success/index.html">Outcome.Success</a> value.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1178148983%2FFunctions%2F-251573632" anchor-label="coerceToSuccess" id="-1178148983%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../coerce-to-success.html"><span>coerce</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1178148983%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../coerce-to-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../coerce-to-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../coerce-to-success.html">Ok</a><span class="token punctuation">, </span><a href="../coerce-to-success.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../coerce-to-success.html"><span class="token function">coerceToSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>recover<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../coerce-to-success.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../coerce-to-success.html">Ok</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-success/index.html">Outcome.Success</a><span class="token operator">&lt;</span><a href="../coerce-to-success.html">Ok</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="-success/index.html">Outcome.Success</a>, after applying <a href="../coerce-to-success.html">recover</a> to the <a href="-failure/index.html">Outcome.Failure</a> error.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-359120460%2FFunctions%2F-251573632" anchor-label="collapse" id="-359120460%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../collapse.html"><span><span>collapse</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-359120460%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;collapseToAncestorAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../collapse.html">Ancestor</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse.html">Ok</a><span class="token operator"> : </span><a href="../collapse.html">Ancestor</a><span class="token punctuation">, </span><a href="../collapse.html">Error</a><span class="token operator"> : </span><a href="../collapse.html">Ancestor</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../collapse.html">Ok</a><span class="token punctuation">, </span><a href="../collapse.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../collapse.html"><span class="token function">collapse</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../collapse.html">Ancestor</a></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../collapse-to-ancestor.html">Outcome.collapseToAncestor</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="571549002%2FFunctions%2F-251573632" anchor-label="collapseFold" id="571549002%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../collapse-fold.html"><span>collapse</span><wbr></wbr><span><span>Fold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="571549002%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../collapse-fold.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse-fold.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse-fold.html">Output</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../collapse-fold.html">Ok</a><span class="token punctuation">, </span><a href="../collapse-fold.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../collapse-fold.html"><span class="token function">collapseFold</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../collapse-fold.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse-fold.html">Output</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../collapse-fold.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse-fold.html">Output</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../collapse-fold.html">Output</a></div><div class="brief "><p class="paragraph">Collapse the receiver <a href="index.html">Outcome</a> into an instance of <a href="../collapse-fold.html">Output</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1647187705%2FFunctions%2F-251573632" anchor-label="collapseToAncestor" id="-1647187705%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../collapse-to-ancestor.html"><span>collapse</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Ancestor</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1647187705%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../collapse-to-ancestor.html">Ancestor</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse-to-ancestor.html">Ok</a><span class="token operator"> : </span><a href="../collapse-to-ancestor.html">Ancestor</a><span class="token punctuation">, </span><a href="../collapse-to-ancestor.html">Error</a><span class="token operator"> : </span><a href="../collapse-to-ancestor.html">Ancestor</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../collapse-to-ancestor.html">Ok</a><span class="token punctuation">, </span><a href="../collapse-to-ancestor.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../collapse-to-ancestor.html"><span class="token function">collapseToAncestor</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../collapse-to-ancestor.html">Ancestor</a></div><div class="brief "><p class="paragraph">Collapse the receiver <a href="index.html">Outcome</a> into either <a href="-success/value.html">value</a> or <a href="-failure/error.html">error</a>, using the nearest common <a href="../collapse-to-ancestor.html">Ancestor</a> as the type.</p></div><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;collapseFoldAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../collapse-to-ancestor.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse-to-ancestor.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../collapse-to-ancestor.html">Output</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../collapse-to-ancestor.html">Ok</a><span class="token punctuation">, </span><a href="../collapse-to-ancestor.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../collapse-to-ancestor.html"><span class="token function">collapseToAncestor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../collapse-to-ancestor.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse-to-ancestor.html">Output</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../collapse-to-ancestor.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../collapse-to-ancestor.html">Output</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../collapse-to-ancestor.html">Output</a></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../collapse-fold.html">Outcome.collapseFold</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1429493295%2FFunctions%2F-251573632" anchor-label="component1" id="1429493295%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="component1.html"><span><span>component1</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1429493295%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="component1.html"><span class="token function">component1</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Ok</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1460513102%2FFunctions%2F-251573632" anchor-label="component2" id="1460513102%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="component2.html"><span><span>component2</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1460513102%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="component2.html"><span class="token function">component2</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Error</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1485294102%2FFunctions%2F-251573632" anchor-label="errorOrDefault" id="-1485294102%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../error-or-default.html"><span>error</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1485294102%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../error-or-default.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../error-or-default.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../error-or-default.html">Ok</a><span class="token punctuation">, </span><a href="../error-or-default.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../error-or-default.html"><span class="token function">errorOrDefault</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">default<span class="token operator">: </span><a href="../error-or-default.html">Error</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../error-or-default.html">Error</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1066091205%2FFunctions%2F-251573632" anchor-label="errorOrElse" id="-1066091205%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../error-or-else.html"><span>error</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Else</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1066091205%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../error-or-else.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../error-or-else.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../error-or-else.html">Ok</a><span class="token punctuation">, </span><a href="../error-or-else.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../error-or-else.html"><span class="token function">errorOrElse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">transform<span class="token operator">: </span><span class="token punctuation">(</span><a href="../error-or-else.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../error-or-else.html">Error</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../error-or-else.html">Error</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="471460693%2FFunctions%2F-251573632" anchor-label="errorOrNull" id="471460693%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../error-or-null.html"><span>error</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="471460693%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../error-or-null.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../error-or-null.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../error-or-null.html">Ok</a><span class="token punctuation">, </span><a href="../error-or-null.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../error-or-null.html"><span class="token function">errorOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../error-or-null.html">Error</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-107120982%2FFunctions%2F-251573632" anchor-label="errorOrThrow" id="-107120982%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../error-or-throw.html"><span>error</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-107120982%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../error-or-throw.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../error-or-throw.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../error-or-throw.html">Ok</a><span class="token punctuation">, </span><a href="../error-or-throw.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../error-or-throw.html"><span class="token function">errorOrThrow</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../error-or-throw.html">Error</a></div><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../error-or-throw.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../error-or-throw.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../error-or-throw.html">Ok</a><span class="token punctuation">, </span><a href="../error-or-throw.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../error-or-throw.html"><span class="token function">errorOrThrow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">throws<span class="token operator">: </span><span class="token punctuation">(</span><a href="../error-or-throw.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-throwable/index.html">Throwable</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../error-or-throw.html">Error</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2008633950%2FFunctions%2F-251573632" anchor-label="falter" id="-2008633950%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../falter.html"><span><span>falter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2008633950%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;coerceToFailureAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../falter.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../falter.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../falter.html">Ok</a><span class="token punctuation">, </span><a href="../falter.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../falter.html"><span class="token function">falter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../falter.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../falter.html">Error</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-failure/index.html">Outcome.Failure</a><span class="token operator">&lt;</span><a href="../falter.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An alias for <a href="../coerce-to-failure.html">Outcome.coerceToFailure</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1313263678%2FFunctions%2F-251573632" anchor-label="flatFold" id="1313263678%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-fold.html"><span>flat</span><wbr></wbr><span><span>Fold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1313263678%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-fold.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-fold.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-fold.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-fold.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-fold.html">In</a><span class="token punctuation">, </span><a href="../flat-fold.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-fold.html"><span class="token function">flatFold</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../flat-fold.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-fold.html">Out</a><span class="token punctuation">, </span><a href="../flat-fold.html">ErrorOut</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../flat-fold.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-fold.html">Out</a><span class="token punctuation">, </span><a href="../flat-fold.html">ErrorOut</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-fold.html">Out</a><span class="token punctuation">, </span><a href="../flat-fold.html">ErrorOut</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="index.html">Outcome</a>, after applying <a href="../flat-fold.html">success</a> or <a href="../flat-fold.html">failure</a> based on the current <a href="index.html">Outcome</a> state.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1696564670%2FFunctions%2F-251573632" anchor-label="flatMapf" id="-1696564670%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-mapf.html"><span>flat</span><wbr></wbr><span><span>Mapf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1696564670%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;flatMapFailureAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-mapf.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-mapf.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-mapf.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-mapf.html">Ok</a><span class="token punctuation">, </span><a href="../flat-mapf.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-mapf.html"><span class="token function">flatMapf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../flat-mapf.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-mapf.html">Ok</a><span class="token punctuation">, </span><a href="../flat-mapf.html">ErrorOut</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-mapf.html">Ok</a><span class="token punctuation">, </span><a href="../flat-mapf.html">ErrorOut</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../flat-map-failure.html">Outcome.flatMapFailure</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-724362490%2FFunctions%2F-251573632" anchor-label="flatMapFailure" id="-724362490%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-map-failure.html"><span>flat</span><wbr></wbr><span>Map</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-724362490%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-map-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-map-failure.html">Ok</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-map-failure.html"><span class="token function">flatMapFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../flat-map-failure.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-map-failure.html">Ok</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">ErrorOut</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-map-failure.html">Ok</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">ErrorOut</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="index.html">Outcome</a>, after applying <a href="../flat-map-failure.html">transform</a> to the <a href="-failure/index.html">Outcome.Failure</a> error.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1362007823%2FFunctions%2F-251573632" anchor-label="flatMaps" id="1362007823%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-maps.html"><span>flat</span><wbr></wbr><span><span>Maps</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1362007823%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;flatMapSuccessAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-maps.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-maps.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-maps.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-maps.html">In</a><span class="token punctuation">, </span><a href="../flat-maps.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-maps.html"><span class="token function">flatMaps</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../flat-maps.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-maps.html">Out</a><span class="token punctuation">, </span><a href="../flat-maps.html">Error</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-maps.html">Out</a><span class="token punctuation">, </span><a href="../flat-maps.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../flat-map-success.html">Outcome.flatMapSuccess</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-587060417%2FFunctions%2F-251573632" anchor-label="flatMapSuccess" id="-587060417%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-map-success.html"><span>flat</span><wbr></wbr><span>Map</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-587060417%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-map-success.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-map-success.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flat-map-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-map-success.html">In</a><span class="token punctuation">, </span><a href="../flat-map-success.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-map-success.html"><span class="token function">flatMapSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../flat-map-success.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-map-success.html">Out</a><span class="token punctuation">, </span><a href="../flat-map-success.html">Error</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flat-map-success.html">Out</a><span class="token punctuation">, </span><a href="../flat-map-success.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="index.html">Outcome</a>, after applying <a href="../flat-map-success.html">transform</a> to the <a href="-success/index.html">Outcome.Success</a> value.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1010462955%2FFunctions%2F-251573632" anchor-label="flattenNestedBoth" id="1010462955%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten-nested-both.html"><span>flatten</span><wbr></wbr><span>Nested</span><wbr></wbr><span><span>Both</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1010462955%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flatten-nested-both.html">SuccessOk</a><span class="token operator"> : </span><a href="../flatten-nested-both.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">SuccessError</a><span class="token operator"> : </span><a href="../flatten-nested-both.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">FailureOk</a><span class="token operator"> : </span><a href="../flatten-nested-both.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">FailureError</a><span class="token operator"> : </span><a href="../flatten-nested-both.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">AncestorOk</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">AncestorError</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-both.html">SuccessOk</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">SuccessError</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-both.html">FailureOk</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">FailureError</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten-nested-both.html"><span class="token function">flattenNestedBoth</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-both.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten-nested-both.html">AncestorError</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Flatten the nested <a href="index.html">Outcome</a> inside both <a href="-success/index.html">Outcome.Success</a> and <a href="-failure/index.html">Outcome.Failure</a> states, into a single <a href="index.html">Outcome</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1332417199%2FFunctions%2F-251573632" anchor-label="flattenNestedFailure" id="1332417199%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten-nested-failure.html"><span>flatten</span><wbr></wbr><span>Nested</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1332417199%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flatten-nested-failure.html">OuterOk</a><span class="token operator"> : </span><a href="../flatten-nested-failure.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten-nested-failure.html">EmbeddedOk</a><span class="token operator"> : </span><a href="../flatten-nested-failure.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten-nested-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flatten-nested-failure.html">AncestorOk</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-failure.html">OuterOk</a><span class="token punctuation">, </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-failure.html">EmbeddedOk</a><span class="token punctuation">, </span><a href="../flatten-nested-failure.html">Error</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten-nested-failure.html"><span class="token function">flattenNestedFailure</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-failure.html">AncestorOk</a><span class="token punctuation">, </span><a href="../flatten-nested-failure.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Flatten a nested <a href="index.html">Outcome</a> inside the <a href="-failure/index.html">Outcome.Failure</a> state, into a single <a href="index.html">Outcome</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1169483306%2FFunctions%2F-251573632" anchor-label="flattenNestedSuccess" id="1169483306%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten-nested-success.html"><span>flatten</span><wbr></wbr><span>Nested</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1169483306%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flatten-nested-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../flatten-nested-success.html">EmbeddedError</a><span class="token operator"> : </span><a href="../flatten-nested-success.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten-nested-success.html">OuterError</a><span class="token operator"> : </span><a href="../flatten-nested-success.html">AncestorError</a><span class="token punctuation">, </span><a href="../flatten-nested-success.html">AncestorError</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-success.html">Ok</a><span class="token punctuation">, </span><a href="../flatten-nested-success.html">EmbeddedError</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="../flatten-nested-success.html">OuterError</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten-nested-success.html"><span class="token function">flattenNestedSuccess</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../flatten-nested-success.html">Ok</a><span class="token punctuation">, </span><a href="../flatten-nested-success.html">AncestorError</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Flatten a nested <a href="index.html">Outcome</a> inside the <a href="-success/index.html">Outcome.Success</a> state, into a single <a href="index.html">Outcome</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1792928651%2FFunctions%2F-251573632" anchor-label="fold" id="1792928651%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../fold.html"><span><span>fold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1792928651%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../fold.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../fold.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../fold.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../fold.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../fold.html">In</a><span class="token punctuation">, </span><a href="../fold.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../fold.html"><span class="token function">fold</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../fold.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../fold.html">Out</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../fold.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../fold.html">ErrorOut</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../fold.html">Out</a><span class="token punctuation">, </span><a href="../fold.html">ErrorOut</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="index.html">Outcome</a>, after applying <a href="../fold.html">success</a> or <a href="../fold.html">failure</a> based on the current <a href="index.html">Outcome</a> state.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="562004572%2FFunctions%2F-251573632" anchor-label="getOrDefault" id="562004572%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-default.html"><span>get</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="562004572%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-default.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../get-or-default.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../get-or-default.html">Ok</a><span class="token punctuation">, </span><a href="../get-or-default.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-default.html"><span class="token function">getOrDefault</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">default<span class="token operator">: </span><a href="../get-or-default.html">Ok</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-default.html">Ok</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1509691949%2FFunctions%2F-251573632" anchor-label="getOrElse" id="1509691949%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-else.html"><span>get</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Else</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1509691949%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-else.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../get-or-else.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../get-or-else.html">Ok</a><span class="token punctuation">, </span><a href="../get-or-else.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-else.html"><span class="token function">getOrElse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">recover<span class="token operator">: </span><span class="token punctuation">(</span><a href="../get-or-else.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../get-or-else.html">Ok</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-else.html">Ok</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="477560995%2FFunctions%2F-251573632" anchor-label="getOrNull" id="477560995%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-null.html"><span>get</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="477560995%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-null.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../get-or-null.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../get-or-null.html">Ok</a><span class="token punctuation">, </span><a href="../get-or-null.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-null.html"><span class="token function">getOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-null.html">Ok</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-21298618%2FFunctions%2F-251573632" anchor-label="getOrThrow" id="-21298618%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-throw.html"><span>get</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-21298618%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-throw.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../get-or-throw.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../get-or-throw.html">Ok</a><span class="token punctuation">, </span><a href="../get-or-throw.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-throw.html"><span class="token function">getOrThrow</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-throw.html">Ok</a></div><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-throw.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../get-or-throw.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../get-or-throw.html">Ok</a><span class="token punctuation">, </span><a href="../get-or-throw.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-throw.html"><span class="token function">getOrThrow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">throws<span class="token operator">: </span><span class="token punctuation">(</span><a href="../get-or-throw.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-throwable/index.html">Throwable</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-throw.html">Ok</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-232699683%2FFunctions%2F-251573632" anchor-label="invert" id="-232699683%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../invert.html"><span><span>invert</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-232699683%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../invert.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../invert.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../invert.html">Ok</a><span class="token punctuation">, </span><a href="../invert.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../invert.html"><span class="token function">invert</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../invert.html">Error</a><span class="token punctuation">, </span><a href="../invert.html">Ok</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Inverts the <a href="index.html">Outcome</a> so that the <a href="-success/index.html">Outcome.Success</a> value becomes the <a href="-failure/index.html">Outcome.Failure</a> error and vice versa.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="974291038%2FFunctions%2F-251573632" anchor-label="isFailure" id="974291038%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../is-failure.html"><span>is</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="974291038%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../is-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../is-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../is-failure.html">Ok</a><span class="token punctuation">, </span><a href="../is-failure.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../is-failure.html"><span class="token function">isFailure</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../is-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../is-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../is-failure.html">Ok</a><span class="token punctuation">, </span><a href="../is-failure.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../is-failure.html"><span class="token function">isFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">predicate<span class="token operator">: </span><span class="token punctuation">(</span><a href="../is-failure.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1413866686%2FFunctions%2F-251573632" anchor-label="isSuccess" id="1413866686%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../is-success.html"><span>is</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1413866686%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../is-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../is-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../is-success.html">Ok</a><span class="token punctuation">, </span><a href="../is-success.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../is-success.html"><span class="token function">isSuccess</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../is-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../is-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../is-success.html">Ok</a><span class="token punctuation">, </span><a href="../is-success.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../is-success.html"><span class="token function">isSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">predicate<span class="token operator">: </span><span class="token punctuation">(</span><a href="../is-success.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1625749432%2FFunctions%2F-251573632" anchor-label="mapf" id="-1625749432%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../mapf.html"><span><span>mapf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1625749432%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;mapFailureAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../mapf.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../mapf.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../mapf.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../mapf.html">Ok</a><span class="token punctuation">, </span><a href="../mapf.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../mapf.html"><span class="token function">mapf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>failure<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../mapf.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../mapf.html">ErrorOut</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../mapf.html">Ok</a><span class="token punctuation">, </span><a href="../mapf.html">ErrorOut</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../map-failure.html">Outcome.mapFailure</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1152147900%2FFunctions%2F-251573632" anchor-label="mapFailure" id="-1152147900%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../map-failure.html"><span>map</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1152147900%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../map-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../map-failure.html">ErrorIn</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../map-failure.html">ErrorOut</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../map-failure.html">Ok</a><span class="token punctuation">, </span><a href="../map-failure.html">ErrorIn</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../map-failure.html"><span class="token function">mapFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../map-failure.html">ErrorIn</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../map-failure.html">ErrorOut</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../map-failure.html">Ok</a><span class="token punctuation">, </span><a href="../map-failure.html">ErrorOut</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="index.html">Outcome</a>, after applying <a href="../map-failure.html">transform</a> to the <a href="-failure/index.html">Outcome.Failure</a> error.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1978173605%2FFunctions%2F-251573632" anchor-label="maps" id="-1978173605%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../maps.html"><span><span>maps</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1978173605%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;mapSuccessAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../maps.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../maps.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../maps.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../maps.html">In</a><span class="token punctuation">, </span><a href="../maps.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../maps.html"><span class="token function">maps</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>success<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../maps.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../maps.html">Out</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../maps.html">Out</a><span class="token punctuation">, </span><a href="../maps.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An overloaded alias for <a href="../map-success.html">Outcome.mapSuccess</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="498878059%2FFunctions%2F-251573632" anchor-label="mapSuccess" id="498878059%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../map-success.html"><span>map</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="498878059%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../map-success.html">In</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../map-success.html">Out</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../map-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../map-success.html">In</a><span class="token punctuation">, </span><a href="../map-success.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../map-success.html"><span class="token function">mapSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../map-success.html">In</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../map-success.html">Out</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../map-success.html">Out</a><span class="token punctuation">, </span><a href="../map-success.html">Error</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a new <a href="index.html">Outcome</a>, after applying <a href="../map-success.html">transform</a> to the <a href="-success/index.html">Outcome.Success</a> value.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2113344408%2FFunctions%2F-251573632" anchor-label="onFailure" id="2113344408%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../on-failure.html"><span>on</span><wbr></wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2113344408%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-failure.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../on-failure.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../on-failure.html">Ok</a><span class="token punctuation">, </span><a href="../on-failure.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-failure.html"><span class="token function">onFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token punctuation">(</span><a href="../on-failure.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../on-failure.html">Ok</a><span class="token punctuation">, </span><a href="../on-failure.html">Error</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="221631249%2FFunctions%2F-251573632" anchor-label="onSuccess" id="221631249%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../on-success.html"><span>on</span><wbr></wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="221631249%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../on-success.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../on-success.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../on-success.html">Ok</a><span class="token punctuation">, </span><a href="../on-success.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../on-success.html"><span class="token function">onSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token punctuation">(</span><a href="../on-success.html">Ok</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../on-success.html">Ok</a><span class="token punctuation">, </span><a href="../on-success.html">Error</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-375041390%2FFunctions%2F-251573632" anchor-label="recover" id="-375041390%2FFunctions%2F-251573632" data-filterable-set=":/main"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":/main" data-filterable-set=":/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../recover.html"><span><span>recover</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-375041390%2FFunctions%2F-251573632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;coerceToSuccessAlias&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">infix inline suspend </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../recover.html">Ok</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../recover.html">Error</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">Outcome</a><span class="token operator">&lt;</span><a href="../recover.html">Ok</a><span class="token punctuation">, </span><a href="../recover.html">Error</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../recover.html"><span class="token function">recover</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">crossinline </span>transform<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../recover.html">Error</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../recover.html">Ok</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-success/index.html">Outcome.Success</a><span class="token operator">&lt;</span><a href="../recover.html">Ok</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">An alias for <a href="../coerce-to-success.html">Outcome.coerceToSuccess</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
