@@ -23,11 +23,11 @@ public inline fun <T> T.wrapFaulty(): Faulty<Throwable> =
     throwfold(::failureOf) { it.nullfold(::failureOf, ::outcomePassed) }
 
 @KnomadicDsl
-public inline fun <Error : Any> faultyOf(
+public suspend inline fun <Error : Any> faultyOf(
     @BuilderInference crossinline catch: (throwable: Throwable) -> Faulty<Error> = ::rethrow,
-    @BuilderInference crossinline block: RaiseScope<Error>.() -> Unit,
+    @BuilderInference crossinline block: suspend RaiseScope<Error>.() -> Unit,
 ): Faulty<Error> {
-    return RaiseScope.Companion.fold(
+    return RaiseScope.fold(
         block = block,
         catch = catch,
         recover = ::failureOf,

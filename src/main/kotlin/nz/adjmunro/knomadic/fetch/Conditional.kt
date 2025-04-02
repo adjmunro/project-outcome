@@ -37,30 +37,36 @@ public fun <T : Any> Fetch<T>.isFinished(@BuilderInference predicate: (T) -> Boo
 }
 
 @KnomadicDsl
-public inline fun <T : Any> Fetch<T>.onNotStarted(action: Fetch.NotStarted.() -> Unit): Fetch<T> {
+public suspend inline fun <T : Any> Fetch<T>.onNotStarted(
+    action: suspend Fetch.NotStarted.() -> Unit,
+): Fetch<T> {
     contract { callsInPlace(action, AT_MOST_ONCE) }
     if (hasNotStarted) action(Fetch.NotStarted)
     return this
 }
 
 @KnomadicDsl
-public inline fun <T : Any> Fetch<T>.onInProgress(action: Fetch.InProgress.() -> Unit): Fetch<T> {
+public suspend inline fun <T : Any> Fetch<T>.onInProgress(
+    action: suspend Fetch.InProgress.() -> Unit,
+): Fetch<T> {
     contract { callsInPlace(action, AT_MOST_ONCE) }
     if (isInProgress) action(Fetch.InProgress)
     return this
 }
 
 @KnomadicDsl
-public inline fun <T : Any> Fetch<T>.onFinished(@BuilderInference action: (T) -> Unit): Fetch<T> {
+public suspend inline fun <T : Any> Fetch<T>.onFinished(
+    @BuilderInference action: suspend (T) -> Unit,
+): Fetch<T> {
     contract { callsInPlace(action, AT_MOST_ONCE) }
     if (isFinished()) action(result)
     return this
 }
 
 @KnomadicDsl
-public inline fun <T : Any> Fetch<T>.onFinished(
+public suspend inline fun <T : Any> Fetch<T>.onFinished(
     predicate: Boolean,
-    action: Fetch.Finished<T>.() -> Unit,
+    action: suspend Fetch.Finished<T>.() -> Unit,
 ): Fetch<T> {
     contract { callsInPlace(action, AT_MOST_ONCE) }
     if (predicate && isFinished()) action(this)
@@ -68,9 +74,9 @@ public inline fun <T : Any> Fetch<T>.onFinished(
 }
 
 @KnomadicDsl
-public inline fun <T : Any> Fetch<T>.onFinished(
+public suspend inline fun <T : Any> Fetch<T>.onFinished(
     @BuilderInference noinline predicate: (result: T) -> Boolean,
-    @BuilderInference action: (T) -> Unit,
+    @BuilderInference action: suspend (T) -> Unit,
 ): Fetch<T> {
     contract { callsInPlace(action, AT_MOST_ONCE) }
     if (isFinished(predicate)) action(result)

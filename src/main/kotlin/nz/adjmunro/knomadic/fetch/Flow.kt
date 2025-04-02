@@ -11,26 +11,26 @@ public fun <T : Any> FetchFlow<T>.filterOnlyFinished(): FetchFlow<T> {
     return filter { it.isFinished() }
 }
 
-public fun <T : Any> FetchFlow<T>.onFetchNotStarted(
-    action: suspend Fetch.NotStarted.() -> Unit,
+public inline fun <T : Any> FetchFlow<T>.onFetchNotStarted(
+    @BuilderInference crossinline action: suspend Fetch.NotStarted.() -> Unit,
 ): FetchFlow<T> = onEach { if (it.hasNotStarted) action(Fetch.NotStarted) }
 
-public fun <T : Any> FetchFlow<T>.onFetchInProgress(
-    action: suspend Fetch.InProgress.() -> Unit,
+public inline fun <T : Any> FetchFlow<T>.onFetchInProgress(
+    @BuilderInference crossinline action: suspend Fetch.InProgress.() -> Unit,
 ): FetchFlow<T> = onEach { if (it.isInProgress) action(Fetch.InProgress) }
 
-public fun <T : Any> FetchFlow<T>.onFetchFinished(
-    action: suspend (T) -> Unit,
+public inline fun <T : Any> FetchFlow<T>.onFetchFinished(
+    @BuilderInference crossinline action: suspend (T) -> Unit,
 ): FetchFlow<T> = onEach { if (it.isFinished()) action(it.result) }
 
-public fun <T : Any> FetchFlow<T>.onFetchFinished(
+public inline fun <T : Any> FetchFlow<T>.onFetchFinished(
     predicate: Boolean,
-    action: suspend (T) -> Unit,
+    @BuilderInference crossinline action: suspend (T) -> Unit,
 ): FetchFlow<T> = onEach { if (predicate && it.isFinished()) action(it.result) }
 
-public fun <T : Any> FetchFlow<T>.onFetchFinished(
-    predicate: (T) -> Boolean,
-    action: suspend (T) -> Unit,
+public inline fun <T : Any> FetchFlow<T>.onFetchFinished(
+    @BuilderInference noinline predicate: (T) -> Boolean,
+    @BuilderInference crossinline action: suspend (T) -> Unit,
 ): FetchFlow<T> = onEach { if (it.isFinished(predicate)) action(it.result) }
 
 /**
@@ -52,7 +52,7 @@ public fun <T : Any> FetchFlow<T>.onFetchFinished(
  * ```
  */
 @KnomadicDsl
-public fun <In : Any, Out : Any> FetchFlow<In>.fold(
+public suspend fun <In : Any, Out : Any> FetchFlow<In>.fold(
     @BuilderInference notStarted: suspend Fetch.NotStarted.() -> Fetch<Out> = { Fetch.NotStarted },
     @BuilderInference fetching: suspend Fetch.InProgress.() -> Fetch<Out> = { Fetch.InProgress },
     @BuilderInference finished: suspend (result: In) -> Fetch<Out>,
@@ -79,11 +79,11 @@ public inline fun <Ancestor : Any, In : Ancestor, Out : Ancestor> FetchFlow<In>.
     }
 }
 
-public fun <In : Any, Out : Any> FetchFlow<In>.mapFinished(
+public suspend fun <In : Any, Out : Any> FetchFlow<In>.mapFinished(
     @BuilderInference transform: suspend (result: In) -> Fetch<Out>,
 ): FetchFlow<Out> = fold(finished = transform)
 
-public fun <In : Any, Out : Any> FetchFlow<In>.collapse(
+public suspend fun <In : Any, Out : Any> FetchFlow<In>.collapse(
     @BuilderInference notStarted: suspend Fetch.NotStarted.() -> Out,
     @BuilderInference fetching: suspend Fetch.InProgress.() -> Out,
     @BuilderInference finished: suspend (result: In) -> Out,
@@ -95,7 +95,7 @@ public fun <In : Any, Out : Any> FetchFlow<In>.collapse(
     }
 }
 
-public fun <T : Any> FetchFlow<Fetch<T>>.flatten(): FetchFlow<T> = mapFinished { inner ->
+public suspend fun <T : Any> FetchFlow<Fetch<T>>.flatten(): FetchFlow<T> = mapFinished { inner ->
     when (inner) {
         Fetch.NotStarted, Fetch.InProgress -> Fetch.InProgress
         is Fetch.Finished -> Fetch.Finished(inner.result)

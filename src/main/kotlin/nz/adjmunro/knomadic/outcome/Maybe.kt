@@ -20,11 +20,11 @@ public inline fun <T> T.wrapMaybe(): Maybe<T & Any> =
     throwfold(::outcomeFailed) { it.nullfold(::outcomeFailed, ::successOf) }
 
 @KnomadicDsl
-public inline fun <Ok : Any> maybeOf(
+public suspend inline fun <Ok : Any> maybeOf(
     @BuilderInference crossinline catch: (throwable: Throwable) -> Maybe<Ok> = ::rethrow,
-    @BuilderInference crossinline block: RaiseScope<Any>.() -> Ok,
+    @BuilderInference crossinline block: suspend RaiseScope<Any>.() -> Ok,
 ): Maybe<Ok> {
-    return RaiseScope.Companion.fold(
+    return RaiseScope.fold(
         block = block,
         catch = catch,
         recover = ::outcomeFailed,

@@ -35,11 +35,11 @@ import nz.adjmunro.knomadic.util.rethrow
  * @param block The code to execute.
  */
 @KnomadicDsl
-public inline fun <Ok : Any, Error : Any> outcomeOf(
+public suspend inline fun <Ok : Any, Error : Any> outcomeOf(
     @BuilderInference crossinline catch: (throwable: Throwable) -> Outcome<Ok, Error> = ::rethrow,
-    @BuilderInference crossinline block: RaiseScope<Error>.() -> Ok,
+    @BuilderInference crossinline block: suspend RaiseScope<Error>.() -> Ok,
 ): Outcome<Ok, Error> {
-    return RaiseScope.Companion.fold(
+    return RaiseScope.fold(
         block = block,
         catch = catch,
         recover = ::Failure,

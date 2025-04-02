@@ -66,7 +66,7 @@ public sealed interface RaiseScope<in Error : Any> {
         @PublishedApi
         internal inline fun <Ok : Any, Error : Any> withRaiseScope(
             @BuilderInference action: RaiseScope<Error>.() -> Ok,
-        ): Ok = with(receiver = DefaultRaise(), block = action)
+        ): Ok = with(receiver = DefaultRaise<Error>(), action)
 
         /**
          * Invokes [error], wraps it as a [Throwable] and then throws it,
@@ -79,7 +79,9 @@ public sealed interface RaiseScope<in Error : Any> {
          * @see RaiseScope.raise
          */
         @KnomadicDsl
-        public inline fun <Error : Any> RaiseScope<Error>.raise(error: () -> Error): Nothing {
+        public suspend inline fun <Error : Any> RaiseScope<Error>.raise(
+            crossinline error: suspend () -> Error,
+        ): Nothing {
             raised(error = error())
         }
 
@@ -100,9 +102,9 @@ public sealed interface RaiseScope<in Error : Any> {
          * @throws Throwable if [catch] re-throws.
          */
         @KnomadicDsl
-        public inline fun <Ok : Any, Error : Any> RaiseScope<Error>.catch(
+        public suspend inline fun <Ok : Any, Error : Any> RaiseScope<Error>.catch(
             @BuilderInference catch: (throwable: Throwable) -> Error = ::rethrow,
-            @BuilderInference block: RaiseScope<Error>.() -> Ok,
+            @BuilderInference crossinline block: suspend RaiseScope<Error>.() -> Ok,
         ): Ok {
             contract {
                 callsInPlace(catch, AT_MOST_ONCE)
@@ -118,11 +120,11 @@ public sealed interface RaiseScope<in Error : Any> {
 
         @KnomadicDsl
         @Suppress("UNCHECKED_CAST")
-        public inline fun <In : Any, Out : Any, Error : Any> fold(
-            @BuilderInference block: (scope: RaiseScope<Error>) -> In,
-            @BuilderInference catch: (throwable: Throwable) -> Out = ::rethrow,
-            @BuilderInference recover: (error: Error) -> Out,
-            @BuilderInference transform: (value: In) -> Out,
+        public suspend inline fun <In : Any, Out : Any, Error : Any> fold(
+            @BuilderInference crossinline block: suspend (scope: RaiseScope<Error>) -> In,
+            @BuilderInference crossinline catch: (throwable: Throwable) -> Out = ::rethrow,
+            @BuilderInference crossinline recover: suspend (error: Error) -> Out,
+            @BuilderInference crossinline transform: suspend (value: In) -> Out,
         ): Out {
             contract {
                 // TODO: This seems to be a bug in the Kotlin compiler, it should be AT_MOST_ONCE?
