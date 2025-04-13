@@ -4,35 +4,36 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import nz.adjmunro.knomadic.OutcomeFlow
 
-public fun <Ok : Any, Error : Any> Flow<Outcome<Ok, Error>>.filterOnlySuccess(): Flow<Outcome.Success<Ok>> {
+public fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.filterOnlySuccess(): Flow<Outcome.Success<Ok>> {
     return filterIsInstance<Outcome.Success<Ok>>()
 }
 
-public fun <Ok : Any, Error : Any> Flow<Outcome<Ok, Error>>.filterOnlyFailure(): Flow<Outcome.Failure<Error>> {
+public fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.filterOnlyFailure(): Flow<Outcome.Failure<Error>> {
     return filterIsInstance<Outcome.Failure<Error>>()
 }
 
-public inline fun <Ok : Any, Error : Any> Flow<Outcome<Ok, Error>>.onEachSuccess(
+public inline fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.onEachSuccess(
     crossinline block: suspend (Ok) -> Unit
-): Flow<Outcome<Ok, Error>> = onEach { it.onSuccess { value: Ok -> block(value) } }
+): OutcomeFlow<Ok, Error> = onEach { it.onSuccess { value: Ok -> block(value) } }
 
-public inline fun <Ok : Any, Error : Any> Flow<Outcome<Ok, Error>>.onEachFailure(
+public inline fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.onEachFailure(
     crossinline block: suspend (Error) -> Unit
-): Flow<Outcome<Ok, Error>> = onEach { it.onFailure { error: Error -> block(error) } }
+): OutcomeFlow<Ok, Error> = onEach { it.onFailure { error: Error -> block(error) } }
 
-public inline fun <In: Any, Out: Any, Error: Any> Flow<Outcome<In, Error>>.mapEachSuccess(
+public inline fun <In: Any, Out: Any, Error: Any> OutcomeFlow<In, Error>.mapEachSuccess(
     crossinline transform: suspend (In) -> Out
-): Flow<Outcome<Out, Error>> = map { it.mapSuccess(transform) }
+): OutcomeFlow<Out, Error> = map { it.mapSuccess { transform(it) } }
 
-public inline fun <Ok: Any, ErrorIn: Any, ErrorOut: Any> Flow<Outcome<Ok, ErrorIn>>.mapEachFailure(
+public inline fun <Ok: Any, ErrorIn: Any, ErrorOut: Any> OutcomeFlow<Ok, ErrorIn>.mapEachFailure(
     crossinline transform: suspend (ErrorIn) -> ErrorOut
-): Flow<Outcome<Ok, ErrorOut>> = map { it.mapFailure(transform) }
+): OutcomeFlow<Ok, ErrorOut> = map { it.mapFailure { transform(it) } }
 
-public fun <Ancestor : Any, Ok: Ancestor, Error: Ancestor> Flow<Outcome<Ok, Error>>.collapse(): Flow<Ancestor> =
-    map { it.collapseToAncestor() }
+public fun <Ancestor : Any, Ok: Ancestor, Error: Ancestor> OutcomeFlow<Ok, Error>.collapse(): Flow<Ancestor> =
+    map { it.collapse() }
 
-public inline fun <Ok: Any, Error: Any, Output> Flow<Outcome<Ok, Error>>.collapse(
+public inline fun <Ok: Any, Error: Any, Output> OutcomeFlow<Ok, Error>.collapse(
     crossinline success: suspend (Ok) -> Output,
     crossinline failure: suspend (Error) -> Output,
-): Flow<Output> = map { it.collapseFold(success, failure) }
+): Flow<Output> = map { it.fold({ success(it) }, { failure(it) }) }
