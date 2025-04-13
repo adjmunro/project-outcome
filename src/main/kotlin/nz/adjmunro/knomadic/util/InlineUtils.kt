@@ -16,7 +16,7 @@ public inline fun <T> T.caller(ignore: Any? = null): T = this@caller
 public inline fun rethrow(throwable: Throwable): Nothing = throw throwable
 
 @KnomadicDsl
-public inline fun nulls(ignore: Any? = null): Unit? = null
+public inline fun nulls(ignore: Any? = null): Nothing? = null
 
 @KnomadicDsl
 public inline fun <In, Out> In.nullfold(
