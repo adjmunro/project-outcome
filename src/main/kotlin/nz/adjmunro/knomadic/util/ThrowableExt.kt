@@ -1,10 +1,16 @@
 package nz.adjmunro.knomadic.util
 
+import kotlinx.coroutines.TimeoutCancellationException
 import nz.adjmunro.knomadic.raise.exception.RaiseScopeLeakedException
 import java.util.concurrent.CancellationException
 import kotlin.contracts.contract
 
-/** Determines if a [Throwable] should be fatal. */
+/**
+ * Determines if a [Throwable] should be fatal.
+ *
+ * ***Note:** [TimeoutCancellationException] unfortunately extends [CancellationException]
+ * (used by Kotlin's structured concurrency) and is thus also be considered fatal.*
+ */
 public fun Throwable.isFatal(): Boolean {
     contract {
         returns(false) implies (this@isFatal !is AssertionError)

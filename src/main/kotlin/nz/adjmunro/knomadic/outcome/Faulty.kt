@@ -4,6 +4,8 @@ package nz.adjmunro.knomadic.outcome
 
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.raise.RaiseScope
+import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
+import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
 import nz.adjmunro.knomadic.util.nullfold
 import nz.adjmunro.knomadic.util.rethrow
@@ -24,13 +26,15 @@ public inline fun <T> T.wrapFaulty(): Faulty<Throwable> =
 
 @KnomadicDsl
 public inline fun <Error : Any> faultyOf(
-    @BuilderInference crossinline catch: (throwable: Throwable) -> Faulty<Error> = ::rethrow,
-    @BuilderInference crossinline block: RaiseScope<Error>.() -> Unit,
+    @BuilderInference catch: (throwable: Throwable) -> Faulty<Error> = ::rethrow,
+    @BuilderInference block: RaiseScope<Error>.() -> Unit,
 ): Faulty<Error> {
-    return RaiseScope.Companion.fold(
-        block = block,
-        catch = catch,
-        recover = ::failureOf,
-        transform = ::outcomePassed,
-    )
+    return RaiseScope.default<Faulty<Error>, Error> {
+        fold(
+            block = block,
+            catch = catch,
+            recover = ::failureOf,
+            transform = ::outcomePassed,
+        )
+    }
 }

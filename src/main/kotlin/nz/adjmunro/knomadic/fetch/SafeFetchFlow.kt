@@ -21,10 +21,10 @@ import kotlin.time.Duration
  * val b: FetchFlow<Int> = fetch(timeout = 4.seconds) { 4 }
  *
  * // The recover param can map unexpected errors to a Fetch state.
- * val c: FetchFlow<Int> = fetch(timeout = 4.seconds, recover = { NotStarted }) { 4 }
+ * val c: FetchFlow<Int> = fetch(timeout = 4.seconds, recover = { Initial }) { 4 }
  * ```
- * - [Fetch.NotStarted] is used for initial states, and is not emitted by the [FetchFlow].
- * - [Fetch.InProgress] is emitted automatically *before* [block] is executed.
+ * - [Fetch.Initial] is used for initial states, and is not emitted by the [FetchFlow].
+ * - [Fetch.Fetching] is emitted automatically *before* [block] is executed.
  * - [Fetch.Finished] automatically encapsulates the result of [block].
  *
  * @property T The type of the result of the fetch.
@@ -43,7 +43,7 @@ public class SafeFetchFlow<T : Any> @PublishedApi internal constructor(
     override suspend fun collectSafely(collector: FetchCollector<T>) {
         with(collector) {
             // Automatic `fetching` status
-            emit(Fetch.InProgress)
+            emit(Fetch.Fetching)
 
             // Execute the block & await the result
             emit(recover = this@SafeFetchFlow.recover) {

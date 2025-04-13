@@ -1,6 +1,7 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Outcome
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
@@ -26,7 +27,7 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(): Boolean {
 
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(
-    @BuilderInference predicate: (Ok) -> Boolean,
+    predicate: (Ok) -> Boolean,
 ): Boolean {
     contract {
         returns(true) implies (this@isSuccess is Outcome.Success<Ok>)
@@ -39,7 +40,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(
 
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(
-    @BuilderInference predicate: (Error) -> Boolean,
+    predicate: (Error) -> Boolean,
 ): Boolean {
     contract {
         returns(true) implies (this@isFailure is Outcome.Failure<Error>)
@@ -52,7 +53,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(
 
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onSuccess(
-    @BuilderInference block: (Ok) -> Unit,
+    block: (Ok) -> Unit,
 ): Outcome<Ok, Error> {
     contract { callsInPlace(block, AT_MOST_ONCE) }
     if (isSuccess()) block(value)
@@ -61,7 +62,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onSuccess(
 
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onFailure(
-    @BuilderInference block: (Error) -> Unit,
+    block: (Error) -> Unit,
 ): Outcome<Ok, Error> {
     contract { callsInPlace(block, AT_MOST_ONCE) }
     if (isFailure()) block(error)

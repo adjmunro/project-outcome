@@ -3,9 +3,14 @@ package nz.adjmunro.knomadic
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import nz.adjmunro.knomadic.fetch.Fetch
+import nz.adjmunro.knomadic.fetch.fetch
 import nz.adjmunro.knomadic.outcome.Faulty
 import nz.adjmunro.knomadic.outcome.Maybe
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.faultyOf
+import nz.adjmunro.knomadic.outcome.maybeOf
+import nz.adjmunro.knomadic.outcome.outcomeOf
+import nz.adjmunro.knomadic.raise.RaiseScope
 
 /**
  * Alias for Kotlin's [Result] type.
@@ -16,8 +21,35 @@ import nz.adjmunro.knomadic.outcome.Outcome
 public typealias KotlinResult<T> = Result<T>
 
 /**
+ * Alias for a [RaiseScope] context runner used for [Outcome].
+ *
+ * *If injecting lambdas into [outcomeOf], consider using this as the lambda
+ * type to inherit the [RaiseScope] context for your own lambdas.*
+ */
+@KnomadicDsl
+public typealias OutcomeScope<Ok, Error> = RaiseScope<Error>.() -> Ok
+
+/**
+ * Alias for a [RaiseScope] context runner used for [Maybe].
+ *
+ * *If injecting lambdas into [maybeOf], consider using this as the lambda
+ * type to inherit the [RaiseScope] context for your own lambdas.*
+ */
+@KnomadicDsl
+public typealias MaybeScope<Ok> = RaiseScope<Any>.() -> Ok
+
+/**
+ * Alias for a [RaiseScope] context runner used for [Faulty].
+ *
+ * *If injecting lambdas into [faultyOf], consider using this as the lambda
+ * type to inherit the [RaiseScope] context for your own lambdas.*
+ */
+@KnomadicDsl
+public typealias FaultyScope<Error> = RaiseScope<Error>.() -> Unit
+
+/**
  * Alias for a [Flow] of [Fetch] statuses.
- * @see Fetch.Companion.fetch
+ * @see fetch
  */
 @KnomadicDsl
 public typealias FetchFlow<T> = Flow<Fetch<T>>
@@ -27,7 +59,7 @@ public typealias FetchFlow<T> = Flow<Fetch<T>>
  *
  * *For internal-use only!*
  *
- * @see Fetch.Companion.fetch
+ * @see fetch
  */
 @KnomadicDsl
 internal typealias FetchCollector<T> = FlowCollector<Fetch<T>>
@@ -42,7 +74,7 @@ internal typealias FetchCollector<T> = FlowCollector<Fetch<T>>
  * }
  * ```
  *
- * @see Fetch.Companion.fetch
+ * @see fetch
  * @see Faulty
  */
 @KnomadicDsl
@@ -58,7 +90,7 @@ public typealias FaultyFetch<Error> = Flow<Fetch<Faulty<Error>>>
  * }
  * ```
  *
- * @see Fetch.Companion.fetch
+ * @see fetch
  * @see Maybe
  */
 @KnomadicDsl
@@ -74,7 +106,7 @@ public typealias MaybeFetch<Ok> = Flow<Fetch<Maybe<Ok>>>
  * }
  * ```
  *
- * @see Fetch.Companion.fetch
+ * @see fetch
  * @see Outcome
  */
 @KnomadicDsl
@@ -90,7 +122,7 @@ public typealias OutcomeFetch<Ok, Error> = Flow<Fetch<Outcome<Ok, Error>>>
  * }
  * ```
  *
- * @see Fetch.Companion.fetch
+ * @see fetch
  * @see KotlinResult
  */
 @KnomadicDsl
