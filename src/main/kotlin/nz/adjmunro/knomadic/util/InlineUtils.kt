@@ -79,6 +79,60 @@ public inline fun rethrow(throwable: Throwable): Nothing = throw throwable
 public inline fun nulls(ignore: Any? = null): Nothing? = null
 
 /**
+ * Syntax-sugar for a lambda that returns the [String] of `it`.
+ *
+ * ```kotlin
+ * fun <T> T.map(transform: (T) -> String): String
+ *
+ * // Before:
+ * map(transform = { "$it" })
+ *
+ * // After:
+ * map(transform = ::stringItself)
+ * ```
+ *
+ * @return String of the first argument passed to the lambda.
+ */
+@KnomadicDsl
+public inline fun <T> stringItself(value: T): String = value.toString()
+
+/**
+ * Syntax-sugar for a lambda that returns the [String] of `this`.
+ *
+ * ```kotlin
+ * fun <T> T.map(transform: T.() -> String): String
+ *
+ * // Before:
+ * map(transform = { "$this" })
+ *
+ * // After:
+ * map(transform = ::stringCaller)
+ * ```
+ *
+ * @return String of the lambda's receiver.
+ */
+@KnomadicDsl
+public inline fun <T> T.stringCaller(ignore: Any? = null): String = this@stringCaller.toString()
+
+/**
+ * Syntax-sugar for a lambda that returns an empty [String].
+ *
+ * ```kotlin
+ * fun <T> T.map(transform: (T) -> String): String
+ *
+ * // Before:
+ * map(transform = { "" })
+ *
+ * // After:
+ * map(transform = ::emptyString)
+ * ```
+ *
+ * @return An empty [String].
+ */
+@KnomadicDsl
+public inline fun emptyString(ignore: Any? = null): String = ""
+
+/**
  * Syntax-sugar for a lambda folds a nullable receiver type into type [Out].
  *
  * ```kotlin
