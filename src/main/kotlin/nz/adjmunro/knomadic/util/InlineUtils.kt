@@ -3,7 +3,7 @@
 package nz.adjmunro.knomadic.util
 
 import nz.adjmunro.knomadic.KnomadicDsl
-import kotlin.contracts.InvocationKind.AT_MOST_ONCE
+import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
@@ -159,12 +159,12 @@ public inline fun emptyString(ignore: Any? = null): String = ""
  */
 @KnomadicDsl
 public inline fun <In, Out> In.nullfold(
-    @BuilderInference none: (NullPointerException) -> Out,
-    @BuilderInference some: (In & Any) -> Out,
+    none: (NullPointerException) -> Out,
+    some: (In & Any) -> Out,
 ): Out {
     contract {
-        callsInPlace(some, AT_MOST_ONCE)
-        callsInPlace(none, AT_MOST_ONCE)
+        callsInPlace(some, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(none, InvocationKind.AT_MOST_ONCE)
     }
 
     return when (this@nullfold) {
@@ -196,12 +196,12 @@ public inline fun <In, Out> In.nullfold(
  */
 @KnomadicDsl
 public inline fun <In, Out> In.throwfold(
-    @BuilderInference throws: (Throwable) -> Out,
-    @BuilderInference pass: (In) -> Out,
+    throws: (Throwable) -> Out,
+    pass: (In) -> Out,
 ): Out {
     contract {
-        callsInPlace(pass, AT_MOST_ONCE)
-        callsInPlace(throws, AT_MOST_ONCE)
+        callsInPlace(pass, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(throws, InvocationKind.AT_MOST_ONCE)
     }
 
     return when (this@throwfold) {

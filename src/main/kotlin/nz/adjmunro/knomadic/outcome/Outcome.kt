@@ -5,11 +5,15 @@ import nz.adjmunro.knomadic.KotlinResult
 import nz.adjmunro.knomadic.outcome.Outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome.Success
 import nz.adjmunro.knomadic.raise.RaiseScope
+import nz.adjmunro.knomadic.raise.RaiseScope.Companion.catch
+import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
+import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
+import nz.adjmunro.knomadic.raise.RaiseScope.Companion.raise
 import nz.adjmunro.knomadic.util.rethrow
 
 /**
  * Context runner that encapsulates the [Ok] result of [block] as an [Outcome.Success], and any
- * [raised][RaiseScope.raised] or [caught][RaiseScope.catch] [errors][Error] as an [Outcome.Failure].
+ * [raised][RaiseScope.raise] or [caught][RaiseScope.catch] [errors][Error] as an [Outcome.Failure].
  *
  * > ***Note:** [catch] will [rethrow] by default. This is because the consumer needs to manually
  * > override the parameter and map it to an [Outcome] (if desired). Assigning it to
@@ -35,16 +39,18 @@ import nz.adjmunro.knomadic.util.rethrow
  * @param block The code to execute.
  */
 @KnomadicDsl
-public suspend inline fun <Ok : Any, Error : Any> outcomeOf(
-    @BuilderInference crossinline catch: (throwable: Throwable) -> Outcome<Ok, Error> = ::rethrow,
-    @BuilderInference crossinline block: suspend RaiseScope<Error>.() -> Ok,
+public inline fun <Ok : Any, Error : Any> outcomeOf(
+    catch: (throwable: Throwable) -> Outcome<Ok, Error> = ::rethrow,
+    @BuilderInference block: RaiseScope<Error>.() -> Ok,
 ): Outcome<Ok, Error> {
-    return RaiseScope.fold(
-        block = block,
-        catch = catch,
-        recover = ::Failure,
-        transform = ::Success,
-    )
+    return RaiseScope.default {
+        fold(
+            block = block,
+            catch = catch,
+            recover = ::Failure,
+            transform = ::Success,
+        )
+    }
 }
 
 /**
