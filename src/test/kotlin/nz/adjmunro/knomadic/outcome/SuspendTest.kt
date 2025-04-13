@@ -39,7 +39,7 @@ class SuspendTest {
     private val suspend = suspend { true }
     private val suspendException = suspend { IllegalStateException() }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `KotlinResult works with suspend`(): TestResult = runTest {
         // Given
         val result = resultOf { suspend() }
@@ -57,7 +57,7 @@ class SuspendTest {
         nullable.shouldNotBeNull().shouldBeEqual(true)
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `KotlinResult works without suspend`() {
         // Given
         val result = resultOf { blocking() }
@@ -75,7 +75,7 @@ class SuspendTest {
         nullable.shouldNotBeNull().shouldBeEqual(true)
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `InlineUtils works with suspend`(): TestResult = runTest {
         // Given
         val nullIf = nullfold( { suspend() }, { suspend() })
@@ -86,7 +86,7 @@ class SuspendTest {
         throwIf.shouldNotBeNull().shouldBeEqual(true)
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `InlineUtils works without suspend`() {
         // Given
         val nullIf = nullfold( { blocking() }, { blocking() })
@@ -97,7 +97,7 @@ class SuspendTest {
         throwIf.shouldNotBeNull().shouldBeEqual(true)
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `RaiseScope works with suspend`(): TestResult = runTest {
         RaiseScope.default {
             raised(suspend())
@@ -116,7 +116,7 @@ class SuspendTest {
         }
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `RaiseScope works without suspend`() {
         RaiseScope.default {
             raised(blocking())
@@ -135,7 +135,7 @@ class SuspendTest {
         }
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `Outcome works with suspend`(): TestResult = runTest {
         val outcome = outcomeOf(::failureOf) { suspend() }
         outcomeOf<Boolean, Boolean>({ failureOf(suspend()) }) { suspend() }
@@ -167,7 +167,7 @@ class SuspendTest {
         outcome.coerceToFailure { suspend() }
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `Outcome works without suspend`() {
         // Given
         val outcome = outcomeOf(::failureOf) { blocking() }
@@ -201,7 +201,7 @@ class SuspendTest {
         outcome.coerceToFailure { blocking() }
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `OutcomeFlow works with suspend`(): TestResult = runTest {
         // Given
         val outcomeFlow = flow { emit(outcomeOf(::failureOf) { suspend() }) }
@@ -214,7 +214,7 @@ class SuspendTest {
         outcomeFlow.mapEachFailure { suspend() }
     }
 
-    @Test
+    @Test @Suppress("UnreachableCode")
     fun `OutcomeFlow works without suspend`() {
         // Given
         val outcomeFlow = flow { emit(outcomeOf(::failureOf) { blocking() }) }

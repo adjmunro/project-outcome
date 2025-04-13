@@ -7,21 +7,21 @@ import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
 
 /**
- * [Send][FlowCollector.emit] a [fetch not started][Fetch.NotStarted]
+ * [Send][FlowCollector.emit] a [fetch not started][Fetch.Initial]
  * status to the current [flow-scope][Flow].
  */
 @KnomadicDsl
 public suspend inline fun FetchCollector<Nothing>.reset() {
-    emit(Fetch.NotStarted)
+    emit(Fetch.Initial)
 }
 
 /**
- * [Send][FlowCollector.emit] a [fetch in progress][Fetch.InProgress]
+ * [Send][FlowCollector.emit] a [fetch in progress][Fetch.Fetching]
  * status to the current [flow-scope][Flow].
  */
 @KnomadicDsl
 public suspend inline fun FetchCollector<Nothing>.fetching() {
-    emit(Fetch.InProgress)
+    emit(Fetch.Fetching)
 }
 
 /**
@@ -41,7 +41,7 @@ public suspend inline fun <T : Any> FetchCollector<T>.finished(result: T) {
  */
 @KnomadicDsl
 public suspend inline fun <T> FlowCollector<T>.emit(
-    @BuilderInference recover: FlowCollector<T>.(Throwable) -> T = { throw it },
+    recover: FlowCollector<T>.(Throwable) -> T = { throw it },
     @BuilderInference block: FlowCollector<T>.() -> T,
 ) {
     try {

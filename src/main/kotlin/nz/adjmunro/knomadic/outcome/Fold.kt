@@ -11,7 +11,7 @@ import kotlin.contracts.contract
  *
  * - Unlike [map][Outcome.map], `fold` places no restrictions on [Output] type.
  * - If [Output] is [Outcome], `fold` can be used to `flatMap` both outcomes.
- * - *Use [collapse][Outcome.collapse], to assume the nearest common `Ancestor` as the [Output] type.*
+ * - *Use [collapse][Outcome.collapse] to assume the nearest common `Ancestor` as the [Output] type.*
  *
  * @receiver The [Outcome] to collapse.
  * @return The collapsed value of type [Output].

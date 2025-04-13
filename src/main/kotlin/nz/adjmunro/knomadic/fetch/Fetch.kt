@@ -11,8 +11,8 @@ import kotlin.time.Duration
 /**
  * Create a new [FetchFlow] with the given [block] of code to execute.
  *
- * - [Fetch.NotStarted] is for default states, and is not emitted by the resulting [FetchFlow].
- * - [Fetch.InProgress] is emitted automatically *before* [block] is executed.
+ * - [Fetch.Initial] is for default states, and is not emitted by the resulting [FetchFlow].
+ * - [Fetch.Fetching] is emitted automatically *before* [block] is executed.
  * - [Fetch.Finished] automatically encapsulates the result of [block].
  *
  * However, you can manually [emit][FlowCollector.emit] these statuses via
@@ -28,7 +28,7 @@ import kotlin.time.Duration
 @KnomadicDsl
 public fun <T : Any> fetch(
     timeout: Duration = Duration.INFINITE,
-    @BuilderInference recover: FetchCollector<T>.(Throwable) -> Fetch<T> = { throw it },
+    recover: FetchCollector<T>.(Throwable) -> Fetch<T> = { throw it },
     @BuilderInference block: suspend FetchCollector<T>.() -> T,
 ): FetchFlow<T> = SafeFetchFlow(
     timeout = timeout,
@@ -39,8 +39,8 @@ public fun <T : Any> fetch(
 /**
  * A wrapper for asynchronous fetch operations.
  *
- * - [Fetch.NotStarted] is for default states, and is not generally emitted;
- * - [Fetch.InProgress] is emitted automatically *before* the fetch operation is executed when using [fetch];
+ * - [Fetch.Initial] is for default states, and is not generally emitted;
+ * - [Fetch.Fetching] is emitted automatically *before* the fetch operation is executed when using [fetch];
  * - [Fetch.Finished] automatically encapsulates the result of the fetch operation.
  *
  * @see fetch
@@ -53,14 +53,14 @@ public sealed interface Fetch<out T : Any> {
      *
      * *This is for default states, and is not generally emitted.*
      */
-    public data object NotStarted : Fetch<Nothing>
+    public data object Initial : Fetch<Nothing>
 
     /**
      * A fetch operation that is currently in progress.
      *
      * *This is emitted automatically before the fetch operation is executed when using [fetch].*
      */
-    public data object InProgress : Fetch<Nothing>
+    public data object Fetching : Fetch<Nothing>
 
     /**
      * A fetch operation that has finished.
