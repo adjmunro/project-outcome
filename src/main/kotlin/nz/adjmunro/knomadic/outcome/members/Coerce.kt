@@ -1,17 +1,20 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.failureOf
+import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
-/** An alias for [Outcome.coerceToFailure]. */
+/** An alias for [coerceToFailure]. */
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.falter(
     transform: (Ok) -> Error,
 ): Outcome.Failure<Error> = coerceToFailure(transform)
 
-/** An alias for [Outcome.coerceToSuccess]. */
+/** An alias for [coerceToSuccess]. */
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
     transform: (Error) -> Ok,
@@ -33,7 +36,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
  *
  * @param recover The transform function to convert an [Error] value into an [Ok] value.
  *
- * @see Outcome.coerceToFailure
+ * @see coerceToFailure
  * @see Outcome.recover
  */
 @KnomadicDsl
@@ -60,7 +63,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToSucce
  *
  * @param falter The transform function to convert an [Ok] value into an [Error] value.
  *
- * @see Outcome.coerceToSuccess
+ * @see coerceToSuccess
  * @see Outcome.falter
  */
 @KnomadicDsl

@@ -5,10 +5,10 @@ import kotlinx.coroutines.flow.map
 import nz.adjmunro.knomadic.FetchFlow
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.fetch.Fetch
-import nz.adjmunro.knomadic.fetch.mapFetchingToFinished
-import nz.adjmunro.knomadic.fetch.mapFinished
-import nz.adjmunro.knomadic.fetch.mapInitialToFinished
-import nz.adjmunro.knomadic.fetch.mapToFinished
+import nz.adjmunro.knomadic.fetch.members.mapFetchingToFinished
+import nz.adjmunro.knomadic.fetch.members.mapFinished
+import nz.adjmunro.knomadic.fetch.members.mapInitialToFinished
+import nz.adjmunro.knomadic.fetch.members.mapToFinished
 
 /** Convenience function to apply [mapFinished][Fetch.mapFinished] inside a [Flow]. */
 @KnomadicDsl

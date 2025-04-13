@@ -1,7 +1,7 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.raise.RaiseScope
+import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.util.itself
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract

@@ -1,9 +1,11 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.failureOf
+import nz.adjmunro.knomadic.outcome.successOf
+import nz.adjmunro.knomadic.outcome.outcomeOf
 import nz.adjmunro.knomadic.raise.RaiseScope
-import kotlin.contracts.InvocationKind.AT_MOST_ONCE
-import kotlin.contracts.contract
 
 /**
  * Returns a new [Outcome], after applying [transform] to the [Outcome.Success] value.
@@ -12,7 +14,7 @@ import kotlin.contracts.contract
  * - If the receiver [Outcome] is an [Outcome.Failure], the `Error` is simply re-wrapped to update the `Ok` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
- * - Unlike [Outcome.mapSuccess], flatMapSuccess's transform lambda returns the [Outcome] wrapper directly instead of the monad's internal value.
+ * - Unlike [mapSuccess][Outcome.mapSuccess], flatMapSuccess's transform lambda returns the [Outcome] wrapper directly instead of the monad's internal value.
  *
  * @receiver The [Outcome]<[In], [Error]> to transform.
  * @return A new [Outcome]<[Out], [Error]> with the transformed value.
@@ -23,8 +25,8 @@ import kotlin.contracts.contract
  *
  * @param transform The transform function to convert an [In] value into an [Outcome].
  *
- * @see Outcome.flatMapFailure
- * @see Outcome.flatMap
+ * @see flatMapFailure
+ * @see Outcome.fold
  */
 @KnomadicDsl
 public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMapSuccess(
@@ -38,7 +40,7 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.fl
  * - If the receiver [Outcome] is an [Outcome.Success], the `Ok` is simply re-wrapped to update the `Error` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
- * - Unlike [Outcome.mapFailure], flatMapFailure's transform lambda returns the [Outcome] wrapper directly instead of the monad's internal value.
+ * - Unlike [mapFailure][Outcome.mapFailure], flatMapFailure's transform lambda returns the [Outcome] wrapper directly instead of the monad's internal value.
  *
  * @receiver The [Outcome]<[Ok], [ErrorIn]> to transform.
  * @return A new [Outcome]<[Ok], [ErrorOut]> with the transformed error.
@@ -49,8 +51,8 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.fl
  *
  * @param transform The transform function to convert an [ErrorIn] value into an [Outcome].
  *
- * @see Outcome.flatMapSuccess
- * @see Outcome.flatMap
+ * @see flatMapSuccess
+ * @see Outcome.fold
  */
 @KnomadicDsl
 public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMapFailure(

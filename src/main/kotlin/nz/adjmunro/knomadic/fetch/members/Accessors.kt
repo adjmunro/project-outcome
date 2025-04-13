@@ -1,6 +1,7 @@
-package nz.adjmunro.knomadic.fetch
+package nz.adjmunro.knomadic.fetch.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.fetch.Fetch
 import nz.adjmunro.knomadic.util.itself
 import nz.adjmunro.knomadic.util.nulls
 import kotlin.contracts.contract

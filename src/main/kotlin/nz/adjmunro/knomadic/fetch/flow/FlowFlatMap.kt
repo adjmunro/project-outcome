@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.map
 import nz.adjmunro.knomadic.FetchFlow
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.fetch.Fetch
-import nz.adjmunro.knomadic.fetch.flatMapFetching
-import nz.adjmunro.knomadic.fetch.flatMapFinished
-import nz.adjmunro.knomadic.fetch.flatMapInitial
+import nz.adjmunro.knomadic.fetch.members.flatMapFetching
+import nz.adjmunro.knomadic.fetch.members.flatMapFinished
+import nz.adjmunro.knomadic.fetch.members.flatMapInitial
 
 /** Convenience function to apply [flatMapInitial][Fetch.flatMapInitial] inside a [Flow]. */
 @KnomadicDsl

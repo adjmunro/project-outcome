@@ -1,17 +1,18 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import nz.adjmunro.knomadic.OutcomeFlow
+import nz.adjmunro.knomadic.outcome.Outcome
 
-public fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.filterOnlySuccess(): Flow<Outcome.Success<Ok>> {
-    return filterIsInstance<Outcome.Success<Ok>>()
+public fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.filterOnlySuccess(): Flow<Ok> {
+    return filterIsInstance<Outcome.Success<Ok>>().map { it.value }
 }
 
-public fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.filterOnlyFailure(): Flow<Outcome.Failure<Error>> {
-    return filterIsInstance<Outcome.Failure<Error>>()
+public fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.filterOnlyFailure(): Flow<Error> {
+    return filterIsInstance<Outcome.Failure<Error>>().map { it.error }
 }
 
 public inline fun <Ok : Any, Error : Any> OutcomeFlow<Ok, Error>.onEachSuccess(

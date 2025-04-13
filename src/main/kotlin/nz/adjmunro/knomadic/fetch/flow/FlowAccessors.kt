@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.map
 import nz.adjmunro.knomadic.FetchFlow
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.fetch.Fetch
-import nz.adjmunro.knomadic.fetch.getOrDefault
-import nz.adjmunro.knomadic.fetch.getOrElse
-import nz.adjmunro.knomadic.fetch.getOrNull
-import nz.adjmunro.knomadic.fetch.getOrThrow
-import nz.adjmunro.knomadic.fetch.unwrap
+import nz.adjmunro.knomadic.fetch.members.getOrDefault
+import nz.adjmunro.knomadic.fetch.members.getOrElse
+import nz.adjmunro.knomadic.fetch.members.getOrNull
+import nz.adjmunro.knomadic.fetch.members.getOrThrow
+import nz.adjmunro.knomadic.fetch.members.unwrap
 
 /**
  * @return A [Flow] of the [result][Fetch.Finished.result] of a [Fetch] or the [default] value.

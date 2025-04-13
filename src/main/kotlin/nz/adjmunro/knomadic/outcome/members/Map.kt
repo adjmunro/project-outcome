@@ -1,6 +1,10 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.failureOf
+import nz.adjmunro.knomadic.outcome.outcomeOf
+import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.util.itself
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
@@ -51,7 +55,7 @@ public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<I
  * - If the receiver [Outcome] is an [Outcome.Failure], the `Error` is simply re-wrapped to update the `Ok` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
- * - Unlike [Outcome.flatMapSuccess], mapSuccess's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
+ * - Unlike [flatMapSuccess], mapSuccess's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
  *
  * @receiver The [Outcome]<[In], [Error]> to transform.
  * @return A new [Outcome]<[Out], [Error]> with the transformed value.
@@ -80,7 +84,7 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.ma
  * - If the receiver [Outcome] is an [Outcome.Success], the `Ok` is simply re-wrapped to update the `Error` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
- * - Unlike [Outcome.flatMapFailure], mapFailure's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
+ * - Unlike [flatMapFailure], mapFailure's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
  *
  * @receiver The [Outcome]<[Ok], [ErrorIn]> to transform.
  * @return A new [Outcome]<[Ok], [ErrorOut]> with the transformed error.

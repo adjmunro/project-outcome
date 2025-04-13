@@ -4,6 +4,8 @@ import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.KotlinResult
 import nz.adjmunro.knomadic.outcome.Outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome.Success
+import nz.adjmunro.knomadic.outcome.members.errorOrNull
+import nz.adjmunro.knomadic.outcome.members.getOrNull
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.catch
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default

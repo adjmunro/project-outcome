@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.map
 import nz.adjmunro.knomadic.FetchFlow
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.fetch.Fetch
-import nz.adjmunro.knomadic.fetch.fold
-import nz.adjmunro.knomadic.fetch.mapFinished
+import nz.adjmunro.knomadic.fetch.members.fold
+import nz.adjmunro.knomadic.fetch.members.mapFinished
 
 /**
  * [Fold][Fetch.fold] a [FetchFlow] into a [Flow] of [Output].

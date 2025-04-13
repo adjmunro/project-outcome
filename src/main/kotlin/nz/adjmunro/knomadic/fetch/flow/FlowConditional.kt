@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import nz.adjmunro.knomadic.FetchFlow
 import nz.adjmunro.knomadic.fetch.Fetch
-import nz.adjmunro.knomadic.fetch.isFinished
+import nz.adjmunro.knomadic.fetch.members.isFinished
 
 /**
  * Filter a [FetchFlow] by [isFinished], and map to the [result][Fetch.Finished.result].

@@ -1,6 +1,9 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.failureOf
+import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.knomadic.util.itself
 
 /**

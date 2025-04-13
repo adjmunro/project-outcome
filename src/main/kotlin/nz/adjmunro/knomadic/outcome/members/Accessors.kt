@@ -1,12 +1,12 @@
-package nz.adjmunro.knomadic.outcome
+package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.util.itself
 import nz.adjmunro.knomadic.util.nulls
 import nz.adjmunro.knomadic.util.rethrow
 import nz.adjmunro.knomadic.util.throwfold
 import java.lang.IllegalStateException
-import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
 /** @return The [value][Outcome.Success] or [default]. */
@@ -99,10 +99,10 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
  *
  * @return The [value][Outcome.Success] or the result of [recover].
  * @throws IllegalStateException if the [Outcome] is a [failure][Outcome.Failure].
- * @see Outcome.getOrThrow
- * @see Outcome.getOrNull
- * @see Outcome.getOrElse
- * @see Outcome.unwrapError
+ * @see getOrThrow
+ * @see getOrNull
+ * @see getOrElse
+ * @see unwrapError
  */
 @KnomadicDsl
 public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
@@ -123,10 +123,10 @@ public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
  *
  * @return The [error][Outcome.Failure] or the result of [faulter].
  * @throws IllegalStateException if the [Outcome] is a [success][Outcome.Success].
- * @see Outcome.errorOrThrow
- * @see Outcome.errorOrNull
- * @see Outcome.errorOrElse
- * @see Outcome.unwrap
+ * @see errorOrThrow
+ * @see errorOrNull
+ * @see errorOrElse
+ * @see unwrap
  */
 @KnomadicDsl
 public inline infix fun <Ok: Any, Error> Outcome<Ok, Error & Any>.unwrapError(

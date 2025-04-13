@@ -1,12 +1,13 @@
-package nz.adjmunro.knomadic.fetch
+package nz.adjmunro.knomadic.fetch.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.fetch.Fetch
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
  * Transform each [Fetch] status into an [Output].
- * 
+ *
  * - Unlike [mapFinished][Fetch.mapFinished], `fold` places no restrictions on [Output] type.
  * - If [Output] is [Fetch], `fold` can be used to `flatMap` all fetch statuses.
  * 
