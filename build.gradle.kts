@@ -91,7 +91,7 @@ tasks.register<Jar>("dokkaJar") {
 
 publishing {
     publications {
-        create<MavenPublication>(name = "knomadic-maven-artifact") {
+        register<MavenPublication>(name = "knomadic-maven-artifact") {
             from(components["kotlin"])
             groupId = version { project.group.id }
             artifactId = version { project.artifact.id }
@@ -101,13 +101,23 @@ publishing {
     repositories {
         mavenLocal()
 
-//       TODO
+        // Publish to GitHub Packages
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/adjmunro/knomadic")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+
+        // TODO Publish to Sonatype OSSRH / Maven Central
 //        maven {
-//            name = "GitHubPackages"
-//            url = uri("https://maven.pkg.github.com/adjmunro/knomadic")
+//            name = "OSSRH"
+//            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 //            credentials {
-//                username = System.getenv("GITHUB_ACTOR")
-//                password = System.getenv("GITHUB_TOKEN")
+//                username = System.getenv("MAVEN_USERNAME")
+//                password = System.getenv("MAVEN_PASSWORD")
 //            }
 //        }
     }
