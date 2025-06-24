@@ -116,6 +116,5 @@ publishing {
 dependencies {
     implementation(platform(libs.kotlin.bom))
     implementation(libs.bundles.core)
-    testImplementation(libs.bundles.core)
     testImplementation(libs.bundles.test)
 }
