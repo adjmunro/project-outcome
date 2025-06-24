@@ -2,14 +2,9 @@ name: Publish Dokka
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-
-  ## Delete below when merged to main!
-  ## Added such that one can test pages deployment on branch before merging
-  # pull_request:
-  #   branches: [ "main" ]
+  # Triggers the workflow on release
+  release:
+    types: [ published ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
