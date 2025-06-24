@@ -9,10 +9,15 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish package to the Maven Central Repository and GitHub Packages
+name: Publish to Maven Central & GitHub Packages
 on:
   release:
-    types: [created]
+    branches: [main]
+    types: [created, edited]
+
+  # This allows manual triggering of the workflow from the GitHub UI.
+  workflow_dispatch:
+
 jobs:
   publish:
     runs-on: ubuntu-latest

@@ -1,9 +1,11 @@
 name: Dependency Submission
 
 on:
-  push:
-    branches: [ 'main' ]
-  pull_request:
+  release:
+    types: [ published ]
+
+  # This allows manual triggering of the workflow from the GitHub UI.
+  workflow_dispatch:
 
 permissions:
   contents: write
