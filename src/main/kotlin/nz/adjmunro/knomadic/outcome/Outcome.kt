@@ -39,6 +39,8 @@ import nz.adjmunro.knomadic.util.rethrow
  *
  * @param catch Map thrown exceptions to an [Outcome]. (Throws by default).
  * @param block The code to execute.
+ * @see outcome
+ * @see catch
  */
 @KnomadicDsl
 public inline fun <Ok : Any, Error : Any> outcomeOf(
@@ -54,6 +56,37 @@ public inline fun <Ok : Any, Error : Any> outcomeOf(
         )
     }
 }
+
+/**
+ * An alias for [outcomeOf] that uses a [String] as the [Error] type.
+ *
+ * > Useful for simple cases, where you fail to provide a specific error type,
+ * > and just want to use any message string or [Throwable.message].
+ *
+ * @see outcomeOf
+ * @see catch
+ */
+@KnomadicDsl
+public inline fun <Ok : Any> outcome(
+    @BuilderInference block: RaiseScope<String>.() -> Ok,
+): Outcome<Ok, String> = outcomeOf(
+    catch = { e: Throwable -> Failure(error = e.message ?: e.toString()) },
+    block = block
+)
+
+/**
+ * An alias for [outcomeOf] that uses [Throwable] as the [Error] type.
+ *
+ * > Useful for cases where you want to catch & wrap all exceptions to
+ * > handle them as [Outcome.Failure].
+ *
+ * @see outcomeOf
+ * @see outcome
+ */
+@KnomadicDsl
+public inline fun <Ok : Any> catch(
+    @BuilderInference block: RaiseScope<Throwable>.() -> Ok,
+): Outcome<Ok, Throwable> = outcomeOf(catch = ::Failure, block = block)
 
 /**
  * Represents either a [Success] or [Failure] state.
