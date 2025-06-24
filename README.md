@@ -29,14 +29,6 @@ TL;DR: idiomatic kotlin; `sealed` & `inline`; `<Error: Any>`; short-circuit via 
   - Following the single-responsibility principle, the intention here is to wrap a `Outcome` in a `Fetch`, with each providing it's own behaviour.
   - Basically this was made because we inherited a stupid quasi `Fetch`/`Result` at work that doubled up all the success/failure function maintenance (and also I was curious about making a custom `FlowCollector` context runner).
 
-### Why suspend?
----
-At first I thought that inline functions would inherit the surrounding continuation context, but I soon discovered that their lambdas seemingly cannot. Therefore, instead of providing a suspending an non-suspending version of very function, I've decided to take another page out of ArrowKt's book and *always suspend*. 
-
-The premise for this is that suspending gives control of how to suspend to YOU!, the library consumer. You can `launch`, `async`, or `runBlocking` - that's not my responsibility. But all the utilities here should inherit the continuation context properly without breaking your code. 
-
-It's not a bug 🐛, ~~it's a shiny bug! 🐛✨~~ it's a feature! ✨
-
 ### Notes & Quirks
 ---
 > 1. I've noticed that if you specify `outcomeOf(catch = ::Failure)`, it forces `RaiseScope<Throwable>`, regardless of what you try to raise inside the scope. 
