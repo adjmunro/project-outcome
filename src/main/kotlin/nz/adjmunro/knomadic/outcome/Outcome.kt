@@ -23,22 +23,24 @@ import nz.adjmunro.knomadic.util.rethrow
  * > by the [RaiseScope], which may interfere with the intended [Error] type!*
  * ```kotlin
  * // Outcome<Unit, Throwable>
- * outcomeOf(::Failure) { this: RaiseScope<Throwable> -> ... }
+ * outcomeOf(::Failure) { // this: RaiseScope<Throwable> -> ... }
  *
  * // Outcome<Int, String>
- * outcomeOf { this: RaiseScope<String> ->
+ * outcomeOf { // this: RaiseScope<String> ->
  *     raise { "error" }
  *     return 3
  * }
  *
  * // Outcome<String, NullPointerException>
- * outcomeOf { this: RaiseScope<NullPointerException> ->
+ * outcomeOf { // this: RaiseScope<NullPointerException> ->
  *     catch({ it }) { throw NullPointerException() }
  * }
  * ```
  *
  * @param catch Map thrown exceptions to an [Outcome]. (Throws by default).
  * @param block The code to execute.
+ * @see outcome
+ * @see catch
  */
 @KnomadicDsl
 public inline fun <Ok : Any, Error : Any> outcomeOf(
@@ -54,6 +56,37 @@ public inline fun <Ok : Any, Error : Any> outcomeOf(
         )
     }
 }
+
+/**
+ * An alias for [outcomeOf] that uses a [String] as the [Error] type.
+ *
+ * > Useful for simple cases, where you fail to provide a specific error type,
+ * > and just want to use any message string or [Throwable.message].
+ *
+ * @see outcomeOf
+ * @see catch
+ */
+@KnomadicDsl
+public inline fun <Ok : Any> outcome(
+    @BuilderInference block: RaiseScope<String>.() -> Ok,
+): Outcome<Ok, String> = outcomeOf(
+    catch = { e: Throwable -> Failure(error = e.message ?: e.toString()) },
+    block = block
+)
+
+/**
+ * An alias for [outcomeOf] that uses [Throwable] as the [Error] type.
+ *
+ * > Useful for cases where you want to catch & wrap all exceptions to
+ * > handle them as [Outcome.Failure].
+ *
+ * @see outcomeOf
+ * @see outcome
+ */
+@KnomadicDsl
+public inline fun <Ok : Any> catch(
+    @BuilderInference block: RaiseScope<Throwable>.() -> Ok,
+): Outcome<Ok, Throwable> = outcomeOf(catch = ::Failure, block = block)
 
 /**
  * Represents either a [Success] or [Failure] state.
