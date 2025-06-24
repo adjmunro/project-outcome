@@ -36,7 +36,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
  *
  * @param recover The transform function to convert an [Error] value into an [Ok] value.
  *
- * @see coerceToFailure
+ * @see Outcome.coerceToFailure
  * @see Outcome.recover
  */
 @KnomadicDsl
@@ -63,7 +63,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToSucce
  *
  * @param falter The transform function to convert an [Ok] value into an [Error] value.
  *
- * @see coerceToSuccess
+ * @see Outcome.coerceToSuccess
  * @see Outcome.falter
  */
 @KnomadicDsl

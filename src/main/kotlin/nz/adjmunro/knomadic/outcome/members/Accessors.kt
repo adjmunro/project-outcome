@@ -99,10 +99,10 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
  *
  * @return The [value][Outcome.Success] or the result of [recover].
  * @throws IllegalStateException if the [Outcome] is a [failure][Outcome.Failure].
- * @see getOrThrow
- * @see getOrNull
- * @see getOrElse
- * @see unwrapError
+ * @see Outcome.getOrThrow
+ * @see Outcome.getOrNull
+ * @see Outcome.getOrElse
+ * @see Outcome.unwrapError
  */
 @KnomadicDsl
 public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
@@ -123,10 +123,10 @@ public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
  *
  * @return The [error][Outcome.Failure] or the result of [faulter].
  * @throws IllegalStateException if the [Outcome] is a [success][Outcome.Success].
- * @see errorOrThrow
- * @see errorOrNull
- * @see errorOrElse
- * @see unwrap
+ * @see Outcome.errorOrThrow
+ * @see Outcome.errorOrNull
+ * @see Outcome.errorOrElse
+ * @see Outcome.unwrap
  */
 @KnomadicDsl
 public inline infix fun <Ok: Any, Error> Outcome<Ok, Error & Any>.unwrapError(

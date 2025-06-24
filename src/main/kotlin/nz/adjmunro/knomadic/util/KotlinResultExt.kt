@@ -7,8 +7,11 @@ import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.KotlinResult
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
+import kotlin.collections.isNotEmpty
+import kotlin.collections.map
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.getOrThrow
 
 /**
  * Context runner to encapsulate the result of [block] as a [KotlinResult].
@@ -64,7 +67,7 @@ public inline fun <T> nullable(block: () -> T): T? {
  * - [Failure][Result.isFailure] -> `returns` the encapsulated [Throwable]
  */
 @KnomadicDsl
-public inline fun <T> Result<T>.exceptionOrThrow(): Throwable {
+public inline fun <T> KotlinResult<T>.exceptionOrThrow(): Throwable {
     return fold(
         onSuccess = { throw NoSuchElementException("Result is not a failure: $this") },
         onFailure = ::itself,
@@ -79,7 +82,7 @@ public inline fun <T> Result<T>.exceptionOrThrow(): Throwable {
  * *Note, that this function rethrows any [Throwable] exception thrown by [onSuccess] function.*
  */
 @KnomadicDsl
-public inline fun <T> Result<T>.exceptionOrElse(onSuccess: (value: T) -> Throwable): Throwable {
+public inline fun <T> KotlinResult<T>.exceptionOrElse(onSuccess: (value: T) -> Throwable): Throwable {
     return fold(onSuccess = onSuccess, onFailure = ::itself)
 }
 
@@ -89,7 +92,7 @@ public inline fun <T> Result<T>.exceptionOrElse(onSuccess: (value: T) -> Throwab
  * - [Failure][Result.isFailure] -> `returns` the encapsulated [Throwable].
  */
 @KnomadicDsl
-public inline fun <T> Result<T>.exceptionOrDefault(default: Throwable): Throwable {
+public inline fun <T> KotlinResult<T>.exceptionOrDefault(default: Throwable): Throwable {
     return fold(onSuccess = { default }, onFailure = ::itself)
 }
 
@@ -103,9 +106,9 @@ public inline fun <T> Result<T>.exceptionOrDefault(default: Throwable): Throwabl
  *
  * ```kotlin
  * resultOf { 4 }
- *   .andThen { it * 2 } // Result.success(8)
- *   .andThen { check(false) { it } } // Result.failure(IllegalStateException("4"))
- *   .andThen { 16 } // Remains Result.failure(IllegalStateException("4"))
+ *   .andThen { it * 2 } // KotlinResult.success(8)
+ *   .andThen { check(false) { it } } // KotlinResult.failure(IllegalStateException("4"))
+ *   .andThen { 16 } //  RemainsKotlinResult.failure(IllegalStateException("4"))
  * ```
  *
  * @see resultOf
@@ -125,8 +128,8 @@ public inline fun <I, O> KotlinResult<I>.andThen(onSuccess: (I) -> O): KotlinRes
  * - *If [onSuccess] throws an exception, it will be caught & wrapped by [resultOf].*
  *
  * ```kotlin
- * resultOf { 4 }.andIf({ it > 0 }) { it * 2 } // Result.success(8)
- * resultOf { 4 }.andIf({ it < 0 }) { it * 2 } // Result.success(4)
+ * resultOf { 4 }.andIf({ it > 0 }) { it * 2 } // KotlinResult.success(8)
+ * resultOf { 4 }.andIf({ it < 0 }) { it * 2 } // KotlinResult.success(4)
  * ```
  *
  * @see resultOf
@@ -155,10 +158,10 @@ public inline fun <T> KotlinResult<T>.andIf(
  * ***This is the [resultOf] alternative to [Result.recoverCatching].***
  *
  * ```kotlin
- * resultOf { 4 } // Result.success(4)
- *   .tryRecover { Unit } // No Change - Result.success(4)
- *   .andThen { throw FileNotFoundException("test") } // Result.failure(FileNotFoundException("test"))
- *   .tryRecover { 7 } // Result.success(7)
+ * resultOf { 4 } // KotlinResult.success(4)
+ *   .tryRecover { Unit } // No Change - KotlinResult.success(4)
+ *   .andThen { throw FileNotFoundException("test") } // KotlinResult.failure(FileNotFoundException("test"))
+ *   .tryRecover { 7 } // KotlinResult.success(7)
  * ```
  *
  * @see resultOf
@@ -179,7 +182,7 @@ public inline fun <T> KotlinResult<T>.tryRecover(onFailure: (Throwable) -> T): K
  * *Note, this function rethrows any [Throwable] exception thrown by the [onFailure] function.*
  */
 @KnomadicDsl
-public inline fun <T> Result<T>.mapFailure(onFailure: (Throwable) -> Throwable): Result<T> {
+public inline fun <T> KotlinResult<T>.mapFailure(onFailure: (Throwable) -> Throwable): KotlinResult<T> {
     contract { callsInPlace(onFailure, InvocationKind.AT_MOST_ONCE) }
     return fold(onSuccess = ::success, onFailure = { failure(onFailure(it)) })
 }
@@ -193,9 +196,9 @@ public inline fun <T> Result<T>.mapFailure(onFailure: (Throwable) -> Throwable):
  * **However**, since this is [flatMap], you can easily embed another [resultOf] inside the [onSuccess] function.*
  */
 @KnomadicDsl
-public inline fun <In, Out> Result<In>.flatMap(
-    @BuilderInference onSuccess: (In) -> Result<Out>,
-): Result<Out> {
+public inline fun <In, Out> KotlinResult<In>.flatMap(
+    @BuilderInference onSuccess: (In) -> KotlinResult<Out>,
+): KotlinResult<Out> {
     return fold(onSuccess = onSuccess, onFailure = ::failure)
 }
 
@@ -207,7 +210,7 @@ public inline fun <In, Out> Result<In>.flatMap(
  *   [exception][Result.Failure.exception] from the outer [KotlinResult].
  */
 @KnomadicDsl
-public inline fun <T> Result<Result<T>>.flatten(): Result<T> {
+public inline fun <T> KotlinResult<Result<T>>.flatten(): KotlinResult<T> {
     return fold(onSuccess = ::itself, onFailure = ::failure)
 }
 
