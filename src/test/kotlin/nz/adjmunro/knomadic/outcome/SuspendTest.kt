@@ -6,6 +6,9 @@ import io.kotest.matchers.result.shouldBeSuccess
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
+import nz.adjmunro.knomadic.outcome.members.aggregate
+import nz.adjmunro.knomadic.outcome.members.andIf
+import nz.adjmunro.knomadic.outcome.members.andThen
 import nz.adjmunro.knomadic.outcome.members.coerceToFailure
 import nz.adjmunro.knomadic.outcome.members.coerceToSuccess
 import nz.adjmunro.knomadic.outcome.members.errorOrElse
@@ -26,6 +29,7 @@ import nz.adjmunro.knomadic.outcome.members.onEachSuccess
 import nz.adjmunro.knomadic.outcome.members.onFailure
 import nz.adjmunro.knomadic.outcome.members.onSuccess
 import nz.adjmunro.knomadic.outcome.members.recover
+import nz.adjmunro.knomadic.outcome.members.tryRecover
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.catch
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
@@ -33,7 +37,7 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.ensure
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.ensureNotNull
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.raise
-import nz.adjmunro.knomadic.util.collect
+import nz.adjmunro.knomadic.util.aggregate
 import nz.adjmunro.knomadic.util.exceptionOrElse
 import nz.adjmunro.knomadic.util.flatMap
 import nz.adjmunro.knomadic.util.mapFailure
@@ -70,7 +74,7 @@ class SuspendTest {
         result.exceptionOrElse { suspendException() }
         result.flatMap { suspend().let(::success) }
         result.mapFailure { suspendException() }
-        list.collect { suspendException() }
+        list.aggregate { suspendException() }
 
         // Then
         result.shouldBeSuccess { it.shouldBeEqual(true) }
@@ -88,7 +92,7 @@ class SuspendTest {
         result.exceptionOrElse { blockingException() }
         result.flatMap { blocking().let(::success) }
         result.mapFailure { blockingException() }
-        list.collect { blockingException() }
+        list.aggregate { blockingException() }
 
         // Then
         result.shouldBeSuccess { it.shouldBeEqual(true) }
@@ -158,6 +162,7 @@ class SuspendTest {
     @Test @Suppress("UnreachableCode")
     fun `Outcome works with suspend`(): TestResult = runTest {
         val outcome = outcomeOf(::failureOf) { suspend() }
+
         outcomeOf<Boolean, Boolean>({ failureOf(suspend()) }) { suspend() }
         maybeOf { suspend() }
         maybeOf<Boolean>({ suspend(); failureOf(Unit) }) { suspend() }
@@ -177,6 +182,10 @@ class SuspendTest {
         outcome.mapSuccess { suspend() }
         outcome.mapFailure { suspend() }
 
+        outcome.andThen { suspend() }
+        outcome.andIf({ suspend() }) { suspend() }
+        outcome.tryRecover<Boolean, Throwable, Boolean> { suspend() }
+
         outcome.flatMapSuccess { suspend().let(::successOf) }
         outcome.flatMapFailure { suspend().let(::failureOf) }
         outcome.fold({ suspend() }, { suspend() })
@@ -185,6 +194,12 @@ class SuspendTest {
         outcome.falter { suspend() }
         outcome.coerceToSuccess { suspend() }
         outcome.coerceToFailure { suspend() }
+
+        listOf(
+            outcomeOf(::failureOf) { suspend() },
+            outcomeOf(::failureOf) { suspend() },
+            outcomeOf(::failureOf) { suspend() },
+        ).aggregate { suspendException() }
     }
 
     @Test @Suppress("UnreachableCode")
@@ -211,6 +226,10 @@ class SuspendTest {
         outcome.mapSuccess { blocking() }
         outcome.mapFailure { blocking() }
 
+        outcome.andThen { blocking() }
+        outcome.andIf({ blocking() }) { blocking() }
+        outcome.tryRecover<Boolean, Throwable, Boolean> { blocking() }
+
         outcome.flatMapSuccess { blocking().let(::successOf) }
         outcome.flatMapFailure { blocking().let(::failureOf) }
         outcome.fold({ blocking() }, { blocking() })
@@ -219,6 +238,12 @@ class SuspendTest {
         outcome.falter { blocking() }
         outcome.coerceToSuccess { blocking() }
         outcome.coerceToFailure { blocking() }
+
+        listOf(
+            outcomeOf(::failureOf) { blocking() },
+            outcomeOf(::failureOf) { blocking() },
+            outcomeOf(::failureOf) { blocking() },
+        ).aggregate { blockingException() }
     }
 
     @Test @Suppress("UnreachableCode")
