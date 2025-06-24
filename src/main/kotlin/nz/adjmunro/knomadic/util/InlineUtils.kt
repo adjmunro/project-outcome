@@ -79,6 +79,24 @@ public inline fun rethrow(throwable: Throwable): Nothing = throw throwable
 public inline fun nulls(ignore: Any? = null): Nothing? = null
 
 /**
+ * Syntax-sugar for a lambda that returns [Unit].
+ *
+ * ```kotlin
+ * fun <T> T.map(transform: (T) -> Unit): Unit
+ *
+ * // Before:
+ * map(transform = { /* do nothing */ })
+ *
+ * // After:
+ * map(transform = ::unit)
+ * ```
+ *
+ * @return [Unit].
+ */
+@KnomadicDsl
+public inline fun unit(ignore: Any? = null): Unit = Unit
+
+/**
  * Syntax-sugar for a lambda that returns the [String] of `it`.
  *
  * ```kotlin

@@ -3,12 +3,14 @@
 package nz.adjmunro.knomadic.outcome
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.members.mapFailure
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.util.nullfold
 import nz.adjmunro.knomadic.util.rethrow
 import nz.adjmunro.knomadic.util.throwfold
+import nz.adjmunro.knomadic.util.unit
 
 @KnomadicDsl
 public typealias Maybe<Ok> = Outcome<Ok, Unit>
@@ -19,6 +21,9 @@ public inline fun outcomeFailed(ignore: Any? = null): Outcome.Failure<Unit> = fa
 @KnomadicDsl
 public inline fun <T> T.wrapMaybe(): Maybe<T & Any> =
     throwfold(::outcomeFailed) { it.nullfold(::outcomeFailed, ::successOf) }
+
+@KnomadicDsl
+public inline fun <Ok : Any> Outcome<Ok, *>.asMaybe(): Maybe<Ok> = mapFailure(::unit)
 
 @KnomadicDsl
 public inline fun <Ok : Any> maybeOf(
