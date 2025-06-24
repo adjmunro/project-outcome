@@ -212,21 +212,29 @@ public inline fun <T> Result<Result<T>>.flatten(): Result<T> {
 }
 
 /**
- * - ***If all*** [results][KotlinResult] in the [Collection] are [success][Result.isSuccess],
+ * - ***If all*** [results][KotlinResult] in the [Iterable] are [success][Result.isSuccess],
  *   `returns` a new [KotlinResult] success, with a [List] of each element's encapsulated value.
- * - ***If any*** [results][KotlinResult] in the [Collection] are [failure][Result.isFailure],
+ * - ***If any*** [results][KotlinResult] in the [Iterable] are [failure][Result.isFailure],
  *   `returns` a new [KotlinResult] failure with the result of the [reduce] function.
  */
 @KnomadicDsl
-public inline fun <T> Collection<Result<T>>.collect(
+public inline fun <T> Iterable<KotlinResult<T>>.aggregate(
     reduce: (List<Throwable>) -> Throwable,
-): Result<List<T>> {
+): KotlinResult<List<T>> {
     contract { callsInPlace(reduce, InvocationKind.AT_MOST_ONCE) }
 
-    val (errors, successes) = partition { it.isFailure }
+    val (
+        errors: List<KotlinResult<T>>,
+        successes: List<KotlinResult<T>>,
+    ) = partition(predicate = KotlinResult<T>::isFailure)
 
     return when {
-        errors.isNotEmpty() -> failure(reduce(errors.map { it.exceptionOrThrow() }))
-        else -> success(successes.map { it.getOrThrow() })
+        errors.isNotEmpty() -> failure(
+            exception = reduce(errors.map(transform = KotlinResult<T>::exceptionOrThrow)),
+        )
+
+        else -> success(
+            value = successes.map(transform = KotlinResult<T>::getOrThrow),
+        )
     }
 }
