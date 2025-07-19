@@ -2,56 +2,30 @@ name: Pull Request CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - '**'
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
+  auto-assign-author:
+    uses: ./.github/workflows/auto-assign-author.yml
+
+  setup-java-gradle:
+    uses: ./.github/workflows/setup-gradle.yml
+
   build:
-    name: Gradle Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-
-      # Setup Gradle takes care of gradle caching & dependency graph reporting
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          add-job-summary-as-pr-comment: on-failure # Valid values are 'never' (default), 'always', and 'on-failure'
-
-      - name: Execute Gradle build
-        run: ./gradlew build
+    uses: ./.github/workflows/build.yml
+    needs: setup-java-gradle
 
   unit-tests:
-    name: Unit Tests
-    uses: ./.github/workflows/job-unit-tests.yml
+    uses: ./.github/workflows/unit-tests.yml
+    needs: build
 
   automerge-dependabot-job:
-    name: Automerge Dependabot
-    needs: [ build, unit-tests ]
-    runs-on: ubuntu-latest
     # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
-    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && github.event_name == 'pull_request' }}
-    steps:
-      # Install GitHub CLI (gh) so we can approve and merge PRs programmatically
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install gh
-
-      # Approve the PR using the PR number
-      - name: Approve Dependabot PR
-        run: gh pr review ${{ github.event.pull_request.number }} --approve
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Enable auto-merge for the PR using the PR number
-      - name: Enable auto-merge for Dependabot PRs
-        run: gh pr merge ${{ github.event.pull_request.number }} --auto --merge
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    needs: [ build, unit-tests ]
+    uses: ./.github/workflows/automerge-dependabot.yml

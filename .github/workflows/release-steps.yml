@@ -1,0 +1,35 @@
+name: Release Steps
+on:
+  workflow_call:
+jobs:
+  dependency-submission:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Submit dependencies
+        uses: gradle/actions/dependency-submission@v3
+
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: kotlin, java
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  dokka:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish Dokka Docs
+        run: ./gradlew dokkaHtml
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish to GitHub Packages
+        run: ./gradlew publish

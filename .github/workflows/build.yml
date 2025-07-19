@@ -1,0 +1,17 @@
+name: Build
+on:
+  workflow_call:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java and Gradle
+        uses: ./.github/actions/setup-gradle
+
+      - name: Execute Gradle build
+        run: ./gradlew build
+
+      - name: Cache Gradle build
+        uses: ./.github/actions/cache-gradle
