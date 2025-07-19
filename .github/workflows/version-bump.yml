@@ -1,6 +1,6 @@
 # This workflow increments the minor version and resets patch for human authors,
 # increments patch for bots, and triggers a release only for major/minor bumps.
-name: Bump Version
+name: Version Bump
 
 on:
   workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
