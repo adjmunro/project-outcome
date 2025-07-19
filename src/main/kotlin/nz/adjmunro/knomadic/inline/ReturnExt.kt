@@ -15,7 +15,7 @@ import nz.adjmunro.knomadic.KnomadicDsl
  * map(transform = { it })
  *
  * // After:
- * map(transform = ::it)
+ * map(transform = ::itself)
  * ```
  *
  * @return The first argument passed to the lambda.
