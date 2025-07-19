@@ -25,7 +25,10 @@ jobs:
     uses: ./.github/workflows/unit-tests.yml
     needs: build
 
+  versioning:
+    uses: ./.github/workflows/versioning.yml
+
+  # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
   automerge-dependabot-job:
-    # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
-    needs: [ build, unit-tests ]
     uses: ./.github/workflows/automerge-dependabot.yml
+    needs: [ build, unit-tests ]
