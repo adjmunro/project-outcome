@@ -1,42 +1,31 @@
-# Read this: https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-java-packages-with-gradle
+name: Publish Release
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# GitHub recommends pinning actions (i.e. setup-gradle) to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: Publish to Maven Central & GitHub Packages
 on:
-  release:
-    branches: [main]
-    types: [created, edited]
-
-  # This allows manual triggering of the workflow from the GitHub UI.
-  workflow_dispatch:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  push:
+    branches:
+      - main
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: 21
-          distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0 (read above)
+  version-tag:
+    uses: ./.github/workflows/publish/version-tag.yml
 
-      - name: Publish package
-        run: ./gradlew publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-#          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+  dokka:
+    uses: ./github/workflows/publish/dokka.yml
+    needs: [version-tag]
+
+  dependency-submission:
+    uses: ./.github/workflows/publish/dependency-submission.yml
+    needs: [version-tag]
+
+  codeql:
+    uses: ./.github/workflows/publish/codeql.yml
+    needs: [version-tag]
+
+  github-packages:
+    uses: ./.github/workflows/publish/github-packages.yml
+    needs: [version-tag, dokka, dependency-submission, codeql]
+
+  changelog:
+    uses: ./.github/workflows/publish/changelog.yml
+    needs: [version-tag, dokka]

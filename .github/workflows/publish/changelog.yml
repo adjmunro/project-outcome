@@ -1,0 +1,45 @@
+name: Changelog Release
+on:
+  workflow_call:
+jobs:
+  changelog-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          if [ -z "$TAG" ]; then
+            echo >&2 "ERROR: No tags found. Cannot create release."
+            exit 1
+          fi
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
+          if [ -z "$PREV_TAG" ]; then
+            echo >&2 "ERROR: No previous tag found. Cannot generate changelog."
+            exit 1
+          fi
+          echo "Generating changelog from $PREV_TAG to $TAG"
+          CHANGELOG=$(git log $PREV_TAG..$TAG --pretty=format:'* %s (%an)' --no-merges)
+          if [ -z "$CHANGELOG" ]; then
+            echo >&2 "No commits found between $PREV_TAG and $TAG. Changelog will be empty."
+          fi
+          echo "$CHANGELOG" > changelog.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG }}
+          name: Release ${{ env.TAG }}
+          body_path: changelog.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
