@@ -1,4 +1,5 @@
-name: Release Steps
+name: Publish Release
+
 on:
   workflow_call:
 jobs:

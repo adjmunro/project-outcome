@@ -1,6 +1,7 @@
-name: Versioning
 # This workflow increments the minor version and resets patch for human authors,
 # increments patch for bots, and triggers a release only for major/minor bumps.
+name: Bump Version
+
 on:
   workflow_call:
 jobs:

@@ -26,7 +26,7 @@ jobs:
     needs: build
 
   versioning:
-    uses: ./.github/workflows/versioning.yml
+    uses: ./.github/workflows/bump-version.yml
 
   # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
   automerge-dependabot-job:
