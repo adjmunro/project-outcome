@@ -5,6 +5,83 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
+ * Syntax-sugar for a lambda that folds a receiver type [T] into type [R].
+ *
+ * *This should primarily be used when chaining.*
+ *
+ * ```kotlin
+ * val result: String = "Hello"
+ *
+ * // Before:
+ * val a = 7
+ * val b = if (a % 2 == 0) null else a
+ * val c = b?.toString().orEmpty()
+ *
+ * // After:
+ * 7.fold(
+ *   predicate = { this % 2 == 0 },
+ *   falsy = { null },
+ *   truthy = { this }
+ * ).toString().orEmpty()
+ * ```
+ *
+ * @param T The type of the receiver.
+ * @param R The type of the return value.
+ * @param predicate The predicate to evaluate on the receiver.
+ * @param falsy The lambda to call if the predicate returns `false`.
+ * @param truthy The lambda to call if the predicate returns `true`.
+ * @see flatmap
+ */
+@KnomadicDsl
+public inline fun <T, R> T.fold(
+    predicate: T.() -> Boolean,
+    falsy: T.() -> R,
+    truthy: T.() -> R,
+): R {
+    contract {
+        callsInPlace(predicate, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(falsy, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(truthy, InvocationKind.AT_MOST_ONCE)
+    }
+
+    return when (predicate()) {
+        true -> truthy()
+        false -> falsy()
+    }
+}
+
+/**
+ * Syntax-sugar for a lambda that folds a receiver type [T] into something else of the same type.
+ *
+ * *This should primarily be used when chaining.*
+ *
+ * ```kotlin
+ * val result: String = "Hello"
+ *
+ * // Before:
+ * val a = 7
+ * val b = if (a % 2 == 0) a else a * 2
+ * val c = b.toString()
+ *
+ * // After:
+ * 7.flatmap(predicate = { this % 2 == 0 }) { this * 2 }
+ *     .toString()
+ * ```
+ *
+ * @param T The type of the receiver.
+ * @param predicate The predicate to evaluate on the receiver.
+ * @param falsy The lambda to call if the predicate returns `false`.
+ * @param truthy The lambda to call if the predicate returns `true`.
+ * @see fold
+ */
+@KnomadicDsl
+public inline fun <T> T.flatmap(
+    predicate: T.() -> Boolean,
+    falsy: T.() -> T = ::caller,
+    truthy: T.() -> T = ::caller,
+): T = fold(predicate = predicate, falsy = falsy, truthy = truthy)
+
+/**
  * Syntax-sugar for a lambda folds a nullable receiver type into type [Out].
  *
  * *Looks dumb, but weirdly useful in the right context.*
