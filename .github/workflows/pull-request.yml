@@ -13,23 +13,19 @@ permissions:
 
 jobs:
   auto-assign-author:
-    uses: ./.github/workflows/auto-assign-author.yml
-
-  setup-java-gradle:
-    uses: ./.github/workflows/setup-gradle.yml
+    uses: ./.github/workflows/pull-request/auto-assign-author.yml
 
   build:
-    uses: ./.github/workflows/build.yml
-    needs: setup-java-gradle
+    uses: ./.github/workflows/pull-request/build.yml
 
   unit-tests:
-    uses: ./.github/workflows/unit-tests.yml
+    uses: ./.github/workflows/pull-request/unit-tests.yml
     needs: build
 
   version-bump:
-    uses: ./.github/workflows/version-bump.yml
+    uses: ./.github/workflows/pull-request/version-bump.yml
 
   # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
   automerge-dependabot-job:
-    uses: ./.github/workflows/automerge-dependabot.yml
+    uses: ./.github/workflows/pull-request/automerge-dependabot.yml
     needs: [ build, unit-tests ]

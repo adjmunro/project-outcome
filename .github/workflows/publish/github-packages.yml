@@ -23,10 +23,10 @@ jobs:
       - name: Setup Java and Gradle
         uses: ./.github/actions/setup-gradle
 
-      - name: Cache Gradle build
+      - name: Restore Gradle Build Cache
         uses: ./.github/actions/cache-gradle
 
-      - name: Publish package
-        run: ./gradlew publish
+      - name: Publish to GitHub Packages
+        run: ./gradlew publish # TODO: note this is for all publishing repos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
