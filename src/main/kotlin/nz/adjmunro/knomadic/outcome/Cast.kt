@@ -3,8 +3,8 @@
 package nz.adjmunro.knomadic.outcome
 
 import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.util.nullfold
-import nz.adjmunro.knomadic.util.throwfold
+import nz.adjmunro.knomadic.inline.nullfold
+import nz.adjmunro.knomadic.inline.throwfold
 
 @KnomadicDsl
 public inline fun <Ok : Any> successOf(value: Ok): Outcome.Success<Ok> = Outcome.Success(value)
