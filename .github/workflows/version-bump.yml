@@ -36,7 +36,7 @@ jobs:
           MINOR=$(grep 'project-version-minor' gradle/libs.versions.toml | cut -d'=' -f2 | tr -d ' "')
           PATCH=$(grep 'project-version-patch' gradle/libs.versions.toml | cut -d'=' -f2 | tr -d ' "')
           if ! [[ "$MAJOR" =~ ^[0-9]+$ && "$MINOR" =~ ^[0-9]+$ && "$PATCH" =~ ^[0-9]+$ ]]; then
-            echo "ERROR: Version fields in libs.versions.toml must be numbers. Found: major='$MAJOR', minor='$MINOR', patch='$PATCH'"
+            echo >&2 "ERROR: Version fields in libs.versions.toml must be numbers. Found: major='$MAJOR', minor='$MINOR', patch='$PATCH'"
             exit 1
           fi
           echo "current_version=$MAJOR.$MINOR.$PATCH" >> $GITHUB_ENV
@@ -52,7 +52,7 @@ jobs:
           PREV_MINOR=$(git show origin/main:gradle/libs.versions.toml | grep 'project-version-minor' | cut -d'=' -f2 | tr -d ' "')
           PREV_PATCH=$(git show origin/main:gradle/libs.versions.toml | grep 'project-version-patch' | cut -d'=' -f2 | tr -d ' "')
           if ! [[ "$PREV_MAJOR" =~ ^[0-9]+$ && "$PREV_MINOR" =~ ^[0-9]+$ && "$PREV_PATCH" =~ ^[0-9]+$ ]]; then
-            echo "ERROR: Previous version fields in main branch libs.versions.toml must be numbers. Found: major='$PREV_MAJOR', minor='$PREV_MINOR', patch='$PREV_PATCH'"
+            echo >&2 "ERROR: Previous version fields in main branch libs.versions.toml must be numbers. Found: major='$PREV_MAJOR', minor='$PREV_MINOR', patch='$PREV_PATCH'"
             exit 1
           fi
           echo "prev_version=$PREV_MAJOR.$PREV_MINOR.$PREV_PATCH" >> $GITHUB_ENV
