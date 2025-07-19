@@ -11,7 +11,7 @@ jobs:
     uses: ./.github/workflows/publish/version-tag.yml
 
   dokka:
-    uses: ./github/workflows/publish/dokka.yml
+    uses: ./.github/workflows/publish/dokka.yml
     needs: [version-tag]
 
   dependency-submission:
