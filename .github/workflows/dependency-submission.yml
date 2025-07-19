@@ -1,11 +1,8 @@
 name: Dependency Submission
 
 on:
-  release:
-    types: [ published ]
-
-  # This allows manual triggering of the workflow from the GitHub UI.
-  workflow_dispatch:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  workflow_call: # Allows this workflow to be called from other workflows.
 
 permissions:
   contents: write

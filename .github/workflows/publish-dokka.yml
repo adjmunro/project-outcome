@@ -1,13 +1,8 @@
 name: Publish Dokka
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on release
-  release:
-    types: [ published ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  workflow_call: # Allows this workflow to be called from other workflows.
 
 jobs:
   publish-dokka:

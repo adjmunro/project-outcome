@@ -1,12 +1,9 @@
 # Read this: https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-java-packages-with-gradle
 name: Publish to Maven Central & GitHub Packages
-on:
-  release:
-    branches: [main]
-    types: [created, edited]
 
-  # This allows manual triggering of the workflow from the GitHub UI.
-  workflow_dispatch:
+on:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  workflow_call: # Allows this workflow to be called from other workflows.
 
 jobs:
   publish:
@@ -16,6 +13,12 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Ensure running on main branch
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: |
+          echo "This workflow can only be run from the main branch."
+          exit 1
 
       - name: Setup Java and Gradle
         uses: ./.github/actions/setup-gradle

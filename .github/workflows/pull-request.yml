@@ -1,6 +1,7 @@
-name: Pull Request CI
+name: Pull Request
 
 on:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:

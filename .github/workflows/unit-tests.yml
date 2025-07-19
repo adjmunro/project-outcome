@@ -1,6 +1,9 @@
 name: Unit Tests
+
 on:
-  workflow_call:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  workflow_call: # Allows this workflow to be called from other workflows.
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest

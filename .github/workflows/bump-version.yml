@@ -3,7 +3,9 @@
 name: Bump Version
 
 on:
-  workflow_call:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  workflow_call: # Allows this workflow to be called from other workflows.
+
 jobs:
   versioning:
     runs-on: ubuntu-latest
