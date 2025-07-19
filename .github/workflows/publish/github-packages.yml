@@ -1,5 +1,5 @@
 # Read this: https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-java-packages-with-gradle
-name: Publish to Maven Central & GitHub Packages
+name: Publish to GitHub Packages
 
 on:
   workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
@@ -30,5 +30,3 @@ jobs:
         run: ./gradlew publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-#          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

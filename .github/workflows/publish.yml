@@ -1,0 +1,19 @@
+name: Publish Release
+
+on:
+  workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
+  workflow_call: # Allows this workflow to be called from other workflows.
+
+jobs:
+  dependency-submission:
+    uses: ./.github/workflows/dependency-submission.yml
+
+  codeql:
+    uses: ./.github/workflows/release/codeql.yml
+
+  dokka:
+    uses: ./github/workflows/dokka.yml
+
+  publish:
+    uses: ./.github/workflows/github-packages.yml
+    needs: [dokka, dependency-submission, codeql]
