@@ -9,7 +9,7 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.exception.RaiseCancellationException
 import nz.adjmunro.knomadic.raise.exception.RaiseScopeLeakedException
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
-import nz.adjmunro.knomadic.util.rethrow
+import nz.adjmunro.knomadic.inline.rethrow
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 

@@ -6,7 +6,7 @@ import nz.adjmunro.knomadic.outcome.failureOf
 import nz.adjmunro.knomadic.outcome.outcomeOf
 import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.knomadic.raise.RaiseScope
-import nz.adjmunro.knomadic.util.itself
+import nz.adjmunro.knomadic.inline.itself
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 

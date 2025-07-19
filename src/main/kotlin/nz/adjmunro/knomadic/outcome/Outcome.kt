@@ -11,7 +11,7 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.catch
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.raise
-import nz.adjmunro.knomadic.util.rethrow
+import nz.adjmunro.knomadic.inline.rethrow
 
 /**
  * Context runner that encapsulates the [Ok] result of [block] as an [Outcome.Success], and any

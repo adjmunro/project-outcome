@@ -7,10 +7,10 @@ import nz.adjmunro.knomadic.outcome.members.mapFailure
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
-import nz.adjmunro.knomadic.util.nullfold
-import nz.adjmunro.knomadic.util.rethrow
-import nz.adjmunro.knomadic.util.throwfold
-import nz.adjmunro.knomadic.util.unit
+import nz.adjmunro.knomadic.inline.nullfold
+import nz.adjmunro.knomadic.inline.rethrow
+import nz.adjmunro.knomadic.inline.throwfold
+import nz.adjmunro.knomadic.inline.unit
 
 @KnomadicDsl
 public typealias Maybe<Ok> = Outcome<Ok, Unit>
