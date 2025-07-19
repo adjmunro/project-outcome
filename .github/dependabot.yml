@@ -12,13 +12,6 @@ updates:
     ignore:
       - dependency-name: "java-bytecode"
 
-    # Groups to prevent overwhelming the team with PRs.
-    groups:
-      # Group all updates together, may be merged when CI is green.
-      gradle-updates:
-        patterns:
-          - "*"
-
     # Each pull request rebase/merge runs all checks again, which may be costly.
     rebase-strategy: "auto"
 
