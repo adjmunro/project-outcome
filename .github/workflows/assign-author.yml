@@ -1,4 +1,4 @@
-name: Auto Assign Author
+name: Assign Author
 
 on:
   workflow_call: # Allows this workflow to be called from other workflows.
