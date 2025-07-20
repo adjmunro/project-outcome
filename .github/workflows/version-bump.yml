@@ -104,9 +104,10 @@ jobs:
           else
             SED_CMD="sed -i ''"
           fi
-          $SED_CMD "s/project-version-major = \"[0-9]*\"/project-version-major = \"$MAJOR\"/" gradle/libs.versions.toml
-          $SED_CMD "s/project-version-minor = \"[0-9]*\"/project-version-minor = \"$MINOR\"/" gradle/libs.versions.toml
-          $SED_CMD "s/project-version-patch = \"[0-9]*\"/project-version-patch = \"$PATCH\"/" gradle/libs.versions.toml
+          $SED_CMD -E "s/project-version-major[ ]*=[ ]*\"[0-9]+\"/project-version-major = \"$MAJOR\"/" gradle/libs.versions.toml
+          $SED_CMD -E "s/project-version-minor[ ]*=[ ]*\"[0-9]+\"/project-version-minor = \"$MINOR\"/" gradle/libs.versions.toml
+          $SED_CMD -E "s/project-version-patch[ ]*=[ ]*\"[0-9]+\"/project-version-patch = \"$PATCH\"/" gradle/libs.versions.toml
+          echo "Updated version lines:" && grep 'project-version-' gradle/libs.versions.toml
 
       - name: Commit and push version bump
         run: |
