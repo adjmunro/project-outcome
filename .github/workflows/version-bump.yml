@@ -113,5 +113,9 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add gradle/libs.versions.toml
-          git diff --cached --exit-code && echo "No changes to commit." || git commit -m "Bump version to $new_version"
+          if git diff --cached --exit-code; then
+            echo "No changes to commit. Skipping push."
+            exit 0
+          fi
+          git commit -m "Bump version to $new_version"
           git push origin ${{ github.head_ref }}
