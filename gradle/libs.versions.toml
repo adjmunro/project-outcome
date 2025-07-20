@@ -10,8 +10,8 @@
 project-group-id = "nz.adjmunro"
 project-artifact-id = "knomadic"
 project-version-major = "0"
-project-version-minor = "0"
-project-version-patch = "1"
+project-version-minor = "1"
+project-version-patch = "0"
 
 ####################################################################################################
 #####################################   Language & Compiler   ######################################
@@ -32,8 +32,8 @@ kotlin-language = "2.2.0"
 dokka = "2.0.0"
 jetbrains-atomicfu = "0.29.0"
 jetbrains-coroutines = "1.10.2"
-junit5 = "5.13.3"
-kotest = "5.9.1"
+junit5 = "5.13.2"
+kotest = "5.9.0"
 mockk = "1.14.5"
 
 ####################################################################################################
