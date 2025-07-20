@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   version-tag:
     uses: ./.github/workflows/version-tag.yml
@@ -24,7 +28,7 @@ jobs:
 
   github-packages:
     uses: ./.github/workflows/github-packages.yml
-    needs: [version-tag, dokka, dependency-submission, codeql]
+    needs: [version-tag, dokka, dependency-submission ]
 
   changelog:
     uses: ./.github/workflows/changelog.yml
