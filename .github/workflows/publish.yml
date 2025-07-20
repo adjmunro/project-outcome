@@ -28,7 +28,7 @@ jobs:
 
   github-packages:
     uses: ./.github/workflows/github-packages.yml
-    needs: [version-tag, dokka, dependency-submission, codeql]
+    needs: [version-tag, dokka, dependency-submission ]
 
   changelog:
     uses: ./.github/workflows/changelog.yml
