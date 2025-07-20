@@ -7,7 +7,7 @@ on:
   workflow_call: # Allows this workflow to be called from other workflows.
 
 jobs:
-  versioning:
+  version-bump:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -28,6 +28,7 @@ jobs:
             echo "author_type=bot" >> $GITHUB_ENV
           else
             echo "author_type=human" >> $GITHUB_ENV
+          fi
 
       - name: Get current version
         id: get_version
