@@ -10,23 +10,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Reset Cancellation Flag
+        run: echo "IS_CANCELLED=false" >> $GITHUB_ENV
+
       - name: Get latest tag
         id: get_tag
         run: |
           TAG=$(git describe --tags --abbrev=0)
           if [ -z "$TAG" ]; then
             echo >&2 "ERROR: No tags found. Cannot create release."
-            exit 1
+            echo "IS_CANCELLED=true" >> $GITHUB_ENV && exit 1
           fi
           echo "TAG=$TAG" >> $GITHUB_ENV
 
       - name: Generate changelog
+        if: env.IS_CANCELLED == 'false'
         id: changelog
         run: |
           PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
           if [ -z "$PREV_TAG" ]; then
             echo >&2 "ERROR: No previous tag found. Cannot generate changelog."
-            exit 1
+            echo "IS_CANCELLED=true" >> $GITHUB_ENV && exit 1
           fi
           echo "Generating changelog from $PREV_TAG to $TAG"
           CHANGELOG=$(git log $PREV_TAG..$TAG --pretty=format:'* %s (%an)' --no-merges)
@@ -36,6 +40,7 @@ jobs:
           echo "$CHANGELOG" > changelog.txt
 
       - name: Create GitHub Release
+        if: env.IS_CANCELLED == 'false'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG }}
