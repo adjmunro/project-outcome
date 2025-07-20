@@ -8,24 +8,24 @@ on:
 
 jobs:
   version-tag:
-    uses: ./.github/workflows/publish/version-tag.yml
+    uses: ./.github/workflows/version-tag.yml
 
   dokka:
-    uses: ./.github/workflows/publish/dokka.yml
+    uses: ./.github/workflows/dokka.yml
     needs: [version-tag]
 
   dependency-submission:
-    uses: ./.github/workflows/publish/dependency-submission.yml
+    uses: ./.github/workflows/dependency-submission.yml
     needs: [version-tag]
 
   codeql:
-    uses: ./.github/workflows/publish/codeql.yml
+    uses: ./.github/workflows/codeql.yml
     needs: [version-tag]
 
   github-packages:
-    uses: ./.github/workflows/publish/github-packages.yml
+    uses: ./.github/workflows/github-packages.yml
     needs: [version-tag, dokka, dependency-submission, codeql]
 
   changelog:
-    uses: ./.github/workflows/publish/changelog.yml
+    uses: ./.github/workflows/changelog.yml
     needs: [version-tag, dokka]
