@@ -11,7 +11,7 @@ project-group-id = "nz.adjmunro"
 project-artifact-id = "knomadic"
 project-version-major = "0"
 project-version-minor = "1"
-project-version-patch = "0"
+project-version-patch = "1"
 
 ####################################################################################################
 #####################################   Language & Compiler   ######################################
