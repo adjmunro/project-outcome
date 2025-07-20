@@ -7,13 +7,14 @@ on:
   workflow_call: # Allows this workflow to be called from other workflows.
 
 jobs:
-  versioning:
+  version-bump:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
       - name: Ensure PR targets main branch
         if: ${{ github.event.pull_request.base.ref != 'main' }}
@@ -28,6 +29,7 @@ jobs:
             echo "author_type=bot" >> $GITHUB_ENV
           else
             echo "author_type=human" >> $GITHUB_ENV
+          fi
 
       - name: Get current version
         id: get_version
@@ -111,5 +113,9 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add gradle/libs.versions.toml
-          git diff --cached --exit-code && echo "No changes to commit." || git commit -m "Bump version to $new_version"
-          git push
+          if git diff --cached --exit-code; then
+            echo "No changes to commit. Skipping push."
+            exit 0
+          fi
+          git commit -m "Bump version to $new_version"
+          git push origin ${{ github.head_ref }}

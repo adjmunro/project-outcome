@@ -12,8 +12,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  auto-assign-author:
-    uses: ./.github/workflows/auto-assign-author.yml
+  assign-author:
+    uses: ./.github/workflows/assign-author.yml
 
   build:
     uses: ./.github/workflows/build.yml
