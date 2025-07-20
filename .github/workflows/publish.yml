@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   version-tag:
     uses: ./.github/workflows/version-tag.yml
