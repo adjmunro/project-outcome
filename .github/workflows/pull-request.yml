@@ -15,6 +15,9 @@ jobs:
   assign-author:
     uses: ./.github/workflows/assign-author.yml
 
+  version-bump:
+    uses: ./.github/workflows/version-bump.yml
+
   build:
     uses: ./.github/workflows/build.yml
 
@@ -22,10 +25,11 @@ jobs:
     uses: ./.github/workflows/unit-tests.yml
     needs: build
 
-  version-bump:
-    uses: ./.github/workflows/version-bump.yml
+  codeql:
+    uses: ./.github/workflows/codeql.yml
+    needs: build
 
   # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
   automerge-dependabot-job:
     uses: ./.github/workflows/automerge-dependabot.yml
-    needs: [ build, unit-tests ]
+    needs: [ build, unit-tests, codeql ]
