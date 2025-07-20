@@ -6,15 +6,20 @@ on:
   workflow_dispatch: # Manual dispatch from the Actions tab in GitHub.
   workflow_call: # Allows this workflow to be called from other workflows.
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   version-bump:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout PR Branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Ensure PR targets main branch
         if: ${{ github.event.pull_request.base.ref != 'main' }}
@@ -122,4 +127,4 @@ jobs:
             exit 0
           fi
           git commit -m "Bump version to $new_version"
-          git push origin ${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref }}
