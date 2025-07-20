@@ -2,11 +2,8 @@ name: Auto Assign Author
 
 on:
   workflow_call: # Allows this workflow to be called from other workflows.
-  issues:
-    types: [ opened, reopened ]
 
 permissions:
-  issues: write
   pull-requests: write
 
 jobs:
