@@ -69,8 +69,8 @@ jobs:
 
       - name: Cancel if already versioned
         run: |
-          if [[ "$MINOR" != "$PREV_MINOR" || "$PATCH" != "$PREV_PATCH" ]]; then
-            echo "Version already incremented (minor or patch differs from main). Cancelling workflow."
+          if [[ "$MAJOR" != "$PREV_MAJOR" || "$MINOR" != "$PREV_MINOR" || "$PATCH" != "$PREV_PATCH" ]]; then
+            echo "Version already incremented (major, minor, or patch differs from main). Cancelling workflow."
             exit 0
           fi
 
