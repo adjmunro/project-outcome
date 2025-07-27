@@ -18,13 +18,13 @@ jobs:
 
   build:
     uses: ./.github/workflows/build.yml
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
 
   unit-tests:
     uses: ./.github/workflows/unit-tests.yml
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
 
   # Only run for PRs created by dependabot after other all checks pass (i.e. build & unit tests)
   automerge-dependabot:
