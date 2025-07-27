@@ -2,10 +2,10 @@ package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.inline.itself
-import nz.adjmunro.knomadic.inline.nulls
-import nz.adjmunro.knomadic.inline.rethrow
-import nz.adjmunro.knomadic.inline.throwfold
+import nz.adjmunro.inline.itself
+import nz.adjmunro.inline.nulls
+import nz.adjmunro.inline.rethrow
+import nz.adjmunro.inline.throwfold
 import java.lang.IllegalStateException
 import kotlin.contracts.contract
 

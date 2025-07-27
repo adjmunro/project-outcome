@@ -2,7 +2,7 @@ package nz.adjmunro.knomadic.fetch.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.fetch.Fetch
-import nz.adjmunro.knomadic.inline.caller
+import nz.adjmunro.inline.caller
 
 /**
  * Transform a [finished][Fetch.Finished] fetch [result][Fetch.Finished.result].

@@ -42,9 +42,9 @@ import nz.adjmunro.knomadic.util.exceptionOrElse
 import nz.adjmunro.knomadic.util.flatMap
 import nz.adjmunro.knomadic.util.mapFailure
 import nz.adjmunro.knomadic.util.nullable
-import nz.adjmunro.knomadic.inline.nullfold
+import nz.adjmunro.inline.nullfold
 import nz.adjmunro.knomadic.util.resultOf
-import nz.adjmunro.knomadic.inline.throwfold
+import nz.adjmunro.inline.throwfold
 import kotlin.Result.Companion.success
 import kotlin.test.Ignore
 import kotlin.test.Test

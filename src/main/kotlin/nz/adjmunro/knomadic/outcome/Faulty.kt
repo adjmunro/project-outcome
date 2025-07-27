@@ -8,10 +8,10 @@ import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
-import nz.adjmunro.knomadic.inline.nullfold
-import nz.adjmunro.knomadic.inline.rethrow
-import nz.adjmunro.knomadic.inline.throwfold
-import nz.adjmunro.knomadic.inline.unit
+import nz.adjmunro.inline.nullfold
+import nz.adjmunro.inline.rethrow
+import nz.adjmunro.inline.throwfold
+import nz.adjmunro.inline.unit
 
 @KnomadicDsl
 public typealias Faulty<Error> = Outcome<Unit, Error>
