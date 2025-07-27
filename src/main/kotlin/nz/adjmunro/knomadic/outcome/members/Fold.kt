@@ -1,8 +1,10 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.inline.itself
+import nz.adjmunro.knomadic.outcome.Success
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
@@ -16,11 +18,11 @@ import kotlin.contracts.contract
  * @receiver The [Outcome] to collapse.
  * @return The collapsed value of type [Output].
  *
- * @param Ok The type of the [Outcome.Success] value.
- * @param Error The type of the [Outcome.Failure] error.
+ * @param Ok The type of the [Success] value.
+ * @param Error The type of the [Failure] error.
  *
- * @param success The lambda to transform the [Outcome.Success] value into [Output].
- * @param failure The lambda to transform the [Outcome.Failure] error into [Output].
+ * @param success The lambda to transform the [Success] value into [Output].
+ * @param failure The lambda to transform the [Failure] error into [Output].
  *
  * @see Outcome.rfold
  * @see Outcome.collapse
@@ -64,8 +66,8 @@ public inline fun <Ok, Error, Output> Outcome<Ok, Error>.rfold(
 }
 
 /**
- * Collapse the receiver [Outcome] into either [value][Outcome.Success.value] or
- * [error][Outcome.Failure.error], using the nearest common [Ancestor] as the type.
+ * Collapse the receiver [Outcome] into either [value][Success.value] or
+ * [error][Failure.error], using the nearest common [Ancestor] as the type.
  *
  * *Use [Outcome.fold] with `success` and `failure` lambda arguments
  * to directly map each state to a specific `Output` type instead.*
@@ -74,8 +76,8 @@ public inline fun <Ok, Error, Output> Outcome<Ok, Error>.rfold(
  * @return The collapsed value of the nearest common [Ancestor] type.
  *
  * @param Ancestor The nearest common ancestor type of [Ok] and [Error].
- * @param Ok The type of the [Outcome.Success] value.
- * @param Error The type of the [Outcome.Failure] error.
+ * @param Ok The type of the [Success] value.
+ * @param Error The type of the [Failure] error.
  *
  * @see Outcome.fold
  * @see Outcome.rfold

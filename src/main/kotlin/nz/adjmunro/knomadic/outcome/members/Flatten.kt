@@ -1,18 +1,20 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.failureOf
 import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.inline.itself
+import nz.adjmunro.knomadic.outcome.Success
 
 /**
  * An overloaded alias for [Outcome.flattenNestedSuccess].
  *
- * @param Ok The [value][Outcome.Success.value] type.
+ * @param Ok The [value][Success.value] type.
  * @param Err The ancestor of [Eri] & [Ero].
- * @param Eri The inner [error][Outcome.Failure.error] type.
- * @param Ero The outer [error][Outcome.Failure.error] type.
+ * @param Eri The inner [error][Failure.error] type.
+ * @param Ero The outer [error][Failure.error] type.
  *
  * @see Outcome.flattenNestedSuccess
  * @see Outcome.flattenNestedFailure
@@ -28,9 +30,9 @@ public val <Ok, Err, Eri, Ero> Outcome<Outcome<Ok, Eri>, Ero>.flatten: Outcome<O
  * An overloaded alias for [Outcome.flattenNestedFailure].
  *
  * @param Ok The ancestor of [Oki] & [Oko].
- * @param Err The [error][Outcome.Failure.error] type.
- * @param Oki The inner [value][Outcome.Success.value] type.
- * @param Oko The outer [value][Outcome.Success.value] type.
+ * @param Err The [error][Failure.error] type.
+ * @param Oki The inner [value][Success.value] type.
+ * @param Oko The outer [value][Success.value] type.
  *
  * @see Outcome.flattenNestedSuccess
  * @see Outcome.flattenNestedFailure
@@ -47,10 +49,10 @@ public val <Ok, Err, Oki, Oko> Outcome<Oko, Outcome<Oki, Err>>.flatten: Outcome<
  *
  * @param Ok The ancestor of [Oks] & [Okf].
  * @param Err The ancestor of [Ers] & [Erf].
- * @param Oks The success [value][Outcome.Success.value] type.
- * @param Ers The success [error][Outcome.Failure.error] type.
- * @param Okf The failure [value][Outcome.Success.value] type.
- * @param Erf The failure [error][Outcome.Failure.error] type.
+ * @param Oks The success [value][Success.value] type.
+ * @param Ers The success [error][Failure.error] type.
+ * @param Okf The failure [value][Success.value] type.
+ * @param Erf The failure [error][Failure.error] type.
  *
  * @see Outcome.flattenNestedSuccess
  * @see Outcome.flattenNestedFailure
@@ -63,17 +65,17 @@ public val <Ok, Err, Oks, Ers, Okf, Erf> Outcome<Outcome<Oks, Ers>, Outcome<Okf,
     get() = flattenNestedBoth()
 
 /**
- * Flatten a nested [Outcome] inside the [Outcome.Success] state, into a single [Outcome].
+ * Flatten a nested [Outcome] inside the [Success] state, into a single [Outcome].
  *
  * *The `Error` type of the returned [Outcome] will be the nearest common [AncestorError] of
  * [EmbeddedError] and [OuterError].*
  *
- * @receiver The [Outcome.Success] of an [Outcome]<[Ok], [EmbeddedError]> to flatten.
+ * @receiver The [Success] of an [Outcome]<[Ok], [EmbeddedError]> to flatten.
  * @return The flattened [Outcome]<[Ok], [AncestorError]>.
  *
- * @param Ok The type of the [Outcome.Success] value.
- * @param EmbeddedError The type of the [Outcome.Failure] error nested inside the [Outcome.Success].
- * @param OuterError The type of the non-nested [Outcome.Failure] error.
+ * @param Ok The type of the [Success] value.
+ * @param EmbeddedError The type of the [Failure] error nested inside the [Success].
+ * @param OuterError The type of the non-nested [Failure] error.
  * @param AncestorError The nearest common ancestor type of [EmbeddedError] and [OuterError].
  *
  * @see Outcome.flatten
@@ -91,17 +93,17 @@ public fun <Ok, EmbeddedError, OuterError, AncestorError> Outcome<Outcome<Ok, Em
 }
 
 /**
- * Flatten a nested [Outcome] inside the [Outcome.Failure] state, into a single [Outcome].
+ * Flatten a nested [Outcome] inside the [Failure] state, into a single [Outcome].
  *
  * *The `Ok` type of the returned [Outcome] will be the nearest common [AncestorOk] of
  * [EmbeddedOk] and [OuterOk].*
  *
- * @receiver The [Outcome.Failure] of an [Outcome]<[EmbeddedOk], [Error]> to flatten.
+ * @receiver The [Failure] of an [Outcome]<[EmbeddedOk], [Error]> to flatten.
  * @return The flattened [Outcome]<[AncestorOk], [Error]>.
  *
- * @param Error The type of the [Outcome.Failure] error.
- * @param OuterOk The type of the non-nested [Outcome.Success] value.
- * @param EmbeddedOk The type of the [Outcome.Success] value nested inside the [Outcome.Failure].
+ * @param Error The type of the [Failure] error.
+ * @param OuterOk The type of the non-nested [Success] value.
+ * @param EmbeddedOk The type of the [Success] value nested inside the [Failure].
  * @param AncestorOk The nearest common ancestor type of [EmbeddedOk] and [OuterOk].
  *
  * @see Outcome.flatten
@@ -119,17 +121,17 @@ public fun <OuterOk, EmbeddedOk, Error, AncestorOk> Outcome<OuterOk, Outcome<Emb
 }
 
 /**
- * Flatten the nested [Outcome] inside both [Outcome.Success] and [Outcome.Failure] states, into a single [Outcome].
+ * Flatten the nested [Outcome] inside both [Success] and [Failure] states, into a single [Outcome].
  *
  * *The `Ok` and `Error` types of the returned [Outcome] will be the nearest common [AncestorOk] and [AncestorError].*
  *
  * @receiver The [Outcome] to flatten, with a nested [Outcome] inside both success and failure states.
  * @return The flattened [Outcome]<[AncestorOk], [AncestorError]>.
  *
- * @param SuccessOk The type of the [Outcome.Success] value nested inside the [Outcome.Success].
- * @param SuccessError The type of the [Outcome.Failure] error nested inside the [Outcome.Success].
- * @param FailureOk The type of the [Outcome.Success] value nested inside the [Outcome.Failure].
- * @param FailureError The type of the [Outcome.Failure] error nested inside the [Outcome.Failure].
+ * @param SuccessOk The type of the [Success] value nested inside the [Success].
+ * @param SuccessError The type of the [Failure] error nested inside the [Success].
+ * @param FailureOk The type of the [Success] value nested inside the [Failure].
+ * @param FailureError The type of the [Failure] error nested inside the [Failure].
  * @param AncestorOk The nearest common ancestor type of [SuccessOk] and [FailureOk].
  * @param AncestorError The nearest common ancestor type of [SuccessError] and [FailureError].
  *

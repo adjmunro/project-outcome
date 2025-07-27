@@ -6,16 +6,18 @@ import nz.adjmunro.inline.itself
 import nz.adjmunro.inline.nulls
 import nz.adjmunro.inline.rethrow
 import nz.adjmunro.inline.throwfold
+import nz.adjmunro.knomadic.outcome.Failure
+import nz.adjmunro.knomadic.outcome.Success
 import java.lang.IllegalStateException
 import kotlin.contracts.contract
 
-/** @return The [value][Outcome.Success] or [default]. */
+/** @return The [value][Success] or [default]. */
 @KnomadicDsl
 public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrDefault(default: Ok): Ok {
     return fold(success = ::itself, failure = { default })
 }
 
-/** @return The [value][Outcome.Success] or the result of [recover]. */
+/** @return The [value][Success] or the result of [recover]. */
 @KnomadicDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrElse(
     recover: (Error) -> Ok,
@@ -23,73 +25,35 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrElse(
     return fold(success = ::itself, failure = recover)
 }
 
-/** @return The [value][Outcome.Success] or `null`. */
+/** @return The [value][Success] or `null`. */
 @KnomadicDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrNull(): Ok? {
     contract {
-        returnsNotNull() implies (this@getOrNull is Outcome.Success<Ok>)
-        returns(null) implies (this@getOrNull is Outcome.Failure<Error>)
+        returnsNotNull() implies (this@getOrNull is Success<Ok>)
+        returns(null) implies (this@getOrNull is Failure<Error>)
     }
 
     return fold(success = ::itself, failure = ::nulls)
 }
 
 /**
- * @return The [value][Outcome.Success] or `throws`.
- * @throws IllegalStateException if the [Outcome] is a [failure][Outcome.Failure].
+ * @return The [value][Success] or `throws`.
+ * @throws IllegalStateException if the [Outcome] is a [failure][Failure].
  */
 @KnomadicDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrThrow(): Ok {
-    contract { returns() implies (this@getOrThrow is Outcome.Success<Ok>) }
+    contract { returns() implies (this@getOrThrow is Success<Ok>) }
 
     return fold(success = ::itself) {
         it.throwfold(throws = ::rethrow) { error("Outcome::getOrThrow threw! Got: $this") }
     }
 }
 
-/** @return The [error][Outcome.Failure] or [default]. */
-@KnomadicDsl
-public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrDefault(default: Error): Error {
-    return rfold(failure = ::itself) { default }
-}
-
-/** @return The [error][Outcome.Failure] or the result of [faulter]. */
-@KnomadicDsl
-public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrElse(
-    faulter: (Ok) -> Error,
-): Error {
-    return fold(success = faulter, failure = ::itself)
-}
-
-/** @return The [error][Outcome.Failure] or `null`. */
-@KnomadicDsl
-public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrNull(): Error? {
-    contract {
-        returnsNotNull() implies (this@errorOrNull is Outcome.Failure<Error>)
-        returns(null) implies (this@errorOrNull is Outcome.Success<Ok>)
-    }
-
-    return fold(success = ::nulls, failure = ::itself)
-}
-
-/**
- * @return The [error][Outcome.Failure] or `throws`.
- * @throws IllegalStateException if the [Outcome] is a [success][Outcome.Success].
- */
-@KnomadicDsl
-public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
-    contract {
-        returns() implies (this@errorOrThrow is Outcome.Failure<Error>)
-    }
-
-    return rfold(failure = ::itself) {
-        it.throwfold(throws = ::rethrow) { error("Outcome::errorOrThrow threw! Got: $this") }
-    }
-}
-
 /**
  * Attempt to unwrap [Outcome] into an [Ok] value.
  *
+ * > **Be warned: [recover] throws by default!**
+ * 
  * ```kotlin
  * val outcome: Outcome<String, Throwable> = ...
  * outcome.unwrap()         // getOrThrow() (default behaviour)
@@ -97,8 +61,9 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
  * outcome.unwrap { "$it" } // getOrElse() (map Error to fallback value)
  * ```
  *
- * @return The [value][Outcome.Success] or the result of [recover].
- * @throws IllegalStateException if the [Outcome] is a [failure][Outcome.Failure].
+ * @param recover A function that maps the [Error] value to an [Ok] value.
+ * @return The [value][Success.value] or the result of [recover].
+ * @throws IllegalStateException if the [Outcome] is a [failure][Failure], by default.
  * @see Outcome.getOrThrow
  * @see Outcome.getOrNull
  * @see Outcome.getOrElse
@@ -108,12 +73,54 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
 public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
     recover: (Error) -> Ok = { error("Outcome::unwrap threw! Got: $this") },
 ): Ok {
-    return fold(success = ::itself, failure = recover)
+    return fold(success = Success<Ok & Any>::value, failure = { recover(error) })
+}
+
+/** @return The [error][Failure] or [default]. */
+@KnomadicDsl
+public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrDefault(default: Error): Error {
+    return rfold(failure = ::itself) { default }
+}
+
+/** @return The [error][Failure] or the result of [faulter]. */
+@KnomadicDsl
+public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrElse(
+    faulter: (Ok) -> Error,
+): Error {
+    return fold(success = faulter, failure = ::itself)
+}
+
+/** @return The [error][Failure] or `null`. */
+@KnomadicDsl
+public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrNull(): Error? {
+    contract {
+        returnsNotNull() implies (this@errorOrNull is Failure<Error>)
+        returns(null) implies (this@errorOrNull is Success<Ok>)
+    }
+
+    return fold(success = ::nulls, failure = ::itself)
 }
 
 /**
- * Attempt to unwrap [Outcome] into an [Ok] value.
+ * @return The [error][Failure] or `throws`.
+ * @throws IllegalStateException if the [Outcome] is a [success][Success].
+ */
+@KnomadicDsl
+public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
+    contract {
+        returns() implies (this@errorOrThrow is Failure<Error>)
+    }
+
+    return rfold(failure = ::itself) {
+        it.throwfold(throws = ::rethrow) { error("Outcome::errorOrThrow threw! Got: $this") }
+    }
+}
+
+/**
+ * Attempt to unwrap [Outcome] into an [Error] value.
  *
+ * > **Be warned: [faulter] throws by default!**
+ * 
  * ```kotlin
  * val outcome: Outcome<String, Throwable> = ...
  * outcome.unwrapError()         // errorOrThrow() (default behaviour)
@@ -121,8 +128,9 @@ public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
  * outcome.unwrapError { "$it" } // errorOrElse() (map Ok to fallback value)
  * ```
  *
- * @return The [error][Outcome.Failure] or the result of [faulter].
- * @throws IllegalStateException if the [Outcome] is a [success][Outcome.Success].
+ * @param faulter A function that maps the [Ok] value to an [Error] value.
+ * @return The [error][Failure.error] or the result of [faulter].
+ * @throws IllegalStateException if the [Outcome] is a [success][Success], by default.
  * @see Outcome.errorOrThrow
  * @see Outcome.errorOrNull
  * @see Outcome.errorOrElse

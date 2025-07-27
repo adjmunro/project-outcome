@@ -2,8 +2,6 @@ package nz.adjmunro.knomadic.outcome
 
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.KotlinResult
-import nz.adjmunro.knomadic.outcome.Outcome.Failure
-import nz.adjmunro.knomadic.outcome.Outcome.Success
 import nz.adjmunro.knomadic.outcome.members.errorOrNull
 import nz.adjmunro.knomadic.outcome.members.getOrNull
 import nz.adjmunro.knomadic.raise.RaiseScope
@@ -14,12 +12,12 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.raise
 import nz.adjmunro.inline.rethrow
 
 /**
- * Context runner that encapsulates the [Ok] result of [block] as an [Outcome.Success], and any
- * [raised][RaiseScope.raise] or [caught][RaiseScope.catch] [errors][Error] as an [Outcome.Failure].
+ * Context runner that encapsulates the [Ok] result of [block] as an [Success], and any
+ * [raised][RaiseScope.raise] or [caught][RaiseScope.catch] [errors][Error] as an [Failure].
  *
  * > ***Note:** [catch] will [rethrow] by default. This is because the consumer needs to manually
  * > override the parameter and map it to an [Outcome] (if desired). Assigning it to
- * > [Failure][Outcome.Failure] directly will only force [Error] to be interpreted as [Throwable]
+ * > [Failure][Failure] directly will only force [Error] to be interpreted as [Throwable]
  * > by the [RaiseScope], which may interfere with the intended [Error] type!*
  * ```kotlin
  * // Outcome<Unit, Throwable>
@@ -78,7 +76,7 @@ public inline fun <Ok : Any> outcome(
  * An alias for [outcomeOf] that uses [Throwable] as the [Error] type.
  *
  * > Useful for cases where you want to catch & wrap all exceptions to
- * > handle them as [Outcome.Failure].
+ * > handle them as [Failure].
  *
  * @see outcomeOf
  * @see outcome
@@ -96,35 +94,37 @@ public inline fun <Ok : Any> catch(
  *
  * @property Ok The type of a successful result.
  * @property Error The type of an error result.
- * @see Outcome.Success
- * @see Outcome.Failure
+ * @see Success
+ * @see Failure
  * @see outcomeOf
  */
+@KnomadicDsl
 public sealed interface Outcome<out Ok : Any, out Error : Any> {
 
     public operator fun component1(): Ok? = getOrNull()
     public operator fun component2(): Error? = errorOrNull()
+}
 
-    /**
-     * A successful [Outcome].
-     *
-     * @property value The successful result.
-     */
-    @JvmInline
-    public value class Success<out Ok : Any>(public val value: Ok) : Outcome<Ok, Nothing> {
-        override fun component1(): Ok = value
-        override fun toString(): String = "Outcome::Success<${value::class.simpleName}>($value)"
-    }
+/**
+ * A successful [Outcome].
+ *
+ * @property value The successful result.
+ */
+@KnomadicDsl
+@JvmInline
+public value class Success<out Ok : Any>(public val value: Ok) : Outcome<Ok, Nothing> {
+    override fun component1(): Ok = value
+    override fun toString(): String = "Outcome::Success<${value::class.simpleName}>($value)"
+}
 
-    /**
-     * A failed [Outcome].
-     *
-     * @property error The error result.
-     */
-    @JvmInline
-    public value class Failure<out Error : Any>(public val error: Error) : Outcome<Nothing, Error> {
-        override fun component2(): Error = error
-        override fun toString(): String = "Outcome::Failure<${error::class.simpleName}>($error)"
-    }
-    
+/**
+ * A failed [Outcome].
+ *
+ * @property error The error result.
+ */
+@KnomadicDsl
+@JvmInline
+public value class Failure<out Error : Any>(public val error: Error) : Outcome<Nothing, Error> {
+    override fun component2(): Error = error
+    override fun toString(): String = "Outcome::Failure<${error::class.simpleName}>($error)"
 }
