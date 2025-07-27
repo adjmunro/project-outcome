@@ -33,7 +33,7 @@ public inline fun <In : Any, Out : Any, Error: Any> Outcome<In, Error>.andThen(
 
 /**
  * Transforms the encapsulated value if this instance represents [success][Outcome.isSuccess],
- * and the [predicate] returns true. If [predicate] is false, the [Outcome.Success] is left unchanged.
+ * and the [predicate] returns true. If [predicate] is false, the [Success] is left unchanged.
  *
  * *If [success] throws an exception, it will be re-encapsulated or re-thrown by [outcomeOf].*
  * *If no exception occurs, or [Outcome] is [failure][Outcome.isFailure], the original [Outcome] is returned unaffected.*
@@ -54,7 +54,7 @@ public inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.andIf(
 
 
 /**
- * Transform [failure][Outcome.Failure] into [success][Outcome.Success].
+ * Transform [failure][Failure] into [success][Success].
  * - [Success][Outcome.isSuccess] -> `returns` the original caller.
  * - [Failure][Outcome.isFailure] -> [wraps][outcomeOf] & `returns` the result of [onFailure] transformation.
  * - *If [onFailure] throws an exception, it will be caught & wrapped by [outcomeOf].*
