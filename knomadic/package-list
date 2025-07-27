@@ -65,6 +65,28 @@ $dokka.location:nz.adjmunro.knomadic.fetch/Fetch.Initial///PointingToDeclaration
 $dokka.location:nz.adjmunro.knomadic.fetch/Fetch///PointingToDeclaration/knomadic/nz.adjmunro.knomadic.fetch/-fetch/index.html
 $dokka.location:nz.adjmunro.knomadic.fetch/SafeFetchFlow///PointingToDeclaration/knomadic/nz.adjmunro.knomadic.fetch/-safe-fetch-flow/index.html
 $dokka.location:nz.adjmunro.knomadic.fetch/SafeFetchFlow/collectSafely/#kotlinx.coroutines.flow.FlowCollector[nz.adjmunro.knomadic.fetch.Fetch[TypeParam(bounds=[kotlin.Any])]]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.fetch/-safe-fetch-flow/collect-safely.html
+$dokka.location:nz.adjmunro.knomadic.inline////PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/index.html
+$dokka.location:nz.adjmunro.knomadic.inline//caller/TypeParam(bounds=[kotlin.Any?])#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/caller.html
+$dokka.location:nz.adjmunro.knomadic.inline//castOrElse/kotlin.Any?#kotlin.Function0[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/cast-or-else.html
+$dokka.location:nz.adjmunro.knomadic.inline//castOrNull/kotlin.Any?#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/cast-or-null.html
+$dokka.location:nz.adjmunro.knomadic.inline//castOrThrow/kotlin.Any#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/cast-or-throw.html
+$dokka.location:nz.adjmunro.knomadic.inline//emptyString/#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/empty-string.html
+$dokka.location:nz.adjmunro.knomadic.inline//exists/#TypeParam(bounds=[kotlin.Any?])?#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/exists.html
+$dokka.location:nz.adjmunro.knomadic.inline//exists/TypeParam(bounds=[kotlin.Any?])?#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/exists.html
+$dokka.location:nz.adjmunro.knomadic.inline//fallback/TypeParam(bounds=[kotlin.Any])?#kotlin.Function1[java.lang.NullPointerException,TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/fallback.html
+$dokka.location:nz.adjmunro.knomadic.inline//flatmap/TypeParam(bounds=[kotlin.Any?])#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.Boolean]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/flatmap.html
+$dokka.location:nz.adjmunro.knomadic.inline//fold/TypeParam(bounds=[kotlin.Any?])#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.Boolean]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/fold.html
+$dokka.location:nz.adjmunro.knomadic.inline//instanceOf/kotlin.Any?#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/instance-of.html
+$dokka.location:nz.adjmunro.knomadic.inline//itself/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/itself.html
+$dokka.location:nz.adjmunro.knomadic.inline//nullfold/TypeParam(bounds=[kotlin.Any?])#kotlin.Function1[java.lang.NullPointerException,TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/nullfold.html
+$dokka.location:nz.adjmunro.knomadic.inline//nulls/#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/nulls.html
+$dokka.location:nz.adjmunro.knomadic.inline//on/TypeParam(bounds=[kotlin.Any?])#kotlin.reflect.KClass[TypeParam(bounds=[kotlin.Any])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any]),kotlin.Unit]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/on.html
+$dokka.location:nz.adjmunro.knomadic.inline//rethrow/#kotlin.Throwable/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/rethrow.html
+$dokka.location:nz.adjmunro.knomadic.inline//rethrow/#kotlinx.coroutines.flow.FlowCollector[TypeParam(bounds=[kotlin.Any])]#kotlin.Throwable/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/rethrow.html
+$dokka.location:nz.adjmunro.knomadic.inline//stringCaller/TypeParam(bounds=[kotlin.Any?])#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/string-caller.html
+$dokka.location:nz.adjmunro.knomadic.inline//stringItself/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/string-itself.html
+$dokka.location:nz.adjmunro.knomadic.inline//throwfold/TypeParam(bounds=[kotlin.Any?])#kotlin.Function1[kotlin.Throwable,TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/throwfold.html
+$dokka.location:nz.adjmunro.knomadic.inline//unit/#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.inline/unit.html
 $dokka.location:nz.adjmunro.knomadic.outcome.members////PointingToDeclaration/knomadic/nz.adjmunro.knomadic.outcome.members/index.html
 $dokka.location:nz.adjmunro.knomadic.outcome.members//aggregate/kotlin.collections.Iterable[nz.adjmunro.knomadic.outcome.Outcome[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]]#kotlin.Function1[kotlin.collections.List[TypeParam(bounds=[kotlin.Any])],TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.outcome.members/aggregate.html
 $dokka.location:nz.adjmunro.knomadic.outcome.members//andIf/nz.adjmunro.knomadic.outcome.Outcome[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any]),kotlin.Boolean]#kotlin.Function1[kotlin.Throwable,nz.adjmunro.knomadic.outcome.Outcome[TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]]#kotlin.Function2[nz.adjmunro.knomadic.raise.RaiseScope[TypeParam(bounds=[kotlin.Any])],TypeParam(bounds=[kotlin.Any]),TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.outcome.members/and-if.html
@@ -162,30 +184,17 @@ $dokka.location:nz.adjmunro.knomadic.util////PointingToDeclaration/knomadic/nz.
 $dokka.location:nz.adjmunro.knomadic.util//aggregate/kotlin.collections.Iterable[kotlin.Result[TypeParam(bounds=[kotlin.Any?])]]#kotlin.Function1[kotlin.collections.List[kotlin.Throwable],kotlin.Throwable]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/aggregate.html
 $dokka.location:nz.adjmunro.knomadic.util//andIf/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.Boolean]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/and-if.html
 $dokka.location:nz.adjmunro.knomadic.util//andThen/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/and-then.html
-$dokka.location:nz.adjmunro.knomadic.util//caller/TypeParam(bounds=[kotlin.Any?])#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/caller.html
-$dokka.location:nz.adjmunro.knomadic.util//emptyString/#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/empty-string.html
 $dokka.location:nz.adjmunro.knomadic.util//exceptionOrDefault/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Throwable/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/exception-or-default.html
 $dokka.location:nz.adjmunro.knomadic.util//exceptionOrElse/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.Throwable]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/exception-or-else.html
 $dokka.location:nz.adjmunro.knomadic.util//exceptionOrThrow/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/exception-or-throw.html
-$dokka.location:nz.adjmunro.knomadic.util//exists/#TypeParam(bounds=[kotlin.Any?])?#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/exists.html
-$dokka.location:nz.adjmunro.knomadic.util//exists/TypeParam(bounds=[kotlin.Any?])?#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/exists.html
-$dokka.location:nz.adjmunro.knomadic.util//fallback/TypeParam(bounds=[kotlin.Any])?#kotlin.Function1[java.lang.NullPointerException,TypeParam(bounds=[kotlin.Any])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/fallback.html
 $dokka.location:nz.adjmunro.knomadic.util//flatMap/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.Result[TypeParam(bounds=[kotlin.Any?])]]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/flat-map.html
 $dokka.location:nz.adjmunro.knomadic.util//flatten/kotlin.Result[kotlin.Result[TypeParam(bounds=[kotlin.Any?])]]#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/flatten.html
 $dokka.location:nz.adjmunro.knomadic.util//isFatal/kotlin.Throwable#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/is-fatal.html
-$dokka.location:nz.adjmunro.knomadic.util//itself/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/itself.html
 $dokka.location:nz.adjmunro.knomadic.util//mapFailure/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[kotlin.Throwable,kotlin.Throwable]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/map-failure.html
 $dokka.location:nz.adjmunro.knomadic.util//nonFatalOrThrow/TypeParam(bounds=[kotlin.Throwable])#/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/non-fatal-or-throw.html
 $dokka.location:nz.adjmunro.knomadic.util//nullable/#kotlin.Function0[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/nullable.html
-$dokka.location:nz.adjmunro.knomadic.util//nullfold/TypeParam(bounds=[kotlin.Any?])#kotlin.Function1[java.lang.NullPointerException,TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/nullfold.html
-$dokka.location:nz.adjmunro.knomadic.util//nulls/#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/nulls.html
 $dokka.location:nz.adjmunro.knomadic.util//resultOf/#kotlin.Function0[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/result-of.html
-$dokka.location:nz.adjmunro.knomadic.util//rethrow/#kotlin.Throwable/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/rethrow.html
-$dokka.location:nz.adjmunro.knomadic.util//stringCaller/TypeParam(bounds=[kotlin.Any?])#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/string-caller.html
-$dokka.location:nz.adjmunro.knomadic.util//stringItself/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/string-itself.html
-$dokka.location:nz.adjmunro.knomadic.util//throwfold/TypeParam(bounds=[kotlin.Any?])#kotlin.Function1[kotlin.Throwable,TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/throwfold.html
 $dokka.location:nz.adjmunro.knomadic.util//tryRecover/kotlin.Result[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[kotlin.Throwable,TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/try-recover.html
-$dokka.location:nz.adjmunro.knomadic.util//unit/#kotlin.Any?/PointingToDeclaration/knomadic/nz.adjmunro.knomadic.util/unit.html
 $dokka.location:nz.adjmunro.knomadic////PointingToDeclaration/knomadic/nz.adjmunro.knomadic/index.html
 $dokka.location:nz.adjmunro.knomadic/FaultyFetch///PointingToDeclaration/knomadic/nz.adjmunro.knomadic/-faulty-fetch/index.html
 $dokka.location:nz.adjmunro.knomadic/FaultyFlow///PointingToDeclaration/knomadic/nz.adjmunro.knomadic/-faulty-flow/index.html
@@ -205,6 +214,7 @@ nz.adjmunro.knomadic
 nz.adjmunro.knomadic.fetch
 nz.adjmunro.knomadic.fetch.flow
 nz.adjmunro.knomadic.fetch.members
+nz.adjmunro.knomadic.inline
 nz.adjmunro.knomadic.outcome
 nz.adjmunro.knomadic.outcome.members
 nz.adjmunro.knomadic.raise
