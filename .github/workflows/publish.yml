@@ -17,7 +17,11 @@ jobs:
 
   dependency-submission:
     uses: ./.github/workflows/dependency-submission.yml
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   github-packages:
     uses: ./.github/workflows/github-packages.yml
     needs: [dokka, dependency-submission ]
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
