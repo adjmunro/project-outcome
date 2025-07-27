@@ -13,9 +13,6 @@ jobs:
       - name: Setup Java and Gradle
         uses: ./.github/actions/setup-gradle
 
-      - name: Restore Gradle Build Cache
-        uses: ./.github/actions/cache-gradle
-
       - name: Run Unit Tests
         run: ./gradlew check
 
