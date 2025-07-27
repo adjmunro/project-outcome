@@ -2,8 +2,8 @@ package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.failureOf
-import nz.adjmunro.knomadic.outcome.successOf
+import nz.adjmunro.knomadic.outcome.Failure
+import nz.adjmunro.knomadic.outcome.Success
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -25,11 +25,11 @@ public inline fun <Ok : Any, Error : Any> Iterable<Outcome<Ok, Error>>.aggregate
     ) = partition(predicate = Outcome<Ok, Error>::isFailure)
 
     return when {
-        errors.isNotEmpty() -> failureOf(
+        errors.isNotEmpty() -> Failure(
             error = reduce(errors.map(transform = Outcome<Ok, Error>::errorOrThrow)),
         )
 
-        else -> successOf(
+        else -> Success(
             value = successes.map(transform = Outcome<Ok, Error>::getOrThrow),
         )
     }

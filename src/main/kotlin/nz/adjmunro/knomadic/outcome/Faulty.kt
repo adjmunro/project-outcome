@@ -2,29 +2,29 @@
 
 package nz.adjmunro.knomadic.outcome
 
+import nz.adjmunro.inline.nullfold
+import nz.adjmunro.inline.rethrow
+import nz.adjmunro.inline.throwfold
+import nz.adjmunro.inline.unit
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.members.mapSuccess
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
-import nz.adjmunro.inline.nullfold
-import nz.adjmunro.inline.rethrow
-import nz.adjmunro.inline.throwfold
-import nz.adjmunro.inline.unit
 
 @KnomadicDsl
 public typealias Faulty<Error> = Outcome<Unit, Error>
 
 @KnomadicDsl
-public inline fun outcomePassed(ignore: Any? = null): Outcome.Success<Unit> = successOf(Unit)
+public inline fun faultySuccess(ignore: Any? = null): Success<Unit> = Success(Unit)
 
 @KnomadicDsl
-public inline fun <Error : Throwable> Error.wrapFaulty(): Faulty<Error> = failureOf(nonFatalOrThrow())
+public inline fun <Error : Throwable> Error.wrapFaulty(): Faulty<Error> = Failure(nonFatalOrThrow())
 
 @KnomadicDsl
 public inline fun <T> T.wrapFaulty(): Faulty<Throwable> =
-    throwfold(::failureOf) { it.nullfold(::failureOf, ::outcomePassed) }
+    throwfold(throws = ::Failure) { it.nullfold(none = ::Failure, some = ::faultySuccess) }
 
 @KnomadicDsl
 public inline fun <Error : Any> Outcome<*, Error>.asFaulty(): Faulty<Error> = mapSuccess(::unit)
@@ -38,8 +38,8 @@ public inline fun <Error : Any> faultyOf(
         fold(
             block = block,
             catch = catch,
-            recover = ::failureOf,
-            transform = ::outcomePassed,
+            recover = ::Failure,
+            transform = ::faultySuccess,
         )
     }
 }
