@@ -29,6 +29,7 @@ kotlin-language = "2.2.0"
 ####################################################################################################
 ########################################   App Libraries   #########################################
 ####################################################################################################
+adjmunro-inline = "0.1.0"
 dokka = "2.0.0"
 jetbrains-atomicfu = "0.29.0"
 jetbrains-coroutines = "1.10.2"
@@ -50,6 +51,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-language" 
 ####                                                                                             ###
 ####################################################################################################
 [libraries]
+adjmunro-inline = { group = "nz.adjmunro", name = "inline", version.ref = "adjmunro-inline" }
 jetbrains-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version.ref = "jetbrains-atomicfu" }
 jetbrains-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "jetbrains-coroutines" }
 jetbrains-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "jetbrains-coroutines" }
@@ -67,6 +69,7 @@ kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.re
 ####################################################################################################
 [bundles]
 core = [
+    "adjmunro-inline",
     "jetbrains-atomicfu",
     "jetbrains-coroutines-core",
     "kotlin-stdlib",
