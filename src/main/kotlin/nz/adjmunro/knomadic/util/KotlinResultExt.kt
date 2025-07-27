@@ -5,8 +5,8 @@ package nz.adjmunro.knomadic.util
 import kotlinx.coroutines.CancellationException
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.KotlinResult
-import nz.adjmunro.knomadic.inline.caller
-import nz.adjmunro.knomadic.inline.itself
+import nz.adjmunro.inline.caller
+import nz.adjmunro.inline.itself
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
 import kotlin.collections.isNotEmpty

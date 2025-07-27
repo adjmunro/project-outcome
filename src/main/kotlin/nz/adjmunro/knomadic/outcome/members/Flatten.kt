@@ -4,7 +4,7 @@ import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.failureOf
 import nz.adjmunro.knomadic.outcome.successOf
-import nz.adjmunro.knomadic.inline.itself
+import nz.adjmunro.inline.itself
 
 /**
  * An overloaded alias for [Outcome.flattenNestedSuccess].

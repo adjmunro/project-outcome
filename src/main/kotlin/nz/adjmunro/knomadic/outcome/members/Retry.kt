@@ -4,7 +4,7 @@ import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.outcomeOf
 import nz.adjmunro.knomadic.raise.RaiseScope
-import nz.adjmunro.knomadic.inline.rethrow
+import nz.adjmunro.inline.rethrow
 
 /**
  * Transforms the encapsulated value if this instance represents [success][Outcome.isSuccess].
