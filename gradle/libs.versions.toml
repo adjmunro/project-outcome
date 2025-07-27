@@ -8,7 +8,7 @@
 #######################################   Project Verions   ########################################
 ####################################################################################################
 project-group-id = "nz.adjmunro"
-project-artifact-id = "knomadic"
+project-artifact-id = "outcome"
 project-version-major = "0"
 project-version-minor = "2"
 project-version-patch = "0"

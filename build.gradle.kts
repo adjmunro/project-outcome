@@ -97,7 +97,7 @@ tasks.register<Jar>("dokkaJar") {
 
 publishing {
     publications {
-        register<MavenPublication>(name = "knomadic-maven-artifact") {
+        register<MavenPublication>(name = "outcome-maven-artifact") {
             from(components["kotlin"])
             groupId = version { project.group.id }
             artifactId = version { project.artifact.id }
@@ -110,7 +110,7 @@ publishing {
         // Publish to GitHub Packages
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/adjmunro/project-knomadic")
+            url = uri("https://maven.pkg.github.com/adjmunro/project-outcome")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
