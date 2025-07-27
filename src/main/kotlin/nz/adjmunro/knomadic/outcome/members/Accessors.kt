@@ -1,8 +1,8 @@
 package nz.adjmunro.knomadic.outcome.members
 
+import nz.adjmunro.inline.caller
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.inline.itself
 import nz.adjmunro.inline.nulls
 import nz.adjmunro.inline.rethrow
 import nz.adjmunro.inline.throwfold
@@ -14,7 +14,7 @@ import kotlin.contracts.contract
 /** @return The [value][Success] or [default]. */
 @KnomadicDsl
 public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrDefault(default: Ok): Ok {
-    return fold(success = ::itself, failure = { default })
+    return fold(success = Success<Ok>::value, failure = { default })
 }
 
 /** @return The [value][Success] or the result of [recover]. */
@@ -22,7 +22,7 @@ public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrDefault(default
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrElse(
     recover: (Error) -> Ok,
 ): Ok {
-    return fold(success = ::itself, failure = recover)
+    return fold(success = Success<Ok>::value, failure = { recover(error) })
 }
 
 /** @return The [value][Success] or `null`. */
@@ -33,7 +33,7 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrNull(): Ok? {
         returns(null) implies (this@getOrNull is Failure<Error>)
     }
 
-    return fold(success = ::itself, failure = ::nulls)
+    return fold(success = Success<Ok>::value, failure = ::nulls)
 }
 
 /**
@@ -44,8 +44,8 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrNull(): Ok? {
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.getOrThrow(): Ok {
     contract { returns() implies (this@getOrThrow is Success<Ok>) }
 
-    return fold(success = ::itself) {
-        it.throwfold(throws = ::rethrow) { error("Outcome::getOrThrow threw! Got: $this") }
+    return rfold(success = Success<Ok>::value) {
+        error.throwfold(throws = ::rethrow) { error("Outcome::getOrThrow threw! Got: $this") }
     }
 }
 
@@ -79,7 +79,7 @@ public inline infix fun <Ok, Error : Any> Outcome<Ok & Any, Error>.unwrap(
 /** @return The [error][Failure] or [default]. */
 @KnomadicDsl
 public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrDefault(default: Error): Error {
-    return rfold(failure = ::itself) { default }
+    return fold(failure = Failure<Error>::error) { default }
 }
 
 /** @return The [error][Failure] or the result of [faulter]. */
@@ -87,7 +87,7 @@ public infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrDefault(defau
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrElse(
     faulter: (Ok) -> Error,
 ): Error {
-    return fold(success = faulter, failure = ::itself)
+    return fold(success = { faulter(value) }, failure = Failure<Error>::error)
 }
 
 /** @return The [error][Failure] or `null`. */
@@ -98,7 +98,7 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrNull(): Error? {
         returns(null) implies (this@errorOrNull is Success<Ok>)
     }
 
-    return fold(success = ::nulls, failure = ::itself)
+    return fold(success = ::nulls, failure = Failure<Error>::error)
 }
 
 /**
@@ -111,8 +111,8 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
         returns() implies (this@errorOrThrow is Failure<Error>)
     }
 
-    return rfold(failure = ::itself) {
-        it.throwfold(throws = ::rethrow) { error("Outcome::errorOrThrow threw! Got: $this") }
+    return fold(failure = Failure<Error>::error) {
+        value.throwfold(throws = ::rethrow) { error("Outcome::errorOrThrow threw! Got: $this") }
     }
 }
 
@@ -140,5 +140,5 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.errorOrThrow(): Error {
 public inline infix fun <Ok: Any, Error> Outcome<Ok, Error & Any>.unwrapError(
     faulter: (Ok) -> Error = { error("Outcome::unwrapError threw! Got: $this") },
 ): Error {
-    return fold(success = faulter, failure = ::itself)
+    return fold(success = { faulter(value) }, failure = Failure<Error & Any>::error)
 }

@@ -3,7 +3,6 @@ package nz.adjmunro.knomadic.outcome.members
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.inline.itself
 import nz.adjmunro.knomadic.outcome.Success
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -29,8 +28,8 @@ import kotlin.contracts.contract
  */
 @KnomadicDsl
 public inline fun <Ok, Error, Output> Outcome<Ok, Error>.fold(
-    success: (Ok) -> Output,
-    failure: (Error) -> Output,
+    failure: Failure<Error>.() -> Output,
+    success: Success<Ok>.() -> Output,
 ): Output where Ok : Any, Error : Any, Output : Any? {
     contract {
         callsInPlace(success, AT_MOST_ONCE)
@@ -38,8 +37,8 @@ public inline fun <Ok, Error, Output> Outcome<Ok, Error>.fold(
     }
 
     return when (this@fold) {
-        is Outcome.Success<Ok> -> success(value)
-        is Outcome.Failure<Error> -> failure(error)
+        is Success<Ok> -> success()
+        is Failure<Error> -> failure()
     }
 }
 
@@ -59,8 +58,8 @@ public inline fun <Ok, Error, Output> Outcome<Ok, Error>.fold(
  */
 @KnomadicDsl
 public inline fun <Ok, Error, Output> Outcome<Ok, Error>.rfold(
-    failure: (Error) -> Output,
-    success: (Ok) -> Output,
+    success: Success<Ok>.() -> Output,
+    failure: Failure<Error>.() -> Output,
 ): Output where Ok : Any, Error : Any, Output : Any? {
     return fold(success = success, failure = failure)
 }
@@ -88,5 +87,5 @@ public fun <Ancestor, Ok, Error> Outcome<Ok, Error>.collapse(): Ancestor where
         Ok : Ancestor,
         Error : Ancestor
 {
-    return fold(success = ::itself, failure = ::itself)
+    return fold(success = Success<Ok>::value, failure = Failure<Error>::error)
 }

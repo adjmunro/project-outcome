@@ -1,11 +1,9 @@
 package nz.adjmunro.knomadic.outcome.members
 
+import nz.adjmunro.inline.caller
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.failureOf
-import nz.adjmunro.knomadic.outcome.successOf
-import nz.adjmunro.inline.itself
 import nz.adjmunro.knomadic.outcome.Success
 
 /**
@@ -89,7 +87,10 @@ public fun <Ok, EmbeddedError, OuterError, AncestorError> Outcome<Outcome<Ok, Em
         EmbeddedError : AncestorError,
         OuterError : AncestorError
 {
-    return fold(success = ::itself, failure = ::failureOf)
+    return fold(
+        failure = Failure<OuterError>::caller,
+        success = Success<Outcome<Ok, EmbeddedError>>::value,
+    )
 }
 
 /**
@@ -117,7 +118,10 @@ public fun <OuterOk, EmbeddedOk, Error, AncestorOk> Outcome<OuterOk, Outcome<Emb
         OuterOk : AncestorOk,
         EmbeddedOk : AncestorOk
 {
-    return fold(success = ::successOf, failure = ::itself)
+    return fold(
+        failure = Failure<Outcome<EmbeddedOk, Error>>::error,
+        success = Success<OuterOk>::caller,
+    )
 }
 
 /**
@@ -148,5 +152,8 @@ public fun <SuccessOk, SuccessError, FailureOk, FailureError, AncestorOk, Ancest
         FailureOk : AncestorOk,
         FailureError : AncestorError
 {
-    return fold(success = ::itself, failure = ::itself)
+    return fold(
+        failure = Failure<Outcome<FailureOk, FailureError>>::error,
+        success = Success<Outcome<SuccessOk, SuccessError>>::value,
+    )
 }

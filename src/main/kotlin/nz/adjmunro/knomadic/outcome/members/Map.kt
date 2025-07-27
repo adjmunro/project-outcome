@@ -2,10 +2,8 @@ package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.failureOf
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.outcomeOf
-import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.knomadic.outcome.Success
 import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.inline.itself
@@ -37,8 +35,8 @@ import kotlin.contracts.contract
  */
 @KnomadicDsl
 public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<In, ErrorIn>.map(
-    success: (In) -> Out,
     failure: (ErrorIn) -> ErrorOut,
+    success: (In) -> Out,
 ): Outcome<Out, ErrorOut> {
     contract {
         callsInPlace(success, AT_MOST_ONCE)
@@ -46,8 +44,8 @@ public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<I
     }
 
     return fold(
-        success = { successOf(success(it)) },
-        failure = { failureOf(failure(it)) },
+        success = { Success(value = success(value)) },
+        failure = { Failure(error = failure(error)) },
     )
 }
 
@@ -121,5 +119,5 @@ public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, Er
  */
 @KnomadicDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.invert(): Outcome<Error, Ok> {
-    return fold(success = ::failureOf, failure = ::successOf)
+    return fold(success = { Failure(error = value) }, failure = { Success(value = error) })
 }

@@ -1,10 +1,9 @@
 package nz.adjmunro.knomadic.outcome.members
 
+import nz.adjmunro.inline.caller
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.failureOf
-import nz.adjmunro.knomadic.outcome.successOf
 import nz.adjmunro.knomadic.outcome.Success
 import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
@@ -46,7 +45,10 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToSucce
     recover: (Error) -> Ok,
 ): Success<Ok> {
     contract { callsInPlace(recover, AT_MOST_ONCE) }
-    return fold(success = ::successOf) { successOf(recover(it)) }
+    return fold(
+        failure = { Success(value = recover(error)) },
+        success = Success<Ok>::caller, 
+    )
 }
 
 /**
@@ -75,7 +77,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToFailu
     contract { callsInPlace(falter, AT_MOST_ONCE) }
 
     return fold(
-        success = { failureOf(falter(it)) },
-        failure = ::failureOf,
+        success = { Failure(error = falter(value)) },
+        failure = Failure<Error>::caller,
     )
 }
