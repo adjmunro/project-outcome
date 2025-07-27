@@ -1,7 +1,7 @@
 package nz.adjmunro.knomadic.outcome.flow
 
 import kotlinx.coroutines.flow.map
-import nz.adjmunro.knomadic.OutcomeFlow
+import nz.adjmunro.knomadic.outcome.OutcomeFlow
 import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.members.mapFailure
 import nz.adjmunro.knomadic.outcome.members.mapSuccess

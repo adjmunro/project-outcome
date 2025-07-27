@@ -12,8 +12,7 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.util.nonFatalOrThrow
 
-@OutcomeDsl
-public typealias Faulty<Error> = Outcome<Unit, Error>
+
 
 @OutcomeDsl
 public inline fun faultySuccess(ignore: Any? = null): Success<Unit> = Success(Unit)

@@ -11,9 +11,6 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 
 @OutcomeDsl
-public typealias Maybe<Ok> = Outcome<Ok, Unit>
-
-@OutcomeDsl
 public inline fun maybeFailed(ignore: Any? = null): Failure<Unit> = Failure(error = Unit)
 
 @OutcomeDsl

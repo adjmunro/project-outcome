@@ -1,5 +1,8 @@
 package nz.adjmunro.knomadic.outcome
 
+/**
+ * Annotation marking members of the [Outcome] DSL.
+ */
 @Target(
     AnnotationTarget.FILE,
     AnnotationTarget.TYPEALIAS,

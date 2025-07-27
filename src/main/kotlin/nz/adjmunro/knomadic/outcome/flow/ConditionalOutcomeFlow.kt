@@ -3,7 +3,7 @@ package nz.adjmunro.knomadic.outcome.flow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
-import nz.adjmunro.knomadic.OutcomeFlow
+import nz.adjmunro.knomadic.outcome.OutcomeFlow
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.members.errorOrNull
