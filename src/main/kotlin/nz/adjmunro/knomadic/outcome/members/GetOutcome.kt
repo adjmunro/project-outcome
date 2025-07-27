@@ -1,6 +1,5 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.inline.caller
 import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.inline.nulls
