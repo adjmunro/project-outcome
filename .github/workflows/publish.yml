@@ -8,28 +8,16 @@ on:
 
 permissions:
   contents: write
+  packages: write
   pages: write
 
 jobs:
-  version-tag:
-    uses: ./.github/workflows/version-tag.yml
-
   dokka:
     uses: ./.github/workflows/dokka.yml
-    needs: [version-tag]
 
   dependency-submission:
     uses: ./.github/workflows/dependency-submission.yml
-    needs: [version-tag]
-
-  codeql:
-    uses: ./.github/workflows/codeql.yml
-    needs: [version-tag]
 
   github-packages:
     uses: ./.github/workflows/github-packages.yml
-    needs: [version-tag, dokka, dependency-submission ]
-
-  changelog:
-    uses: ./.github/workflows/changelog.yml
-    needs: [version-tag, dokka]
+    needs: [dokka, dependency-submission ]

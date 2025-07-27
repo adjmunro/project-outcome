@@ -8,7 +8,7 @@
 #######################################   Project Verions   ########################################
 ####################################################################################################
 project-group-id = "nz.adjmunro"
-project-artifact-id = "knomadic"
+project-artifact-id = "outcome"
 project-version-major = "0"
 project-version-minor = "1"
 project-version-patch = "1"
@@ -34,7 +34,6 @@ jetbrains-atomicfu = "0.29.0"
 jetbrains-coroutines = "1.10.2"
 junit5 = "5.13.3"
 kotest = "5.9.0"
-mockk = "1.14.5"
 
 ####################################################################################################
 ####                                                                                             ###
@@ -60,7 +59,6 @@ kotest-property = { group = "io.kotest", name = "kotest-property", version.ref =
 kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin-language" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin-language" }
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 ####################################################################################################
 ####                                                                                             ###
@@ -79,5 +77,4 @@ test = [
     "kotest-assertions",
     "kotest-property",
     "kotlin-test",
-    "mockk",
 ]

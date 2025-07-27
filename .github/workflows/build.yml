@@ -15,6 +15,3 @@ jobs:
 
       - name: Execute Gradle Build
         run: ./gradlew build
-
-      - name: Cache Gradle Build
-        uses: ./.github/actions/cache-gradle

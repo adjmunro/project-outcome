@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.dokka)
-    `jacoco`
+    jacoco
     `maven-publish`
 }
 
@@ -42,6 +42,12 @@ kotlin {
 
         // Free compiler args
         freeCompilerArgs.addAll(
+            "-Xcontext-parameters",
+            "-Xcontext-sensitive-resolution",
+            "-Xannotation-target-all",
+            "-Xannotation-default-target=param-property",
+            "-Xnested-type-aliases",
+
             "-opt-in=kotlin.experimental.ExperimentalTypeInference",
             "-opt-in=kotlin.contracts.ExperimentalContracts",
         )
@@ -91,7 +97,7 @@ tasks.register<Jar>("dokkaJar") {
 
 publishing {
     publications {
-        register<MavenPublication>(name = "knomadic-maven-artifact") {
+        register<MavenPublication>(name = "outcome-maven-artifact") {
             from(components["kotlin"])
             groupId = version { project.group.id }
             artifactId = version { project.artifact.id }
@@ -104,7 +110,7 @@ publishing {
         // Publish to GitHub Packages
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/adjmunro/project-knomadic")
+            url = uri("https://maven.pkg.github.com/adjmunro/project-outcome")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
