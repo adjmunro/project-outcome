@@ -1,6 +1,6 @@
 package nz.adjmunro.knomadic.outcome
 
-import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.inline.rethrow
 import nz.adjmunro.knomadic.KotlinResult
 import nz.adjmunro.knomadic.outcome.members.errorOrNull
 import nz.adjmunro.knomadic.outcome.members.getOrNull
@@ -9,7 +9,6 @@ import nz.adjmunro.knomadic.raise.RaiseScope.Companion.catch
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.default
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.fold
 import nz.adjmunro.knomadic.raise.RaiseScope.Companion.raise
-import nz.adjmunro.inline.rethrow
 
 /**
  * Context runner that encapsulates the [Ok] result of [block] as an [Success], and any
@@ -40,7 +39,7 @@ import nz.adjmunro.inline.rethrow
  * @see outcome
  * @see catch
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok : Any, Error : Any> outcomeOf(
     catch: (throwable: Throwable) -> Outcome<Ok, Error> = ::rethrow,
     @BuilderInference block: RaiseScope<Error>.() -> Ok,
@@ -64,7 +63,7 @@ public inline fun <Ok : Any, Error : Any> outcomeOf(
  * @see outcomeOf
  * @see catch
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok : Any> outcome(
     @BuilderInference block: RaiseScope<String>.() -> Ok,
 ): Outcome<Ok, String> = outcomeOf(
@@ -81,7 +80,7 @@ public inline fun <Ok : Any> outcome(
  * @see outcomeOf
  * @see outcome
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok : Any> catch(
     @BuilderInference block: RaiseScope<Throwable>.() -> Ok,
 ): Outcome<Ok, Throwable> = outcomeOf(catch = ::Failure, block = block)
@@ -98,7 +97,7 @@ public inline fun <Ok : Any> catch(
  * @see Failure
  * @see outcomeOf
  */
-@KnomadicDsl
+@OutcomeDsl
 public sealed interface Outcome<out Ok : Any, out Error : Any> {
 
     public operator fun component1(): Ok? = getOrNull()
@@ -110,7 +109,7 @@ public sealed interface Outcome<out Ok : Any, out Error : Any> {
  *
  * @property value The successful result.
  */
-@KnomadicDsl
+@OutcomeDsl
 @JvmInline
 public value class Success<out Ok : Any>(public val value: Ok) : Outcome<Ok, Nothing> {
     override fun component1(): Ok = value
@@ -122,7 +121,7 @@ public value class Success<out Ok : Any>(public val value: Ok) : Outcome<Ok, Not
  *
  * @property error The error result.
  */
-@KnomadicDsl
+@OutcomeDsl
 @JvmInline
 public value class Failure<out Error : Any>(public val error: Error) : Outcome<Nothing, Error> {
     override fun component2(): Error = error

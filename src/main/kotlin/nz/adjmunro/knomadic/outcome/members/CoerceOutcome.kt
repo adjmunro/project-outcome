@@ -1,22 +1,22 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.inline.caller
-import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
 /** An alias for [coerceToFailure]. */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.falter(
     transform: (Ok) -> Error,
 ): Failure<Error> = coerceToFailure(falter = transform)
 
 /** An alias for [coerceToSuccess]. */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
     transform: (Error) -> Ok,
 ): Success<Ok> = coerceToSuccess(recover = transform)
@@ -40,7 +40,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
  * @see Outcome.coerceToFailure
  * @see Outcome.recover
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToSuccess(
     recover: (Error) -> Ok,
 ): Success<Ok> {
@@ -70,7 +70,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToSucce
  * @see Outcome.coerceToSuccess
  * @see Outcome.falter
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToFailure(
     falter: (Ok) -> Error,
 ): Failure<Error> {

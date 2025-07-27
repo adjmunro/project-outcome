@@ -1,10 +1,10 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.inline.rethrow
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.outcomeOf
 import nz.adjmunro.knomadic.raise.RaiseScope
-import nz.adjmunro.inline.rethrow
 
 /**
  * Transforms the encapsulated value if this instance represents [success][Outcome.isSuccess].
@@ -25,7 +25,7 @@ import nz.adjmunro.inline.rethrow
  * @see Outcome.mapFailure
  * @see Outcome.tryRecover
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <In : Any, Out : Any, Error: Any> Outcome<In, Error>.andThen(
     catch: (throwable: Throwable) -> Outcome<Out, Error> = ::rethrow,
     @BuilderInference success: RaiseScope<Error>.(In) -> Out,
@@ -72,7 +72,7 @@ public inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.andIf(
  * @see Outcome.andThen
  * @see Outcome.mapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok: Any, ErrorIn: Any, ErrorOut: Any> Outcome<Ok, ErrorIn>.tryRecover(
     catch: (throwable: Throwable) -> Outcome<Ok, ErrorOut> = ::rethrow,
     @BuilderInference failure: RaiseScope<ErrorOut>.(ErrorIn) -> Ok,

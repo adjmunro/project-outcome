@@ -1,8 +1,8 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.Failure
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -13,7 +13,7 @@ import kotlin.contracts.contract
  * - ***If any*** [outcome][Outcome] in the [Iterable] are [failure][Outcome.isFailure],
  *   `returns` a new [Outcome] failure with the result of the [reduce] function.
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok : Any, Error : Any> Iterable<Outcome<Ok, Error>>.aggregate(
     reduce: (List<Error>) -> Error,
 ): Outcome<List<Ok>, Error> {

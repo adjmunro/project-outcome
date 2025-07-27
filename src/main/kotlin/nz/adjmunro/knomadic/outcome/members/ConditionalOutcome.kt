@@ -1,13 +1,13 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
-@KnomadicDsl
+@OutcomeDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(): Boolean {
     contract {
         returns(true) implies (this@isSuccess is Success<Ok>)
@@ -17,7 +17,7 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(): Boolean {
     return this@isSuccess is Success<Ok>
 }
 
-@KnomadicDsl
+@OutcomeDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(): Boolean {
     contract {
         returns(true) implies (this@isFailure is Failure<Error>)
@@ -27,7 +27,7 @@ public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(): Boolean {
     return this@isFailure is Failure<Error>
 }
 
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(
     predicate: (Ok) -> Boolean,
 ): Boolean {
@@ -40,7 +40,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isSuccess(
     return isSuccess() && predicate(value)
 }
 
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(
     predicate: (Error) -> Boolean,
 ): Boolean {
@@ -53,7 +53,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.isFailure(
     return isFailure() && predicate(error)
 }
 
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onSuccess(
     block: (Ok) -> Unit,
 ): Outcome<Ok, Error> {
@@ -62,7 +62,7 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onSuccess(
     return this@onSuccess
 }
 
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.onFailure(
     block: (Error) -> Unit,
 ): Outcome<Ok, Error> {

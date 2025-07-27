@@ -1,9 +1,9 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.inline.caller
-import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 import nz.adjmunro.knomadic.outcome.outcomeOf
 import nz.adjmunro.knomadic.raise.RaiseScope
@@ -30,7 +30,7 @@ import nz.adjmunro.knomadic.raise.RaiseScope
  * @see Outcome.andThen
  * @see Outcome.flatMapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.flatMapSuccess(
     @BuilderInference transform: (In) -> Outcome<Out, Error>,
 ): Outcome<Out, Error> = fold(success = { transform(value) }, failure = Failure<Error>::caller)
@@ -57,7 +57,7 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.fl
  * @see Outcome.tryRecover
  * @see Outcome.flatMapSuccess
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.flatMapFailure(
     @BuilderInference transform: (ErrorIn) -> Outcome<Ok, ErrorOut>,
 ): Outcome<Ok, ErrorOut> = fold(success = Success<Ok>::caller, failure = { transform(error) })

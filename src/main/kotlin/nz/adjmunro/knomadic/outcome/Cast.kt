@@ -2,17 +2,15 @@
 
 package nz.adjmunro.knomadic.outcome
 
-import nz.adjmunro.inline.caller
-import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.inline.nullfold
 import nz.adjmunro.inline.throwfold
 
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok : Any> successOf(block: () -> Ok): Success<Ok> = Success(value = block())
 
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Error : Any> failureOf(block: () -> Error): Failure<Error> = Failure(error = block())
 
-@KnomadicDsl
+@OutcomeDsl
 public fun <T> T.wrapOutcome(): Outcome<T & Any, Throwable> =
     throwfold(throws = ::Failure) { it.nullfold(none = ::Failure, some = ::Success) }

@@ -1,8 +1,8 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
@@ -26,7 +26,7 @@ import kotlin.contracts.contract
  * @see Outcome.rfold
  * @see Outcome.collapse
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok, Error, Output> Outcome<Ok, Error>.fold(
     failure: Failure<Error>.() -> Output,
     success: Success<Ok>.() -> Output,
@@ -56,7 +56,7 @@ public inline fun <Ok, Error, Output> Outcome<Ok, Error>.fold(
  * @see Outcome.fold
  * @see Outcome.collapse
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok, Error, Output> Outcome<Ok, Error>.rfold(
     success: Success<Ok>.() -> Output,
     failure: Failure<Error>.() -> Output,
@@ -81,7 +81,7 @@ public inline fun <Ok, Error, Output> Outcome<Ok, Error>.rfold(
  * @see Outcome.fold
  * @see Outcome.rfold
  */
-@KnomadicDsl
+@OutcomeDsl
 public fun <Ancestor, Ok, Error> Outcome<Ok, Error>.collapse(): Ancestor where
         Ancestor : Any,
         Ok : Ancestor,

@@ -1,9 +1,9 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.inline.caller
-import nz.adjmunro.knomadic.KnomadicDsl
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 
 /**
@@ -18,7 +18,7 @@ import nz.adjmunro.knomadic.outcome.Success
  * @see Outcome.flattenNestedFailure
  * @see Outcome.flattenNestedBoth
  */
-@KnomadicDsl
+@OutcomeDsl
 @get:JvmName("flattenNestedSuccessAlias")
 public val <Ok, Err, Eri, Ero> Outcome<Outcome<Ok, Eri>, Ero>.flatten: Outcome<Ok, Err> where
         Ok : Any, Err : Any, Eri : Err, Ero : Err
@@ -36,7 +36,7 @@ public val <Ok, Err, Eri, Ero> Outcome<Outcome<Ok, Eri>, Ero>.flatten: Outcome<O
  * @see Outcome.flattenNestedFailure
  * @see Outcome.flattenNestedBoth
  */
-@KnomadicDsl
+@OutcomeDsl
 @get:JvmName("flattenNestedFailureAlias")
 public val <Ok, Err, Oki, Oko> Outcome<Oko, Outcome<Oki, Err>>.flatten: Outcome<Ok, Err> where
         Ok : Any, Err : Any, Oko : Ok, Oki : Ok
@@ -56,7 +56,7 @@ public val <Ok, Err, Oki, Oko> Outcome<Oko, Outcome<Oki, Err>>.flatten: Outcome<
  * @see Outcome.flattenNestedFailure
  * @see Outcome.flattenNestedBoth
  */
-@KnomadicDsl
+@OutcomeDsl
 @get:JvmName("flattenNestedBothAlias")
 public val <Ok, Err, Oks, Ers, Okf, Erf> Outcome<Outcome<Oks, Ers>, Outcome<Okf, Erf>>.flatten: Outcome<Ok, Err> where
         Ok : Any, Err : Any, Oks : Ok, Ers : Err, Okf : Ok, Erf : Err
@@ -80,7 +80,7 @@ public val <Ok, Err, Oks, Ers, Okf, Erf> Outcome<Outcome<Oks, Ers>, Outcome<Okf,
  * @see Outcome.flattenNestedFailure
  * @see Outcome.flattenNestedBoth
  */
-@KnomadicDsl
+@OutcomeDsl
 public fun <Ok, EmbeddedError, OuterError, AncestorError> Outcome<Outcome<Ok, EmbeddedError>, OuterError>.flattenNestedSuccess(): Outcome<Ok, AncestorError> where
         Ok : Any,
         AncestorError : Any,
@@ -111,7 +111,7 @@ public fun <Ok, EmbeddedError, OuterError, AncestorError> Outcome<Outcome<Ok, Em
  * @see Outcome.flattenNestedSuccess
  * @see Outcome.flattenNestedBoth
  */
-@KnomadicDsl
+@OutcomeDsl
 public fun <OuterOk, EmbeddedOk, Error, AncestorOk> Outcome<OuterOk, Outcome<EmbeddedOk, Error>>.flattenNestedFailure(): Outcome<AncestorOk, Error> where
         AncestorOk : Any,
         Error : Any,
@@ -143,7 +143,7 @@ public fun <OuterOk, EmbeddedOk, Error, AncestorOk> Outcome<OuterOk, Outcome<Emb
  * @see Outcome.flattenNestedSuccess
  * @see Outcome.flattenNestedFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public fun <SuccessOk, SuccessError, FailureOk, FailureError, AncestorOk, AncestorError> Outcome<Outcome<SuccessOk, SuccessError>, Outcome<FailureOk, FailureError>>.flattenNestedBoth(): Outcome<AncestorOk, AncestorError> where
         AncestorOk : Any,
         AncestorError : Any,

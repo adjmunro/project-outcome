@@ -1,12 +1,12 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.Failure
-import nz.adjmunro.knomadic.outcome.outcomeOf
-import nz.adjmunro.knomadic.outcome.Success
-import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.inline.itself
+import nz.adjmunro.knomadic.outcome.Failure
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
+import nz.adjmunro.knomadic.outcome.Success
+import nz.adjmunro.knomadic.outcome.outcomeOf
+import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
@@ -33,7 +33,7 @@ import kotlin.contracts.contract
  * @see Outcome.flatMapSuccess
  * @see Outcome.flatMapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<In, ErrorIn>.map(
     failure: (ErrorIn) -> ErrorOut,
     success: (In) -> Out,
@@ -72,7 +72,7 @@ public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<I
  * @see Outcome.flatMapSuccess
  * @see Outcome.mapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.mapSuccess(
     transform: (In) -> Out,
 ): Outcome<Out, Error> {
@@ -103,7 +103,7 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.ma
  * @see Outcome.flatMapFailure
  * @see Outcome.mapSuccess
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.mapFailure(
     transform: (ErrorIn) -> ErrorOut,
 ): Outcome<Ok, ErrorOut> {
@@ -117,7 +117,7 @@ public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, Er
  * @param Error The `Error` type of the receiver [Outcome], and `Ok` type of the returned [Outcome].
  * @return A new [Outcome] with the values inverted.
  */
-@KnomadicDsl
+@OutcomeDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.invert(): Outcome<Error, Ok> {
     return fold(success = { Failure(error = value) }, failure = { Success(value = error) })
 }
