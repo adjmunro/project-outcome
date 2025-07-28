@@ -1,5 +1,8 @@
-package nz.adjmunro.knomadic
+package nz.adjmunro.knomadic.raise
 
+/**
+ * Annotation marking members of the [RaiseScope] DSL.
+ */
 @Target(
     AnnotationTarget.FILE,
     AnnotationTarget.TYPEALIAS,
@@ -9,4 +12,4 @@ package nz.adjmunro.knomadic
     AnnotationTarget.PROPERTY,
 )
 @DslMarker
-public annotation class KnomadicDsl
+public annotation class RaiseDsl

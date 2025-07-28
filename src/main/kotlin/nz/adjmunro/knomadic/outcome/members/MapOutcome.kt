@@ -1,12 +1,11 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.failureOf
-import nz.adjmunro.knomadic.outcome.outcomeOf
-import nz.adjmunro.knomadic.outcome.successOf
-import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.inline.itself
+import nz.adjmunro.knomadic.outcome.Failure
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
+import nz.adjmunro.knomadic.outcome.Success
+import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
@@ -25,18 +24,18 @@ import kotlin.contracts.contract
  * @param ErrorIn The `Error` type of the receiver [Outcome].
  * @param ErrorOut The `Error` type of the returned [Outcome].
  *
- * @param success The transform to apply if the receiver [Outcome] is an [Outcome.Success].
- * @param failure The transform to apply if the receiver [Outcome] is an [Outcome.Failure].
+ * @param success The transform to apply if the receiver [Outcome] is an [Success].
+ * @param failure The transform to apply if the receiver [Outcome] is an [Failure].
  *
  * @see Outcome.andThen
  * @see Outcome.tryRecover
  * @see Outcome.flatMapSuccess
  * @see Outcome.flatMapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<In, ErrorIn>.map(
-    success: (In) -> Out,
     failure: (ErrorIn) -> ErrorOut,
+    success: (In) -> Out,
 ): Outcome<Out, ErrorOut> {
     contract {
         callsInPlace(success, AT_MOST_ONCE)
@@ -44,16 +43,16 @@ public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<I
     }
 
     return fold(
-        success = { successOf(success(it)) },
-        failure = { failureOf(failure(it)) },
+        success = { Success(value = success(value)) },
+        failure = { Failure(error = failure(error)) },
     )
 }
 
 /**
- * Returns a new [Outcome], after applying [transform] to the [Outcome.Success] value.
+ * Returns a new [Outcome], after applying [transform] to the [Success] value.
  *
  * - Transforms `Outcome<In, Error>` into `Outcome<Out, Error>`.
- * - If the receiver [Outcome] is an [Outcome.Failure], the `Error` is simply re-wrapped to update the `Ok` type.
+ * - If the receiver [Outcome] is an [Failure], the `Error` is simply re-wrapped to update the `Ok` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [andThen] or [outcomeOf] within the transformation lambda for that.
  * - Unlike [flatMapSuccess], mapSuccess's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
@@ -63,7 +62,7 @@ public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<I
  *
  * @param In The `Ok` type of the receiver [Outcome].
  * @param Out The `Ok` type of the returned [Outcome].
- * @param Error The `Error` type of [Outcome.Failure].
+ * @param Error The `Error` type of [Failure].
  *
  * @param transform The transform function to convert an [In] value into an [Out] value.
  *
@@ -72,7 +71,7 @@ public inline fun <In : Any, Out : Any, ErrorIn : Any, ErrorOut : Any> Outcome<I
  * @see Outcome.flatMapSuccess
  * @see Outcome.mapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.mapSuccess(
     transform: (In) -> Out,
 ): Outcome<Out, Error> {
@@ -81,10 +80,10 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.ma
 
 
 /**
- * Returns a new [Outcome], after applying [transform] to the [Outcome.Failure] error.
+ * Returns a new [Outcome], after applying [transform] to the [Failure] error.
  *
  * - Transforms `Outcome<Ok, ErrorIn>` into `Outcome<Ok, ErrorOut>`.
- * - If the receiver [Outcome] is an [Outcome.Success], the `Ok` is simply re-wrapped to update the `Error` type.
+ * - If the receiver [Outcome] is an [Success], the `Ok` is simply re-wrapped to update the `Error` type.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [tryRecover] or [outcomeOf] within the transformation lambda for that.
  * - Unlike [flatMapFailure], mapFailure's transform lambda returns the monad's internal value directly instead of the [Outcome] wrapper.
@@ -92,7 +91,7 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.ma
  * @receiver The [Outcome]<[Ok], [ErrorIn]> to transform.
  * @return A new [Outcome]<[Ok], [ErrorOut]> with the transformed error.
  *
- * @param Ok The `Ok` type of [Outcome.Success].
+ * @param Ok The `Ok` type of [Success].
  * @param ErrorIn The `Error` type of the receiver [Outcome].
  * @param ErrorOut The `Error` type of the returned [Outcome].
  *
@@ -103,7 +102,7 @@ public inline infix fun <In : Any, Out : Any, Error : Any> Outcome<In, Error>.ma
  * @see Outcome.flatMapFailure
  * @see Outcome.mapSuccess
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, ErrorIn>.mapFailure(
     transform: (ErrorIn) -> ErrorOut,
 ): Outcome<Ok, ErrorOut> {
@@ -111,13 +110,13 @@ public inline infix fun <Ok : Any, ErrorIn : Any, ErrorOut : Any> Outcome<Ok, Er
 }
 
 /**
- * Inverts the [Outcome] so that the [Outcome.Success] value becomes the [Outcome.Failure] error and vice versa.
+ * Inverts the [Outcome] so that the [Success] value becomes the [Failure] error and vice versa.
  *
  * @param Ok The `Ok` type of the receiver [Outcome], and `Error` type of the returned [Outcome].
  * @param Error The `Error` type of the receiver [Outcome], and `Ok` type of the returned [Outcome].
  * @return A new [Outcome] with the values inverted.
  */
-@KnomadicDsl
+@OutcomeDsl
 public fun <Ok : Any, Error : Any> Outcome<Ok, Error>.invert(): Outcome<Error, Ok> {
-    return fold(success = ::failureOf, failure = ::successOf)
+    return fold(success = { Failure(error = value) }, failure = { Success(value = error) })
 }

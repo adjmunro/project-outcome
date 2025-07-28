@@ -1,10 +1,11 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
-import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.outcomeOf
-import nz.adjmunro.knomadic.raise.RaiseScope
 import nz.adjmunro.inline.rethrow
+import nz.adjmunro.knomadic.outcome.Failure
+import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
+import nz.adjmunro.knomadic.outcome.Success
+import nz.adjmunro.knomadic.raise.RaiseScope
 
 /**
  * Transforms the encapsulated value if this instance represents [success][Outcome.isSuccess].
@@ -25,7 +26,7 @@ import nz.adjmunro.inline.rethrow
  * @see Outcome.mapFailure
  * @see Outcome.tryRecover
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <In : Any, Out : Any, Error: Any> Outcome<In, Error>.andThen(
     catch: (throwable: Throwable) -> Outcome<Out, Error> = ::rethrow,
     @BuilderInference success: RaiseScope<Error>.(In) -> Out,
@@ -33,7 +34,7 @@ public inline fun <In : Any, Out : Any, Error: Any> Outcome<In, Error>.andThen(
 
 /**
  * Transforms the encapsulated value if this instance represents [success][Outcome.isSuccess],
- * and the [predicate] returns true. If [predicate] is false, the [Outcome.Success] is left unchanged.
+ * and the [predicate] returns true. If [predicate] is false, the [Success] is left unchanged.
  *
  * *If [success] throws an exception, it will be re-encapsulated or re-thrown by [outcomeOf].*
  * *If no exception occurs, or [Outcome] is [failure][Outcome.isFailure], the original [Outcome] is returned unaffected.*
@@ -54,7 +55,7 @@ public inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.andIf(
 
 
 /**
- * Transform [failure][Outcome.Failure] into [success][Outcome.Success].
+ * Transform [failure][Failure] into [success][Success].
  * - [Success][Outcome.isSuccess] -> `returns` the original caller.
  * - [Failure][Outcome.isFailure] -> [wraps][outcomeOf] & `returns` the result of [onFailure] transformation.
  * - *If [onFailure] throws an exception, it will be caught & wrapped by [outcomeOf].*
@@ -72,7 +73,7 @@ public inline fun <Ok : Any, Error : Any> Outcome<Ok, Error>.andIf(
  * @see Outcome.andThen
  * @see Outcome.mapFailure
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline fun <Ok: Any, ErrorIn: Any, ErrorOut: Any> Outcome<Ok, ErrorIn>.tryRecover(
     catch: (throwable: Throwable) -> Outcome<Ok, ErrorOut> = ::rethrow,
     @BuilderInference failure: RaiseScope<ErrorOut>.(ErrorIn) -> Ok,

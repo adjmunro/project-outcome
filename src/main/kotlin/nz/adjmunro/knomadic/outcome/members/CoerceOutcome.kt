@@ -1,37 +1,38 @@
 package nz.adjmunro.knomadic.outcome.members
 
-import nz.adjmunro.knomadic.KnomadicDsl
+import nz.adjmunro.inline.caller
+import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.failureOf
-import nz.adjmunro.knomadic.outcome.successOf
+import nz.adjmunro.knomadic.outcome.OutcomeDsl
+import nz.adjmunro.knomadic.outcome.Success
 import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
 
 /** An alias for [coerceToFailure]. */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.falter(
     transform: (Ok) -> Error,
-): Outcome.Failure<Error> = coerceToFailure(transform)
+): Failure<Error> = coerceToFailure(falter = transform)
 
 /** An alias for [coerceToSuccess]. */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
     transform: (Error) -> Ok,
-): Outcome.Success<Ok> = coerceToSuccess(transform)
+): Success<Ok> = coerceToSuccess(recover = transform)
 
 /**
- * Returns a new [Outcome.Success], after applying [recover] to the [Outcome.Failure] error.
+ * Returns a new [Success], after applying [recover] to the [Failure] error.
  *
- * - Transforms `Outcome<Ok, Error>` into `Outcome.Success<Ok>`.
- * - If the receiver [Outcome] is an [Outcome.Success], nothing happens.
+ * - Transforms `Outcome<Ok, Error>` into `Success<Ok>`.
+ * - If the receiver [Outcome] is an [Success], nothing happens.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  *
  * @receiver The [Outcome]<[Ok], [Error]> to transform.
- * @return A new [Outcome.Success]<[Ok]> with the transformed value.
+ * @return A new [Success]<[Ok]> with the transformed value.
  *
- * @param Ok The `Ok` type of [Outcome.Success].
+ * @param Ok The `Ok` type of [Success].
  * @param Error The `Error` type of the receiver [Outcome].
  *
  * @param recover The transform function to convert an [Error] value into an [Ok] value.
@@ -39,41 +40,44 @@ public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.recover(
  * @see Outcome.coerceToFailure
  * @see Outcome.recover
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToSuccess(
     recover: (Error) -> Ok,
-): Outcome.Success<Ok> {
+): Success<Ok> {
     contract { callsInPlace(recover, AT_MOST_ONCE) }
-    return fold(success = ::successOf) { successOf(recover(it)) }
+    return fold(
+        failure = { Success(value = recover(error)) },
+        success = Success<Ok>::caller, 
+    )
 }
 
 /**
- * Returns a new [Outcome.Failure], after applying [falter] to the [Outcome.Success] value.
+ * Returns a new [Failure], after applying [falter] to the [Success] value.
  *
- * - Transforms `Outcome<Ok, Error>` into `Outcome.Failure<Ok, Error>`.
- * - If the receiver [Outcome] is an [Outcome.Failure], nothing happens.
+ * - Transforms `Outcome<Ok, Error>` into `Failure<Ok, Error>`.
+ * - If the receiver [Outcome] is an [Failure], nothing happens.
  * - This function **does not** provide a [RaiseScope], and ***makes no guarantees*** about catching,
  *   handling, or rethrowing errors! Use [outcomeOf] within the transformation lambda for that.
  *
  * @receiver The [Outcome]<[Ok], [Error]> to transform.
- * @return A new [Outcome.Failure]<[Nothing], [Error]> with the transformed error.
+ * @return A new [Failure]<[Nothing], [Error]> with the transformed error.
  *
  * @param Ok The `Ok` type of the receiver [Outcome].
- * @param Error The `Error` type of [Outcome.Failure].
+ * @param Error The `Error` type of [Failure].
  *
  * @param falter The transform function to convert an [Ok] value into an [Error] value.
  *
  * @see Outcome.coerceToSuccess
  * @see Outcome.falter
  */
-@KnomadicDsl
+@OutcomeDsl
 public inline infix fun <Ok : Any, Error : Any> Outcome<Ok, Error>.coerceToFailure(
     falter: (Ok) -> Error,
-): Outcome.Failure<Error> {
+): Failure<Error> {
     contract { callsInPlace(falter, AT_MOST_ONCE) }
 
     return fold(
-        success = { failureOf(falter(it)) },
-        failure = ::failureOf,
+        success = { Failure(error = falter(value)) },
+        failure = Failure<Error>::caller,
     )
 }
