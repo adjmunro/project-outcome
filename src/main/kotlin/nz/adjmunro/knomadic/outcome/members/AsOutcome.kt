@@ -12,16 +12,22 @@ import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
 
 
+/** Wrap any [T] as an outcome [Success]. */
 @KnomadicDsl
-public fun <T: Any> T.asSuccess(): Success<T> = Success(value = this)
+public inline val <T: Any> T.asSuccess: Success<T>
+    get() = Success(value = this)
 
+/** Wrap any [T] as an outcome [Failure]. */
 @KnomadicDsl
-public fun <T: Any> T.asFailure(): Failure<T> = Failure(error = this)
+public inline val <T: Any> T.asFailure: Failure<T>
+    get() = Failure(error = this)
 
-
-// TODO make params?
+/** Convert any [Outcome] to a [Faulty] by **transforming** the [Success.value] to [Unit]. */
 @OutcomeDsl
-public inline fun <Error : Any> Outcome<*, Error>.asFaulty(): Faulty<Error> = mapSuccess(transform = ::unit)
+public inline val <Error : Any> Outcome<*, Error>.asFaulty: Faulty<Error>
+    get() = mapSuccess(transform = ::unit)
 
+/** Convert any [Outcome] to a [Maybe] by **transforming** the [Failure.error] to [Unit]. */
 @OutcomeDsl
-public inline fun <Ok : Any> Outcome<Ok, *>.asMaybe(): Maybe<Ok> = mapFailure(transform = ::unit)
+public inline val <Ok : Any> Outcome<Ok, *>.asMaybe: Maybe<Ok>
+    get() = mapFailure(transform = ::unit)
