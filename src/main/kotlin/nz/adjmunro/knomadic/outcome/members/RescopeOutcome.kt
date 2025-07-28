@@ -1,9 +1,10 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.inline.rethrow
+import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.OutcomeDsl
-import nz.adjmunro.knomadic.outcome.outcomeOf
+import nz.adjmunro.knomadic.outcome.Success
 import nz.adjmunro.knomadic.raise.RaiseScope
 
 /**

@@ -7,10 +7,6 @@ import nz.adjmunro.knomadic.fetch.fetch
 import nz.adjmunro.knomadic.outcome.Faulty
 import nz.adjmunro.knomadic.outcome.Maybe
 import nz.adjmunro.knomadic.outcome.Outcome
-import nz.adjmunro.knomadic.outcome.faultyOf
-import nz.adjmunro.knomadic.outcome.maybeOf
-import nz.adjmunro.knomadic.outcome.outcomeOf
-import nz.adjmunro.knomadic.raise.RaiseScope
 
 /**
  * Alias for Kotlin's [Result] type.

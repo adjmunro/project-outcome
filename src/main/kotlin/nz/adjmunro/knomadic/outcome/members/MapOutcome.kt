@@ -5,7 +5,6 @@ import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
-import nz.adjmunro.knomadic.outcome.outcomeOf
 import nz.adjmunro.knomadic.raise.RaiseScope
 import kotlin.contracts.InvocationKind.AT_MOST_ONCE
 import kotlin.contracts.contract
