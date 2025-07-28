@@ -1,7 +1,7 @@
 package nz.adjmunro.knomadic.raise
 
 /**
- * Annotation marking members of the [Outcome] DSL.
+ * Annotation marking members of the [RaiseScope] DSL.
  */
 @Target(
     AnnotationTarget.FILE,
