@@ -3,6 +3,7 @@
 package nz.adjmunro.knomadic.outcome.members
 
 import nz.adjmunro.inline.itself
+import nz.adjmunro.inline.nulls
 import nz.adjmunro.inline.rethrow
 import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Faulty
@@ -102,7 +103,7 @@ public inline fun <In, Out : Any, Error : Any> In.failureOf(block: (In) -> Error
  */
 @OutcomeDsl
 public inline fun <Ok : Any> catch(
-    @BuilderInference block: RaiseScope<Throwable>.() -> Ok,
+    block: RaiseScope<Throwable>.() -> Ok,
 ): Outcome<Ok, Throwable> = outcomeOf(catch = ::Failure, block = block)
 
 /**
@@ -120,7 +121,7 @@ public inline fun <Ok : Any> catch(
  */
 @OutcomeDsl
 public inline fun <In, Out : Any> In.catch(
-    @BuilderInference block: RaiseScope<Throwable>.(In) -> Out,
+    block: RaiseScope<Throwable>.(In) -> Out,
 ): Outcome<Out, Throwable> = outcomeOf(catch = ::Failure, block = block)
 
 /**
@@ -137,7 +138,7 @@ public inline fun <In, Out : Any> In.catch(
  */
 @OutcomeDsl
 public inline fun <Ok : Any> outcome(
-    @BuilderInference block: RaiseScope<String>.() -> Ok,
+    block: RaiseScope<String>.() -> Ok,
 ): Outcome<Ok, String> = outcomeOf(
     catch = { e: Throwable -> Failure(error = e.message ?: e.toString()) },
     block = block
@@ -158,7 +159,7 @@ public inline fun <Ok : Any> outcome(
  */
 @OutcomeDsl
 public inline fun <In, Out : Any> In.outcome(
-    @BuilderInference block: RaiseScope<String>.(In) -> Out,
+    block: RaiseScope<String>.(In) -> Out,
 ): Outcome<Out, String> = outcomeOf(
     catch = { e: Throwable -> Failure(error = e.message ?: e.toString()) },
     block = block
@@ -197,15 +198,8 @@ public inline fun <In, Out : Any> In.outcome(
 public inline fun <Ok : Any, Error : Any> outcomeOf(
     catch: (throwable: Throwable) -> Outcome<Ok, Error> = ::rethrow,
     @BuilderInference block: RaiseScope<Error>.() -> Ok,
-): Outcome<Ok, Error> {
-    return RaiseScope.default {
-        fold(
-            block = block,
-            catch = catch,
-            recover = ::Failure,
-            transform = ::Success,
-        )
-    }
+): Outcome<Ok, Error> = RaiseScope.default {
+    fold(block = block, catch = catch, recover = ::Failure, transform = ::Success)
 }
 
 /**
@@ -244,15 +238,13 @@ public inline fun <Ok : Any, Error : Any> outcomeOf(
 public inline fun <In, Out: Any, Error : Any> In.outcomeOf(
     catch: (throwable: Throwable) -> Outcome<Out, Error> = ::rethrow,
     @BuilderInference block: RaiseScope<Error>.(In) -> Out,
-): Outcome<Out, Error> {
-    return RaiseScope.default {
-        fold(
-            block = { block(this@outcomeOf) },
-            catch = catch,
-            recover = ::Failure,
-            transform = ::Success,
-        )
-    }
+): Outcome<Out, Error> = RaiseScope.default {
+    fold(
+        block = { block(this@outcomeOf) },
+        catch = catch,
+        recover = ::Failure,
+        transform = ::Success,
+    )
 }
 
 /**
@@ -274,17 +266,8 @@ public inline fun <In, Out: Any, Error : Any> In.outcomeOf(
 @OutcomeDsl
 public inline fun <Ok : Any> maybeOf(
     @BuilderInference catch: (throwable: Throwable) -> Maybe<Ok> = ::emptyFailure,
-    @BuilderInference block: RaiseScope<Any>.() -> Ok,
-): Maybe<Ok> {
-    return RaiseScope.default<Maybe<Ok>, Any> {
-        fold(
-            block = block,
-            catch = catch,
-            recover = ::emptyFailure,
-            transform = ::Success,
-        )
-    }
-}
+    block: RaiseScope<Unit>.() -> Ok,
+): Maybe<Ok> = outcomeOf(catch = catch, block = block)
 
 /**
  * Context runner that encapsulates the result of [block] as a [Maybe].
@@ -307,17 +290,8 @@ public inline fun <Ok : Any> maybeOf(
 @OutcomeDsl
 public inline fun <In, Out : Any> In.maybeOf(
     @BuilderInference catch: (throwable: Throwable) -> Maybe<Out> = ::rethrow,
-    @BuilderInference block: RaiseScope<Any>.(In) -> Out,
-): Maybe<Out> {
-    return RaiseScope.default<Maybe<Out>, Any> {
-        fold(
-            block = { block(this@maybeOf) },
-            catch = catch,
-            recover = ::emptyFailure,
-            transform = ::Success,
-        )
-    }
-}
+    block: RaiseScope<Unit>.(In) -> Out,
+): Maybe<Out> = outcomeOf(catch = catch, block = block)
 
 /**
  * Context runner that encapsulates the result of [block] as a [Faulty].
@@ -339,16 +313,7 @@ public inline fun <In, Out : Any> In.maybeOf(
 public inline fun <Error : Any> faultyOf(
     @BuilderInference catch: (throwable: Throwable) -> Faulty<Error> = ::rethrow,
     @BuilderInference block: RaiseScope<Error>.() -> Unit,
-): Faulty<Error> {
-    return RaiseScope.default<Faulty<Error>, Error> {
-        fold(
-            block = block,
-            catch = catch,
-            recover = ::Failure,
-            transform = ::emptySuccess,
-        )
-    }
-}
+): Faulty<Error> = outcomeOf(catch = catch, block = block)
 
 /**
  * Context runner that encapsulates the result of [block] as a [Faulty].
@@ -371,16 +336,7 @@ public inline fun <Error : Any> faultyOf(
 public inline fun <In, Error : Any> In.faultyOf(
     @BuilderInference catch: (throwable: Throwable) -> Faulty<Error> = ::rethrow,
     @BuilderInference block: RaiseScope<Error>.(In) -> Unit,
-): Faulty<Error> {
-    return RaiseScope.default<Faulty<Error>, Error> {
-        fold(
-            block = { block(this@faultyOf) },
-            catch = catch,
-            recover = ::Failure,
-            transform = ::emptySuccess,
-        )
-    }
-}
+): Faulty<Error> = outcomeOf(catch = catch, block = block)
 
 /**
  * Context runner that uses [RaiseScope] to safely capture raised or thrown errors,
@@ -393,18 +349,11 @@ public inline fun <In, Error : Any> In.faultyOf(
  * @return The result of the [block] if successful, or the result of the [fallback] function if an error occurs.
  */
 @OutcomeDsl
-public inline fun <T: Any> safe(
+public inline fun <T: Any> safely(
     crossinline fallback: (Any) -> T,
-    @BuilderInference block: RaiseScope<Unit>.() -> T,
-) : T {
-    return RaiseScope.default {
-        fold(
-            block = block,
-            catch = fallback,
-            recover = fallback,
-            transform = ::itself
-        )
-    }
+    block: RaiseScope<Unit>.() -> T,
+) : T = RaiseScope.default {
+    fold(block = block, catch = fallback, recover = fallback, transform = ::itself)
 }
 
 /**
@@ -419,16 +368,47 @@ public inline fun <T: Any> safe(
  * @return The result of the [block] if successful, or the result of the [fallback] function if an error occurs.
  */
 @OutcomeDsl
-public inline fun <In, Out: Any> In.safe(
+public inline fun <In, Out: Any> In.safely(
     crossinline fallback: (Any) -> Out,
-    @BuilderInference block: RaiseScope<Unit>.(In) -> Out,
-) : Out {
-    return RaiseScope.default {
-        fold(
-            block = { block(this@safe) },
-            catch = fallback,
-            recover = fallback,
-            transform = ::itself
-        )
-    }
+    block: RaiseScope<Unit>.(In) -> Out,
+) : Out = RaiseScope.default {
+    fold(block = { block(this@safely) }, catch = fallback, recover = fallback, transform = ::itself)
+}
+
+/**
+ * Context runner that uses [RaiseScope] to safely capture raised
+ * or thrown errors, and unwraps either the successful [Outcome] or `null`.
+ *
+ * > Used in scenarios where you want the advantages of [Outcome], but immediately
+ * > resolve to its [Ok][Success] type or `null`.
+ *
+ * @param block The code to execute within the [RaiseScope].
+ * @return The result of the [block] if successful, or `null` if an error occurs.
+ */
+@OutcomeDsl
+public inline fun <T: Any> nullableOf(block: RaiseScope<Unit>.() -> T) : T? = RaiseScope.default {
+    fold(block = block, catch = ::nulls, recover = ::nulls, transform = ::itself)
+}
+
+/**
+ * Context runner that uses [RaiseScope] to safely capture raised
+ * or thrown errors, and unwraps either the successful [Outcome] or `null`.
+ *
+ * > Used in scenarios where you want the advantages of [Outcome], but immediately
+ * > resolve to its [Ok][Success] type or `null`.
+ *
+ * @receiver Some input type, [In], passed to [block].
+ * @param block The code to execute within the [RaiseScope].
+ * @return The result of the [block] if successful, or `null` if an error occurs.
+ */
+@OutcomeDsl
+public inline fun <In, Out: Any> In.nullableOf(
+    block: RaiseScope<Unit>.(In) -> Out,
+) : Out? = RaiseScope.default {
+    fold(
+        block = { block(this@nullableOf) },
+        catch = ::nulls,
+        recover = ::nulls,
+        transform = ::itself,
+    )
 }

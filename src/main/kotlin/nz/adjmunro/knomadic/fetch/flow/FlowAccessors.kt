@@ -9,7 +9,6 @@ import nz.adjmunro.knomadic.fetch.members.getOrDefault
 import nz.adjmunro.knomadic.fetch.members.getOrElse
 import nz.adjmunro.knomadic.fetch.members.getOrNull
 import nz.adjmunro.knomadic.fetch.members.getOrThrow
-import nz.adjmunro.knomadic.fetch.members.unwrap
 
 /**
  * @return A [Flow] of the [result][Fetch.Finished.result] of a [Fetch] or the [default] value.
@@ -44,28 +43,4 @@ public fun <T: Any> FetchFlow<T>.fetchOrNull(): Flow<T?> {
 @KnomadicDsl
 public fun <T: Any> FetchFlow<T>.fetchOrThrow(): Flow<T> {
     return map { it.getOrThrow() }
-}
-
-/**
- * Attempt to unwrap a [FetchFlow] to produce a [Flow] of it's [result][Fetch.Finished.result].
- *
- * ```kotlin
- * val fetch: Fetch<String> = Fetch.Initial
- * fetch.unwrap()           // getOrThrow() (default behaviour)
- * fetch.unwrap { null }    // getOrNull() (initial & fetching to null)
- * fetch.unwrap { "$it" }   // getOrElse() (initial & fetching to string)
- * ```
- *
- * @return A [Flow] of the [result][Fetch.Finished.result] of a [Fetch] or the result of [recover].
- * @throws IllegalStateException if default [recover] value is used and fetch is [initial][Fetch.Initial] or [in progress][Fetch.Fetching].
- * @see FetchFlow.fetchOrThrow
- * @see FetchFlow.fetchOrNull
- * @see FetchFlow.fetchOrElse
- * @see FetchFlow.fetchOrDefault
- */
-@KnomadicDsl
-public inline fun <T> FetchFlow<T & Any>.fetchUnwrap(
-    crossinline recover: suspend (Fetch<T & Any>) -> T = { error("Fetch has not finished!") },
-): Flow<T> {
-    return map { it.unwrap() }
 }

@@ -4,8 +4,6 @@ import nz.adjmunro.knomadic.outcome.Failure
 import nz.adjmunro.knomadic.outcome.Outcome
 import nz.adjmunro.knomadic.outcome.OutcomeDsl
 import nz.adjmunro.knomadic.outcome.Success
-import nz.adjmunro.knomadic.outcome.members.errorOrThrow
-import nz.adjmunro.knomadic.outcome.members.getOrThrow
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

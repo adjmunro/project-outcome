@@ -11,5 +11,5 @@ package nz.adjmunro.knomadic.outcome
     AnnotationTarget.FUNCTION,
     AnnotationTarget.PROPERTY,
 )
-@DslMarker
-public annotation class OutcomeDsl
+@DslMarker @PublishedApi
+internal annotation class OutcomeDsl

@@ -1,7 +1,7 @@
-package nz.adjmunro.knomadic.raise
+package nz.adjmunro.knomadic.fetch
 
 /**
- * Annotation marking members of the [RaiseScope] DSL.
+ * Annotation marking members of the [Fetch] DSL.
  */
 @Target(
     AnnotationTarget.FILE,
@@ -12,4 +12,4 @@ package nz.adjmunro.knomadic.raise
     AnnotationTarget.PROPERTY,
 )
 @DslMarker @PublishedApi
-internal annotation class RaiseDsl
+internal annotation class FetchDsl
