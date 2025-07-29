@@ -18,7 +18,7 @@ public infix fun <T: Any> Fetch<T>.getOrDefault(default: T): T {
  * @return The [result][Fetch.Finished.result] of a [Fetch] or the result of [recover].
  */
 @KnomadicDsl
-public inline fun <T: Any> Fetch<T>.getOrElse(recover: (Fetch<T>) -> T): T {
+public inline fun <T> Fetch<T & Any>.getOrElse(recover: (Fetch<T & Any>) -> T): T {
     return fold(initial = { recover(this) }, fetching = { recover(this) }, finished = ::itself)
 }
 
@@ -48,28 +48,4 @@ public fun <T: Any> Fetch<T>.getOrThrow(): T {
         fetching = { error("Fetch has not finished!") },
         finished = ::itself,
     )
-}
-
-/**
- * Attempt to unwrap a [Fetch] to obtain it's [result][Fetch.Finished.result] value.
- * 
- * ```kotlin
- * val fetch: Fetch<String> = Fetch.Initial
- * fetch.unwrap()           // getOrThrow() (default behaviour)
- * fetch.unwrap { null }    // getOrNull() (initial & fetching to null)
- * fetch.unwrap { "$it" }   // getOrElse() (initial & fetching to string)
- * ```
- * 
- * @return The [result][Fetch.Finished.result] of a [Fetch] or the result of [recover].
- * @throws IllegalStateException if default [recover] value is used and fetch is [initial][Fetch.Initial] or [in progress][Fetch.Fetching].
- * @see Fetch.getOrThrow
- * @see Fetch.getOrNull
- * @see Fetch.getOrElse
- * @see Fetch.getOrDefault
- */
-@KnomadicDsl
-public inline fun <T> Fetch<T & Any>.unwrap(
-    recover: (Fetch<T & Any>) -> T = { error("Fetch has not finished!") },
-): T {
-    return fold(initial = { recover(this) }, fetching = { recover(this) }, finished = ::itself)
 }
