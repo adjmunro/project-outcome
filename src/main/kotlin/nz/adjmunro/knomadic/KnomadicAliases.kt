@@ -7,14 +7,8 @@ import nz.adjmunro.knomadic.fetch.fetch
 import nz.adjmunro.knomadic.outcome.Faulty
 import nz.adjmunro.knomadic.outcome.Maybe
 import nz.adjmunro.knomadic.outcome.Outcome
+import nz.adjmunro.knomadic.result.KotlinResult
 
-/**
- * Alias for Kotlin's [Result] type.
- *
- * *Consider using a [Outcome] instead.*
- */
-@KnomadicDsl
-public typealias KotlinResult<T> = Result<T>
 
 /**
  * Alias for a [Flow] of [Fetch] statuses.
@@ -96,19 +90,3 @@ public typealias OutcomeFetch<Ok, Error> = Flow<Fetch<Outcome<Ok, Error>>>
  */
 @KnomadicDsl
 public typealias ResultFetch<Ok> = Flow<Fetch<KotlinResult<Ok>>>
-
-
-/**
- * Alias for a [flow][Flow] of a [result][KotlinResult].
- *
- * ```kotlin
- * val result: ResultFlow<String> = flow {
- *     // Emit a Result from inside the Flow
- *     emit(resultOf { "A value." })
- * }
- * ```
- *
- * @see KotlinResult
- */
-@KnomadicDsl
-public typealias ResultFlow<Ok> = Flow<KotlinResult<Ok>>
