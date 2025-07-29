@@ -79,7 +79,7 @@ public sealed interface RaiseScope<in Error : Any> {
          * @throws Throwable if [catch] re-throws.
          */
         @RaiseDsl
-        public inline fun <Ok : Any, Error : Any> RaiseScope<Error>.catch(
+        public inline fun <Ok, Error : Any> RaiseScope<Error>.catch(
             catch: (throwable: Throwable) -> Error = ::rethrow,
             @BuilderInference block: RaiseScope<Error>.() -> Ok,
         ): Ok {
@@ -94,7 +94,7 @@ public sealed interface RaiseScope<in Error : Any> {
         }
 
         @RaiseDsl
-        public inline fun <Ok : Any, Error : Any> Companion.default(
+        public inline fun <Ok, Error : Any> Companion.default(
             @BuilderInference action: RaiseScope<Error>.() -> Ok,
         ): Ok = with(receiver = DefaultRaise(), block = action)
 
@@ -120,7 +120,7 @@ public sealed interface RaiseScope<in Error : Any> {
 
         @RaiseDsl
         @Suppress("UNCHECKED_CAST")
-        public inline fun <In : Any, Out : Any, Error : Any> RaiseScope<Error>.fold(
+        public inline fun <In, Out, Error : Any> RaiseScope<Error>.fold(
             block: (scope: RaiseScope<Error>) -> In,
             catch: (throwable: Throwable) -> Out = ::rethrow,
             recover: (error: Error) -> Out,
